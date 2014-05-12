@@ -1,0 +1,152 @@
+%% Document Class
+\documentclass[iop]{aastex}
+
+%% Document Preamble
+% Packages
+\usepackage{indentfirst}		% Used to fix non indent of 1st paragraph
+\usepackage{fancyhdr}		% Used to make custom footer / headers
+\usepackage{fixltx2e}		% Used fix Latex Corrections
+\usepackage{graphicx}		% To import figures into text
+\usepackage{natbib}			% Bibliography
+\usepackage{amsmath}		% Equation Package
+\usepackage{textcomp}		% For symbols
+\usepackage{amssymb}		% More symbols
+\usepackage{booktabs}		% For tables
+\usepackage{lscape}		% For Sideways Tables
+
+%% Begin Document
+\begin{document}
+\title{Centimeter Continuum Emission From Young Stellar Objects in the Serpens South Protocluster}
+%\title{Radio Properties of Protostars in the Serpens South Star Forming Region}
+
+
+%% Abstract
+\begin{abstract}
+The Serpens South protostellar cluster is a site of active star formation located in the Aquila Rift, with an abundance of embedded protostars at its core. Radio observations of centimeter emission from the region allow for the classifications of young protostars that are still heavily shrouded, and have proven to be an essential tool in the characterization of young stellar objects. We report the detection of centimeter wavelength ($\lambda=4.135$ cm and $\lambda=6.311$ cm) continuum emission from previously known and unidentified young stellar objects in the core of the Serpens South protostellar cluster. We use the Jansky Very Large Array (VLA) to give a detailed account of the radio properties of the young stellar objects, as well as characterize the evolutionary stage and luminosity source of young stellar objects in Serpens South in conjunction with infrared mappings of the region. We report the detection of centimeter sources lining up with more diffuse sources in micrometer wavelengths, verifying the presence of compact cores. This is the first mapping of centimeter continuum emission in this region at a spatial resolution of $<$ 5 arcseconds.
+
+\end{abstract}
+
+
+%% Begin Paper %%
+
+%% Introduction
+\section{Introduction}
+
+Radio observations of protostars have long been used as a tool to infer the presence of protostars deeply embedded in the clouds of dust and gas that are their progenitors \citep{Anglada95}. 
+
+\begin{landscape}
+\begin{deluxetable}{lccccccccccc}
+\tablewidth{0pc}
+\tabletypesize{\scriptsize}
+\tablecolumns{12}
+\tablecaption{Caption...\label{Properties of 2D Gaussian Fits}}
+\tablehead{
+\colhead{Source Name} & \colhead{Int. Flux} & \colhead{Int. Flux Err} & \colhead{Peak Flux} & \colhead{RA} & \colhead{RA Err} & \colhead{DEC} & \colhead{DEC Err} & \colhead{Bmaj} & \colhead{Bmin} & \colhead{Pos. Angle} & \colhead{RMS} \\
+ \colhead{} & \colhead{(mJy)} & \colhead{(mJy)} & \colhead{(mJy)} & \colhead{(J2000)} & \colhead{(arcsec)} & \colhead{(J2000)} & \colhead{(arcsec)} & \colhead{(arcsec)} & \colhead{(arcsec)} & \colhead{(degrees)} & \colhead{(mJy)}  }
+\startdata
+lower.S1 & 0.06486 & 0.02438 & 0.06500 & -82.44 & 0.8961 & -2.024 & 0.7340 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S2 & 0.5987 & 0.02511 & 0.6000 & -82.46 & 0.09998 & -2.009 & 0.08190 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S3 & 0.04091 & 0.02534 & 0.04100 & -82.47 & 1.476 & -2.013 & 1.209 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S4 & 0.1197 & 0.01196 & 0.1200 & -82.48 & 0.2380 & -2.010 & 0.1950 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S5 & 0.07284 & 0.01367 & 0.07300 & -82.49 & 0.4473 & -2.013 & 0.3664 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S6 & 0.9978 & 0.02082 & 1.000 & -82.49 & 0.04973 & -2.014 & 0.04074 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S7 & 0.05687 & 0.02516 & 0.05700 & -82.47 & 1.054 & -2.025 & 0.8638 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S8 & 0.04290 & 0.02563 & 0.04300 & -82.48 & 0.0003964 & -2.029 & 0.0003247 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S9 & 0.000 & 0.000 & 0.04000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+lower.S10 & 0.000 & 0.000 & 0.1100 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+lower.S11 & 0.1497 & 0.1033 & 0.1500 & -82.49 & 1.646 & -2.042 & 1.348 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S12 & 0.1497 & 0.01350 & 0.1500 & -82.49 & 0.2150 & -2.043 & 0.1762 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S13 & 0.4290 & 0.02459 & 0.4300 & -82.49 & 0.1366 & -2.046 & 0.1119 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S14 & 0.000 & 0.000 & 0.03600 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+lower.S15 & 0.1696 & 0.01368 & 0.1700 & -82.49 & 0.1923 & -2.052 & 0.1575 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S16 & 0.000 & 0.000 & 0.1700 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+lower.S17 & 0.03792 & 0.02311 & 0.03800 & -82.48 & 1.453 & -2.054 & 1.190 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S18 & 0.000 & 0.000 & 0.05000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+lower.S19 & 0.1197 & 0.01004 & 0.1200 & -82.49 & 0.1998 & -2.062 & 0.1637 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S20 & 0.05887 & 0.01186 & 0.05900 & -82.50 & 0.4802 & -2.067 & 0.3933 & 4.820 & 3.850 & 13.40 & 0.03806\\
+lower.S21 & 0.1497 & 0.02503 & 0.1500 & -82.46 & 0.3986 & -2.069 & 0.3265 & 4.820 & 3.850 & 13.40 & 0.03806\\
+upper.S1 & 0.09969 & 0.01901 & 0.1000 & -82.44 & 0.2973 & -2.024 & 0.2436 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S2 & 0.5483 & 0.01932 & 0.5500 & -82.46 & 0.05494 & -2.009 & 0.04502 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S3 & 0.02592 & 0.01936 & 0.02600 & -82.47 & 1.164 & -2.013 & 0.9542 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S4 & 0.05084 & 0.008597 & 0.05100 & -82.48 & 0.2636 & -2.010 & 0.2160 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S5 & 0.04985 & 0.008045 & 0.05000 & -82.49 & 0.2516 & -2.013 & 0.2062 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S6 & 0.3988 & 0.01086 & 0.4000 & -82.49 & 0.04245 & -2.014 & 0.03479 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S7 & 0.04486 & 0.01182 & 0.04500 & -82.47 & 0.4107 & -2.025 & 0.3365 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S8 & 0.04785 & 0.01226 & 0.04800 & -82.48 & 0.3994 & -2.029 & 0.3273 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S9 & 0.02592 & 0.007830 & 0.02600 & -82.49 & 0.4709 & -2.033 & 0.3859 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S10 & 0.05284 & 0.04357 & 0.05300 & -82.49 & 1.285 & -2.040 & 1.053 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S11 & 0.05284 & 0.03196 & 0.05300 & -82.49 & 0.9428 & -2.042 & 0.7726 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S12 & 0.05284 & 0.008033 & 0.05300 & -82.49 & 0.2370 & -2.043 & 0.1942 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S13 & 0.04486 & 0.01037 & 0.04500 & -82.49 & 0.3603 & -2.046 & 0.2952 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S14 & 0.000 & 0.000 & 0.03900 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
+upper.S15 & 0.1894 & 0.01814 & 0.1900 & -82.49 & 0.1493 & -2.052 & 0.1223 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S16 & 0.1894 & 0.01372 & 0.1900 & -82.48 & 0.1129 & -2.053 & 0.09251 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S17 & 0.03888 & 0.01403 & 0.03900 & -82.48 & 0.5624 & -2.054 & 0.4609 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S18 & 0.05084 & 0.009118 & 0.05100 & -82.49 & 0.2796 & -2.057 & 0.2291 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S19 & 0.1196 & 0.007314 & 0.1200 & -82.49 & 0.09530 & -2.062 & 0.07810 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S20 & 0.02592 & 0.009043 & 0.02600 & -82.50 & 0.5438 & -2.067 & 0.4457 & 3.150 & 2.520 & 12.70 & 0.03004\\
+upper.S21 & 0.09969 & 0.01154 & 0.1000 & -82.46 & 0.1804 & -2.069 & 0.1478 & 3.150 & 2.520 & 12.70 & 0.03004\\
+\enddata
+\end{deluxetable}
+\end{landscape}
+
+-- Present problem
+
+-- Previous studies
+
+-- Importance of field
+
+-- Basic specs on data
+
+-- Outline of paper
+
+%Perhaps talk generally about protostars, classifications, problems, unique opportunities for use of radio astronomy?
+
+%Introduction of the discovery of Serpens South by Gutermuth 2008. Basic properties of the region and current thoughts on age, distance, evolution, filamentary accretion flows, and also the basic properties of protostars seen in the radio. Why radio is interesting for protostars and what it may tell us, previous uses of radio emission to determine properties.
+
+\section{Observed Region}
+-- History of region
+
+-- Other studies of region, and current thoughts on dynamics and evolution of region
+
+-- Other studies of region in radio and other wavelengths
+
+-- Overview of telescope used in the study
+
+\section{Observations \& Data Reduction}
+-- Data reduction processes, RFI problems, antennas, etc..
+
+-- RMS values, cleaning steps
+
+-- Acknowledgment of artifacts and bugs in images
+
+-- Resolution of beam
+
+-- Possible errors in aperture synthesis technique
+
+%We used the Jansky Very Large Array (VLA) to image radio continuum emission coming from the Serpens South cluster, taken on July 2nd, 2013. We focused on RA xxxxx DEC xxxxxx, and were sensitive to an area of xxx square degrees. The array was in the C configuration during the observation, which is the second smallest configuration with a maximum baseline length of 3.4 km. We imaged the cluster in the C band, which spans 4238.0 MHz -- 7762.0 MHz. We broke this bandwidth up into two subbands, the first ranging from 4238.00 MHz -- 5262.00 MHz with the middle at $\lambda=6.311$ cm, and the second ranging from 6738.00 MHz -- 7762.00 MHz with the middle at $\lambda=4.135$ cm.
+
+\section{Sources}
+-- Note on sources, how they were chosen
+
+\section{Results \& Analysis}
+
+
+
+\section{Discussion}
+
+
+
+
+\section{Conclusions}
+
+
+
+%% Bibliography %%
+\bibliographystyle{apj}		
+\bibliography{references}{}
+
+%% End Document
+\end{document}
+
+

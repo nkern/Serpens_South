@@ -1,0 +1,15 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Anglada}(1995)}]{Anglada95}
+{Anglada}, G. 1995, in Revista Mexicana de Astronomia y Astrofisica, vol. 27,
+  Vol.~1, Revista Mexicana de Astronomia y Astrofisica Conference Series, ed.
+  S.~{Lizano} \& J.~M. {Torrelles}, 67
+
+\bibitem[{{Gutermuth} {et~al.}(2008){Gutermuth}, {Bourke}, {Allen}, {Myers},
+  {Megeath}, {Matthews}, {J{\o}rgensen}, {Di Francesco}, {Ward-Thompson},
+  {Huard}, {Brooke}, {Dunham}, {Cieza}, {Harvey}, \& {Chapman}}]{Gutermuth08}
+{Gutermuth}, R.~A., {Bourke}, T.~L., {Allen}, L.~E., {et~al.} 2008, \apjl, 673,
+  L151
+
+\end{thebibliography}
