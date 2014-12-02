@@ -1,0 +1,21 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+circle(277.54029,-2.0091667,4") # color=blue text={VLA 1}
+circle(277.52,-2.0095139,4") # color=blue text={VLA 2}
+circle(277.51062,-2.0134722,4") # color=blue text={VLA 3}
+circle(277.50638,-2.0143889,4") # color=blue text={VLA 4}
+circle(277.52758,-2.0247222,4") # color=blue text={VLA 6}
+circle(277.52424,-2.0290972,4") # color=blue text={VLA 7}
+circle(277.52875,-2.0365278,4") # color=blue text={VLA 8}
+circle(277.51166,-2.0403472,4") # color=blue text={VLA 9}
+circle(277.51225,-2.0420417,4") # color=blue text={VLA 10}
+circle(277.51402,-2.0461111,4") # color=blue text={VLA 11}
+circle(277.51715,-2.050625,4") # color=blue text={VLA 12}
+circle(277.51472,-2.0523611,4") # color=blue text={VLA 13}
+circle(277.51604,-2.0534028,4") # color=blue text={VLA 14}
+circle(277.51917,-2.0538889,4") # color=blue text={VLA 15}
+circle(277.51354,-2.0573611,4") # color=blue text={VLA 16}
+circle(277.50555,-2.0619444,4") # color=blue text={VLA 17}
+circle(277.53918,-2.0691667,4") # color=blue text={VLA 18}
+circle(277.56162,-2.0242361,4") # color=blue text={VLA 5}

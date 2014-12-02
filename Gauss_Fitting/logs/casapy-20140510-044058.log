@@ -1,0 +1,14 @@
+2014-05-10 04:41:03	INFO	casa::::casa	---
+2014-05-10 04:41:03	INFO	casa::::casa	CASA Version 4.0.1 (release r22889)
+2014-05-10 04:41:03	INFO	casa::::casa	  Tagged on: Tue, 12 Feb 2013
+2014-05-10 04:41:04	INFO	viewer::::casa	
+2014-05-10 04:41:04	INFO	viewer::::casa+	##########################################
+2014-05-10 04:41:04	INFO	viewer::::casa+	##### Begin Task: viewer             #####
+2014-05-10 04:41:04	INFO	viewer::::casa	viewer(infile="",displaytype="raster",channel=0,zoom=1,
+2014-05-10 04:41:04	INFO	viewer::::casa+	        outfile="",outscale=1.0,outdpi=300,outformat="jpg",outlandscape=False,
+2014-05-10 04:41:04	INFO	viewer::::casa+	        gui=True)
+2014-05-10 04:41:05	INFO	viewer::::casa	##### End Task: viewer               #####
+2014-05-10 04:41:05	INFO	viewer::::casa+	##########################################
+2014-05-10 04:41:19	WARN	CASA::Viewer	currently only supports rectangle, ellipse, symbol (somewhat), and polygon region shapes
+2014-05-10 04:41:19	INFO	RegionTextParser::_determineVersion	Found spec version 0
+2014-05-10 04:41:20	INFO	AsciiRegionFileParser::_parse	Combined 21 image regions (which excludes any annotation regions)

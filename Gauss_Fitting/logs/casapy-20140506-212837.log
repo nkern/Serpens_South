@@ -1,0 +1,6 @@
+2014-05-06 21:28:42	INFO	casa::::casa	---
+2014-05-06 21:28:42	INFO	casa::::casa	CASA Version 4.0.1 (release r22889)
+2014-05-06 21:28:42	INFO	casa::::casa	  Tagged on: Tue, 12 Feb 2013
+2014-05-06 21:28:57	WARN	componentlist::close	componentlist closed
+2014-05-06 21:31:11	SEVERE	componentlist::open	Exception Reported:  is non existant or is not a componentlist table
+2014-05-06 21:31:13	WARN	componentlist::close	componentlist closed

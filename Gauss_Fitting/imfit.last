@@ -1,0 +1,22 @@
+taskname           = "imfit"
+imagename          =  "../FITS/SERPS_2.upper.briggs05.deeper.image.pbcorr.fits"
+box                =  ""
+region             =  "ellipse [[18:30:09.403, -2.04.09.00], [4arcsec, 4arcsec], 90deg]"
+chans              =  ""
+stokes             =  ""
+mask               =  ""
+includepix         =  []
+excludepix         =  []
+residual           =  ""
+model              =  ""
+estimates          =  "Fit_Files/SERPS_upper_try2.S18-gaussest.txt"
+logfile            =  ""
+append             =  True
+newestimates       =  "Fit_Files/SERPS_upper_try2.S18-gaussest_new.txt"
+complist           =  "Fit_Files/SERPS_upper_try2.S18-fitcomps.cl"
+overwrite          =  True
+dooff              =  False
+offset             =  0.0
+fixoffset          =  False
+stretch            =  False
+#imfit(imagename="../FITS/SERPS_2.upper.briggs05.deeper.image.pbcorr.fits",box="",region="ellipse [[18:30:09.403, -2.04.09.00], [4arcsec, 4arcsec], 90deg]",chans="",stokes="",mask="",includepix=[],excludepix=[],residual="",model="",estimates="Fit_Files/SERPS_upper_try2.S18-gaussest.txt",logfile="",append=True,newestimates="Fit_Files/SERPS_upper_try2.S18-gaussest_new.txt",complist="Fit_Files/SERPS_upper_try2.S18-fitcomps.cl",overwrite=True,dooff=False,offset=0.0,fixoffset=False,stretch=False)

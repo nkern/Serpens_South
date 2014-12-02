@@ -1,0 +1,899 @@
+
+Nicholas S. Kern
+nkern@nrao.edu
+07/10/2013
+
+# Reduction of the Serpens South Data, taken by the EVLA for the summer student project.
+# Casa Version 4.1.0
+
+# Original Data set downloaded from the EVLA archive
+# These files live in /lustre/naasc/nkern/serp_south/
+
+# This file is broken into a few parts, the beginning is the data reduction and imaging that I did in Charlottesville, then there is the further reduction and imaging done in Socorro New Mexico.
+# And then there is the further analysis done back in Charlottesville.
+# The reduction notes under the New Mexico section are very useful, look at my comments.
+
+#########################################################
+#########################################################
+############## D A T A   F L A G G I N G ################
+#########################################################
+#########################################################
+
+myvis = 'TDEM0009.sb23987775.eb24043753.56475.31158744213.ms'
+listobs(vis=myvis)
+
+# Observation Date: July 2nd 2013
+
+# Objects:
+# Field 0/1: Gain/Phase Calibrator: J1804 + 0101 (use 1)
+# Field 2  : Target Source        : Serpens South
+# Field 3  : Flux and Bandpass Cal: 1331+305=3C286
+
+# Correlations: RR,LL,RL,LR
+# EVLA: C Band
+# 64 Channels per spw
+
+# Spectral Windows 0-15 : 4.2380 GHz - 7.7620 GHz
+
+# Get Observers Log:
+# Antenna 22 is lost due to subreflector errors
+# Antenna 21 doesn't exist
+
+plotants(vis=myvis,figfile='ant_locations.png')
+# ea14 and ea20 in center of array
+
+plotuv(vis=myvis,figfile='uvplot.png')
+
+plotms(vis=myvis,xaxis='time',yaxis='elevation',correlation='RR,LL',avgchannel='64',spw='0~15:4~60',coloraxis='field')
+
+plotms(vis=myvis,xaxis='time',yaxis='amp',correlation='RR,LL',avgchannel='64',spw='0~15:4~60',coloraxis='scan',iteraxis='field')
+
+# List of dubious looking data:
+# Baseline ea13 & ea20 for field 2
+# Channel 57 in spw 6
+
+flagdata(vis=myvis,field='1',timerange='07:42:00~07:42:15')
+flagdata(vis=myvis,field='1',timerange='07:54:30~07:54:45')
+flagdata(vis=myvis,field='1',timerange='08:06:58~08:07:10')
+flagdata(vis=myvis,field='1',timerange='08:19:20~08:19:35')
+flagdata(vis=myvis,field='3',timerange='08:20:20~08:22:02')
+# Channel 57 in spw 6 is bad
+flagdata(vis=myvis,field='1,2,3',spw='6:57~57')
+
+#### Looking specifically for RFI (there's a lot of it!) ####
+
+# STARTING WITH FIELD 1
+# Spw 0-7
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='1',spw='0~7',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+# A bit of hand flagging in the last plotms, but overall looks decent.
+
+# Spw 8-15
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='1',spw='8~15',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea01 & ea09
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea02 & ea24
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea05 & ea06
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea11 & ea16
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea13 & ea20
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea13 & ea20
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea13 & ea15, ea14 & ea15
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea08 & ea27
+
+# Get rid of this data, then go back and evaluate again.
+flagdata(vis=myvis,mode='manual',spw='14',field='1',antenna='ea01&ea09;ea02&ea24;ea05&ea06;ea11&ea16;ea13&ea20;ea13&ea15;ea14&ea15;ea08&ea27')
+
+# Field: 1, Spw: 13, Corr: All, Chan: All, Baseline: ea01&ea09,ea02&ea24,ea05&ea06
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea01&ea08,ea02&ea24,ea05&ea06,ea10&ea15,ea12&ea04,ea13&ea14
+flagdata(vis=myvis,mode='manual',spw='14',field='1',antenna='ea01&ea08;ea02&ea24;ea05&ea06;ea10&ea15;ea12&ea04;ea13&ea14')
+flagdata(vis=myvis,mode='manual',spw='13',field='1',antenna='ea01&ea09;ea02&ea24;ea05&ea06')
+
+# Field: 1, Spw: 12, Corr: All, Chan: All, Baseline: ea02&ea24,
+# Field: 1, Spw: 14, Corr: All, Chan: All, Baseline: ea13&ea14,ea20&ea24,ea16&ea24,ea14&ea24,ea13&ea24
+flagdata(vis=myvis,mode='manual',spw='12',field='1',antenna='ea02&ea24')
+flagdata(vis=myvis,mode='manual',spw='14',field='1',antenna='ea13&ea14;ea20&ea24;ea16&ea24;ea14&ea24;ea13&ea24')
+
+# Still some left over noise that I am flagging by box and flag in plotms
+
+
+# FIELD 2
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='2',spw='0~7',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+# Field: 2, Spw: 1, Corr: All, Chan: All, Baseline: ea13&ea20
+flagdata(vis=myvis,field='2',mode='manual',spw='1',antenna='ea13&ea20')
+# Channel 6 of spw 1 is bad
+flagdata(vis=myvis,field='2',mode='manual',spw='1:6~7')
+# Field: 2, Spw: 1, Corr: All, Chan: All, Baseline: ea05&ea11,
+# Field: 2, Spw: 2, Corr: All, Chan: All, Baseline: ea13&ea20,
+flagdata(vis=myvis,field='2',mode='manual',spw='1',antenna='ea05&ea11')
+flagdata(vis=myvis,field='2',mode='manual',spw='2',antenna='ea13&ea20')
+flagdata(vis=myvis,field='2',mode='manual',spw='3',antenna='ea13&ea20')
+
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='2',spw='8~15',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+# Field: 2, Spw: 12, Corr: All, Chan: All, Baseline: ea02&ea13,ea06&ea11,ea05&ea08,ea14&ea20,ea16&ea24
+# Field: 2, Spw: 14, Corr: All, Chan: All, Baseline: ea01&ea05,ea05&ea08,ea09&ea27,ea16&ea24
+flagdata(vis=myvis,mode='manual',field='2',spw='12',antenna='ea01&ea05;ea02&ea13;ea06&ea11;ea05&ea08;ea14&ea20;ea16&ea24;ea13&ea20;ea02&ea24')
+flagdata(vis=myvis,mode='manual',field='2',spw='13',antenna='ea09&ea27;ea13&ea20;ea02&ea24')
+flagdata(vis=myvis,mode='manual',field='2',spw='14',antenna='ea01&ea05;ea05&ea08;ea09&ea27;ea16&ea24;ea05&ea27;ea06&ea11;ea13&ea20;ea02&ea24')
+
+# Sometimes if you just re-paste the plotms line from above plotms doesn't
+# upload the new flags. Try and check force reload and see if flagged data
+# dissapears.
+
+# Now to do some minor plotms box and flag, then move on to field 3
+
+
+# FIELD 3
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='3',spw='0~7',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+# This data set looks great!
+
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='3',spw='8~15',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+# This data set looks good too.
+
+### Forgot to look at UV dist plots ###
+plotms(vis=myvis,xaxis='uvdist',yaxis='amp',field='1',iteraxis='spw',spw='0~15:4~60',avgchannel='64',coloraxis='antenna1')
+plotms(vis=myvis,xaxis='uvdist',yaxis='amp',field='2',iteraxis='spw',spw='0~15:4~60',avgchannel='64',coloraxis='antenna1')
+plotms(vis=myvis,xaxis='uvdist',yaxis='amp',field='3',iteraxis='spw',spw='0~15:4~60',avgchannel='64',coloraxis='antenna1')
+# Low amplitudes come from cross polarizations (RL, LR) so that's okay.
+# Spikes in short baseline amplitudes for field 2 over spws 12,13,14 show RFI,
+# that means we still need to do more flagging.
+
+# Next, I will go back to the bandpass plots (channel vs. amplitude) but will
+# iterate over each spectral window.
+
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='1',spw='0',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+
+# Go Through the above plot and look for bad baselines (for each spw 0-15), by bad I mean ones
+# that show spiked or non-uniform behavoir. Its okay to have some noise on
+# top, at some point there has to be something on top, but as long as it is
+# uniform esque it is fine. If you see some in between behavoir, maybe a spike
+# of only a point or two, single out that antenna and iter over other antenna
+# to see if within a certain baseline over a few channels there is RFI, use
+# the plot below to do so:
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='1',spw=(specify),antenna=(specify),iteraxis='antenna',coloraxis='antenna2',avgtime='1e8')
+# (Or you can be even more careful and use iteraxis='baseline', which will
+# give you all baselines. You can see that certain baselines have spiked
+# behavior but only over certain channels, around channel 20 for spw1 (you can
+# do a few spw at a time (color by spw) to get it done faster).
+
+# Field 1, Spw: 13, All of Baseline: ea11&ea16,ea13&ea20
+# Field 1, Spw: 14, All of Baseline: ea01&ea05,ea01&ea06,ea08&ea09,ea13&ea16
+
+
+# Field 1, Spw: 1, Chan: 16-23, Baseline: ea13&ea20,ea02&ea20,ea11&ea24,ea13&ea14,ea13&ea20,ea13ea24,ea14&ea20,ea14&ea24,ea16&ea24,ea20&ea24
+# Field 1, Spw: 3, Chan: 6-14, Baseline: ea13&ea20,
+# Field 1, Spw: 4, Baseline: ea13&ea20
+# Field 1, Spw: 12, Chan: 3-24;57-63, Baseline: ea01&ea06;ea08;ea27, ea02&ea13;ea15;ea16,ea20, ea03&ea12, ea05&ea06;ea09;ea11, ea07&ea17;ea27, ea09&ea27, ea10&ea13;ea14;ea15;ea20, ea11&ea16;ea20;ea24, ea13&ea14;ea15;ea16;ea20;ea24, ea14&ea15;ea16;ea20ea24, ea15&ea16;ea20;ea24, ea16&ea24, ea20&ea24
+# Field 1, Spw: 13, Chan: 5-7;26-33, Baseline: ea01&ea05;ea06ea08;ea27, ea02&ea20, ea05&ea08;ea09;ea11, ea08&ea09;ea27, ea09;ea26;ea27, ea10&ea13;ea14;ea15;ea16, ea11&ea13;ea20, ea13&ea14;ea15;ea16;ea24, ea14&ea15;ea20;ea24, ea15&ea16;ea20, ea16&ea20;ea24, ea20&ea24
+# Field 1, Spw: 14, Chan: 6-10;17-22,36-42  Baselines: ea01&ea10;ea11;ea13;ea14;ea15;ea16;ea20;ea24;ea26;ea27, ea02;ea11;ea13;ea14;ea15;ea16,ea20, ea03&ea04;ea07;ea12;ea15, ea04&ea05;ea10;ea11;ea13;ea14;ea15;ea16;ea20, ea05&ea08;ea09;ea11;ea13;ea14;ea15;ea16;ea20;ea24;ea26;ea27, ea06&ea08;ea09;ea11;ea13;ea14;ea15;ea16;ea20;ea24;ea27; ea08&ea16, ea09&ea11;ea24;ea25;ea26;ea27, ea10&ea11;ea12;ea13;ea14;ea16;ea20;ea24, ea11&ea13;ea14;ea15;ea20;ea24, ea12&ea13;ea14;ea15;ea20, ea14&ea16;ea20, ea15&ea20;ea24, ea16&ea20, ea17&ea28, ea18&ea28, ea19&ea23;ea25, ea25&ea26, ea26&ea27
+
+# Yes, this took a few hours...
+
+flagdata(vis=myvis,field='1',spw='13',antenna='ea11&ea16;ea13&ea20')
+flagdata(vis=myvis,field='1',spw='14',antenna='ea01&ea05;ea01&ea06;ea08&ea09;ea13&ea16')
+
+flagdata(vis=myvis,field='1',spw='1:16~23',antenna='ea13&ea20;ea02&ea20;ea11&ea24;ea13&ea14;ea13&ea20;ea13&ea24;ea14&ea20;ea14&ea24;ea16&ea24;ea20&ea24')
+flagdata(vis=myvis,field='1',spw='3:6~14',antenna='ea13&ea20')
+flagdata(vis=myvis,field='1',spw='4',antenna='ea13&ea20')
+flagdata(vis=myvis,field='1',spw='12:3~24;57~63',antenna='ea01&ea06;ea01&ea08;ea01&ea27;ea02&ea13;ea02&ea15;ea02&ea16;ea02&ea20;ea03&ea12;ea05&ea06;ea05&ea09;ea05&ea11;ea07&ea17;ea07&ea27;ea09&ea27;ea10&ea13;ea10&ea14;ea10&ea15;ea10&ea20;ea11&ea16;ea11&ea20;ea11&ea24;ea13&ea14;ea13&ea15;ea13&ea16;ea13&ea20;ea14&ea24;ea14&ea15;ea14&ea16;ea14&ea20;ea14&ea24;ea15&ea16;ea15&ea20;ea15&ea24;ea16&ea24;ea20&ea24')
+
+flagdata(vis=myvis,field='1',spw='13:5~7;26~33',antenna='ea01&ea05;ea01&ea06;ea01&ea08;ea01&ea27;ea02&ea20;ea05&ea08;ea05&ea09;ea05&ea11;ea08&ea09;ea08&ea27;ea09&ea26;ea09&ea27;ea10&ea13;ea10&ea14;ea10&ea15;ea10&ea16;ea11&ea13;ea11&ea20;ea13&ea14;ea13&ea15;ea13&ea16;ea13&ea24;ea14&ea15;ea14&ea20;ea14&ea24;ea15&ea16;ea15&ea20;ea16&ea20;ea16&ea24;ea20&ea24')
+
+flagdata(vis=myvis,field='1',spw='14:6~11;16~23;35~45',antenna='ea01&ea10;ea01&ea11;ea01&ea13;ea01&ea14;ea01&ea15;ea01&ea16;ea01&ea20;ea01&ea24;ea01&ea26;ea01&ea27;ea02&ea11;ea02&ea13;ea02&ea14;ea02&ea15;ea02&ea16;ea02&ea20;ea03&ea04;ea03&ea07;ea03&ea12;ea03&ea15;ea04&ea05;ea04&ea10;ea04&ea11;ea04&ea13;ea04&ea14;ea04&ea15;ea04&ea16;ea04&ea20;ea05&ea08;ea05&ea09;ea05&ea11;ea05&ea13;ea05&ea14;ea05&ea15;ea05&ea16;ea05&ea20;ea05&ea24;ea05&ea26;ea05&ea27;ea06&ea08;ea06&ea09;ea06&ea11;ea06&ea13;ea06&ea14;ea06&ea15;ea06&ea16;ea06&ea20;ea06&ea24;ea06&ea27;ea08&ea16;ea09&ea11;ea09&ea24;ea09&ea25;ea09&ea26;ea09&ea27;ea10&ea11;ea10&ea12;ea10&ea13;ea10&ea14;ea10&ea16;ea10&ea20;ea10&ea24;ea11&ea13;ea11&ea14;ea11&ea15;ea11&ea20;ea11&ea24;ea12&ea13;ea12&ea14;ea12&ea15;ea12&ea20;ea14&ea16;ea14&ea20;ea15&ea20;ea15&ea24;ea16&ea20;ea17&ea28;ea18&ea28;ea19&ea23;ea19&ea25;ea25&ea26;ea26&ea27')
+
+#### FIELD 2 ####
+#  Apply same flags from field 1, then go over and inspect band pass data
+
+flagdata(vis=myvis,field='2',spw='13',antenna='ea11&ea16;ea13&ea20')
+flagdata(vis=myvis,field='2',spw='14',antenna='ea01&ea05;ea01&ea06;ea08&ea09;ea13&ea16')
+
+flagdata(vis=myvis,field='2',spw='1:16~23',antenna='ea13&ea20;ea02&ea20;ea11&ea24;ea13&ea14;ea13&ea20;ea13&ea24;ea14&ea20;ea14&ea24;ea16&ea24;ea20&ea24')
+
+flagdata(vis=myvis,field='2',spw='3:6~14',antenna='ea13&ea20')
+flagdata(vis=myvis,field='2',spw='4',antenna='ea13&ea20')
+
+flagdata(vis=myvis,field='2',spw='12:3~24;57~63',antenna='ea01&ea06;ea01&ea08;ea01&ea27;ea02&ea13;ea02&ea15;ea02&ea16;ea02&ea20;ea03&ea12;ea05&ea06;ea05&ea09;ea05&ea11;ea07&ea17;ea07&ea27;ea09&ea27;ea10&ea13;ea10&ea14;ea10&ea15;ea10&ea20;ea11&ea16;ea11&ea20;ea11&ea24;ea13&ea14;ea13&ea15;ea13&ea16;ea13&ea20;ea14&ea24;ea14&ea15;ea14&ea16;ea14&ea20;ea14&ea24;ea15&ea16;ea15&ea20;ea15&ea24;ea16&ea24;ea20&ea24')
+
+flagdata(vis=myvis,field='2',spw='13:5~7;26~33',antenna='ea01&ea05;ea01&ea06;ea01&ea08;ea01&ea27;ea02&ea20;ea05&ea08;ea05&ea09;ea05&ea11;ea08&ea09;ea08&ea27;ea09&ea26;ea09&ea27;ea10&ea13;ea10&ea14;ea10&ea15;ea10&ea16;ea11&ea13;ea11&ea20;ea13&ea14;ea13&ea15;ea13&ea16;ea13&ea24;ea14&ea15;ea14&ea20;ea14&ea24;ea15&ea16;ea15&ea20;ea16&ea20;ea16&ea24;ea20&ea24')
+
+flagdata(vis=myvis,field='2',spw='14:6~11;16~23;35~45',antenna='ea01&ea10;ea01&ea11;ea01&ea13;ea01&ea14;ea01&ea15;ea01&ea16;ea01&ea20;ea01&ea24;ea01&ea26;ea01&ea27;ea02&ea11;ea02&ea13;ea02&ea14;ea02&ea15;ea02&ea16;ea02&ea20;ea03&ea04;ea03&ea07;ea03&ea12;ea03&ea15;ea04&ea05;ea04&ea10;ea04&ea11;ea04&ea13;ea04&ea14;ea04&ea15;ea04&ea16;ea04&ea20;ea05&ea08;ea05&ea09;ea05&ea11;ea05&ea13;ea05&ea14;ea05&ea15;ea05&ea16;ea05&ea20;ea05&ea24;ea05&ea26;ea05&ea27;ea06&ea08;ea06&ea09;ea06&ea11;ea06&ea13;ea06&ea14;ea06&ea15;ea06&ea16;ea06&ea20;ea06&ea24;ea06&ea27;ea08&ea16;ea09&ea11;ea09&ea24;ea09&ea25;ea09&ea26;ea09&ea27;ea10&ea11;ea10&ea12;ea10&ea13;ea10&ea14;ea10&ea16;ea10&ea20;ea10&ea24;ea11&ea13;ea11&ea14;ea11&ea15;ea11&ea20;ea11&ea24;ea12&ea13;ea12&ea14;ea12&ea15;ea12&ea20;ea14&ea16;ea14&ea20;ea15&ea20;ea15&ea24;ea16&ea20;ea17&ea28;ea18&ea28;ea19&ea23;ea19&ea25;ea25&ea26;ea26&ea27')
+
+
+# Now inspect
+plotms(vis=myvis,xaxis='channel',yaxis='amp',field='2',spw='0',avgtime='1e8',iteraxis='antenna',coloraxis='antenna2')
+
+# Field: 2, Chan: 4-12, Spw:'12', Baseline: ea01&ea11;ea02&ea11;ea02&ea14;ea05&ea27;ea06&ea20;ea06&ea24;ea06&ea25;ea08&ea23;ea09&ea26;ea12&ea24;ea13&ea24;ea16&ea20;ea20&ea25
+# Field: 2, Spw:'13', Baseline: ea01&ea05;ea01&ea16;ea02&ea03;ea02&ea05;ea02&ea20;ea03&ea05;ea05&ea16;
+# Field: 2, Spw:'14', Baseline: ea02&ea13;ea02&ea20;ea13&ea14;ea13&ea15;ea13&ea24;ea14&ea15;ea14&ea16;ea14&ea20;ea16&ea20
+
+flagdata(vis=myvis,field='2',spw='12:4~12',antenna='ea01&ea11;ea02&ea11;ea02&ea14;ea05&ea27;ea06&ea20;ea06&ea24;ea06&ea25;ea08&ea23;ea09&ea26;ea12&ea24;ea13&ea24;ea16&ea20;ea20&ea25')
+flagdata(vis=myvis,field='2',spw='13',antenna='ea01&ea05;ea01&ea16;ea02&ea03;ea02&ea05;ea02&ea20;ea03&ea05;ea05&ea16')
+flagdata(vis=myvis,field='2',spw='14',antenna='ea02&ea13;ea02&ea20;ea13&ea14;ea13&ea15;ea13&ea24;ea14&ea15;ea14&ea16;ea14&ea20;ea16&ea20')
+
+
+# Go to Uv plots from before and look at spikes in spw 12, 13, 14, box and
+# locate baselines and eliminate them!
+
+flagdata(vis=myvis,field='2',spw='12',antenna='ea13&ea24;ea08&ea27;ea16&ea20')
+flagdata(vis=myvis,field='2',spw='13',antenna='ea20&ea24;ea13&ea14;ea02&ea16;ea13&ea15')
+flagdata(vis=myvis,field='2',spw='14',antenna='ea08&ea27;ea01&ea08;ea02&ea16;ea05&ea06;ea11&ea16')
+
+
+#########################################################
+#########################################################
+############## C A L I B R A T I O N S ################## 
+#########################################################
+#########################################################
+
+##### Calibrations ! (finally) ####
+
+# Plot Antennas
+plotants(vis=myvis,figfile='ant_locations.png')
+
+# Gaincurve Calibration
+gencal(vis=myvis,caltable='gaincurve.cal',caltype='gceff')
+
+# Weather Plot
+myTau = plotweather(vis=myvis,doPlot=T)
+
+# Opacity Correction
+gencal(vis=myvis,caltable='opacity.cal',caltype='opac',spw='0~15',parameter=myTau)
+
+# Baseline Correction
+gencal(vis=myvis,caltable='antpos.cal',caltype='antpos',antenna='')
+# No baseline corrections available / needed
+
+# Find Flux Model
+setjy(vis=myvis,listmodels=T)
+
+# Set Flux Model
+setjy(vis=myvis,field='3',spw='0~15',modimage='3C286_C.im')
+
+# Delay Calibration
+# Pick Reference Antenna
+# In retrospect, I think the antenna in the middle w/ least amount of RFI was
+# antenna 10, check phase to see if its a good calibrator reference.
+plotms(vis=myvis,xaxis='channel',yaxis='phase',correlation='RR',avgtime='1e8',spw='0',antenna='ea10',iteraxis='antenna')
+# Specify antenna 10, 14, 15 as reference antennas
+gaincal(vis=myvis,caltable='delays.cal',field='3',refant='ea10,ea14,ea15',gaintype='K',gaintable=['gaincurve.cal','opacity.cal'])
+
+# Bandpass Solution
+gaincal(vis=myvis,caltable='bpphase.gcal',field='3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='int',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal'])
+
+# Bandpass Calibration
+bandpass(vis=myvis,caltable='bandpass.bcal',field='3',refant='ea10,ea14,ea15',solint='inf',solnorm=T,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bpphase.gcal'])
+
+# Lots of solutions rejected.... plotcals
+applycal(vis=myvis,field='3',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'],gainfield=['','','3','3'],calwt=F)
+
+# Look at corrected data
+plotms(vis=myvis,xaxis='channel',yaxis='phase',ydatacolumn='corrected',field='3',correlation='RR',spw='0~7:6~58',antenna='ea10',avgtime='1e8',coloraxis='antenna2',iteraxis='spw')
+
+# Gain Calibration
+gaincal(vis=myvis,caltable='intphase.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='int',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'])
+
+gaincal(vis=myvis,caltable='scanphase.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'])
+
+# Amplitude Solution
+gaincal(vis=myvis,caltable='amp.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='ap',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal'])
+
+# Plotcal
+plotcal(caltable='amp.gcal',xaxis='time',yaxis='phase',iteration='antenna',subplot=331,plotrange=[-1,-1,-10,10])
+
+# Flux Scale
+fluxscale(vis=myvis,caltable='amp.gcal',fluxtable='flux.cal',reference='3',incremental=T)
+
+#'J1804+0101','fluxd': array([ 0.70711439,  0.70694474,  0.7070274 ,  0.71862253, 0.70251813, 0.70893195,  0.6978172 ,  0.68850341,  0.65954018,  0.66305576, 0.66774443,  0.67222202,  0.6603453 ,  0.66556599,  0.65595631, 0.6473155 ])
+
+# Apply Gain Calibrator
+applycal(vis=myvis,field='1',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal','amp.gcal','flux.cal'],gainfield=['','','3','3','1','1','1'],calwt=F)
+
+# Apply Bandpass Calibrator
+applycal(vis=myvis,field='3',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal','amp.gcal','flux.cal'],gainfield=['','','3','3','3','3','3'],calwt=F)
+
+# Apply Target
+applycal(vis=myvis,field='2',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal','amp.gcal','flux.cal'],gainfield=['','','3','3','1','1','1'],calwt=F)
+
+# Inspect
+plotms(vis=myvis,field='1',xaxis='time',yaxis='amp',ydatacolumn='corrected',correlation='RR,LL',avgchannel='64',spw='0~15:6~58',coloraxis='antenna1')
+# to be honest, it doesn't look great, but I just want to get a clean to see
+# how it looks. I will most likely come back and do more flagging. Also I am
+# running a raw set through the pipeline. I might re do all of these flagging
+# methods on that finished file once it goes through the pipeline.
+
+# Initial Split
+split(vis=myvis,field='1',outputvis='J1804')
+clearcal(vis='J1804')
+split(vis=myvis,field='2',outputvis='SERPS')
+clearcal(vis='SERPS')
+
+# Dirty Clean of Continuum (Remember There is no spectral line data)
+clean(vis='SERPS',imagename='SERPS.lower.dirty',imagermode='csclean',mode='mfs',spw='0~7:6~58',imsize=2048,cell=['1arcsec'],restoringbeam='5.9arcsec',weighting='uniform',niter=0)
+
+# Clean, avg rms ~ 15uJ, clean to threshold of .1mJy, snr ~ 8 sig
+# I tried the below command and I got a SKYModelSolve warning: clean not converging; for a thresh: .1mJy and natural weighting, so I used briggs
+clean(vis='SERPS',imagename='SERPS.lower.try1',imagermode='csclean',mode='mfs',spw='0~7:6~58',threshold='.1mJy',imsize=2048,cell=['.7arcsec'],weighting='briggs',robust=.5,niter=10000)
+
+# Clean lower again, get a bigger image b/c there is a source on edge of image
+clean(vis='SERPS',imagename='SERPS.lower.try1.bigger',imagermode='csclean',mode='mfs',spw='0~7:6~58',threshold='.1mJy',imsize=3000,cell=['.7arcsec'],weighting='briggs',robust=.5,niter=10000)
+
+# Clean Upper  (use natural, don't specify restoring beam)
+clean(vis='SERPS',imagename='SERPS.upper.try1',imagermode='csclean',mode='mfs',spw='8~15:6~58',threshold='.1mJy',imsize=2048,cell=['.7arcsec'],weighting='briggs',robust=.5,niter=10000)
+
+# Clean upper again, get a bigger image
+clean(vis='SERPS',imagename='SERPS.upper.try1.bigger',imagermode='csclean',mode='mfs',spw='8~15:6~58',threshold='.1mJy',imsize=3000,cell=['.7arcsec'],weighting='briggs',robust=.5,niter=10000)
+
+# Now make a mask over areas that we think are sources.
+clean(vis='SERPS',imagename='SERPS.lower.mask',imagermode='csclean',mode='mfs',spw='0~7:6~58',threshold='.1mJy',imsize=3000,cell=['.7arcsec'],weighting='briggs',robust=.5,interactive=T,niter=100)
+
+# For the upper, try excluding spw 12,13,14 b/c of the intense RFI
+clean(vis='SERPS',imagename='SERPS.upper.mask',imagermode='csclean',mode='mfs',spw='8~11:6~58,15:6~58',threshold='.1mJy',imsize=3000,cell=['.7arcsec'],weighting='briggs',robust=.5,mask='SERPS.lower.mask.mask',niter=10000)
+
+# 1.5 Sigma Clip
+immath(imagename=['SERPS.lower.try1.bigger.image'],mode='evalexpr',expr='iif( abs(IM0) >= (1.5*0.000018), IM0 , 0.0)',outfile='SERPS.lower.try1.bigger.1.5sig')
+immath(imagename=['SERPS.upper.try1.bigger.image'],mode='evalexpr',expr='iif( abs(IM0) >= (1.5*0.000008), IM0 , 0.0)',outfile='SERPS.upper.try1.bigger.1.5sig')
+
+# 2 Sigma Clip
+immath(imagename=['SERPS.lower.try1.bigger.image'],mode='evalexpr',expr='iif( abs(IM0) >= (2.*0.000018), IM0 , 0.0)',outfile='SERPS.lower.try1.bigger.2sig')
+immath(imagename=['SERPS.upper.try1.bigger.image'],mode='evalexpr',expr='iif( abs(IM0) >= (2.*0.000008), IM0 , 0.0)',outfile='SERPS.upper.try1.bigger.2sig')
+
+# 3 Sigma Clip
+immath(imagename=['SERPS.lower.try1.bigger.image'],mode='evalexpr',expr='iif( abs(IM0) >= (3.*0.000018), IM0 , 0.0)',outfile='SERPS.lower.try1.bigger.3sig')
+immath(imagename=['SERPS.upper.try1.bigger.image'],mode='evalexpr',expr='iif( abs(IM0) >= (3.*0.000008), IM0 , 0.0)',outfile='SERPS.upper.try1.bigger.3sig')
+
+# Spectral Index
+immath(imagename=['SERPS.lower.try1.bigger.image','SERPS.upper.try1.bigger.image'],outfile='SERPS.noclip.spix',mode='spix')
+immath(imagename=['SERPS.lower.try1.bigger.1.5sig','SERPS.upper.try1.bigger.1.5sig'],outfile='SERPS.1.5sig.spix',mode='spix')
+immath(imagename=['SERPS.lower.try1.bigger.2sig','SERPS.upper.try1.bigger.2sig'],outfile='SERPS.2sig.spix',mode='spix')
+immath(imagename=['SERPS.lower.try1.bigger.3sig','SERPS.upper.try1.bigger.3sig'],outfile='SERPS.3sig.spix',mode='spix')
+
+
+# So I got nothing from most of the spectral index maps, for the no clip I
+# just got a bunch of stuff that seemed like noise. I might try and do a
+# spectral map via different method than immath(). 
+
+# Overall, after consulting with everyone, we agree that:
+# 1.) More flagging needs to be done to get rid of diffraction pattern on
+# lower map and to get rid of streaks.
+# 2.) We should try and clean with a different phase center. Not exactly sure
+# why but I guess we will find out.
+
+# Switch Phase center
+# Lower
+clean(vis='SERPS',imagename='SERPS.lower.phc',imagermode='csclean',mode='mfs',spw='0~7:6~58',threshold='.1mJy',imsize=4000,phasecenter='J2000 18h30m24 -2d01m33',cell=['.7arcsec'],weighting='briggs',robust=.5,niter=10000)
+
+# Switching phase center didn't help
+
+
+#############################################
+######### New Mexico Data Reduction##########
+############# July 15-17, 2013 ##############
+#############################################
+
+myvis = 'TDEM0009.sb23987775.eb24043753.56475.31158744213.ms'
+
+# Flagging notes
+
+## FIELD 1
+plotms(vis=myvis,xaxis='channel',yaxis='amp',avgtime='1e8',spw='11',field='1',iteraxis='baseline',correlation='RR,LL',coloraxis='corr')
+
+# Field 1, spw 12, corr LL, chan 18-22, antenna: ea01&ea18;
+# Some hand flagging as well in spw 12
+
+# Field 1, spw 13, chan 24~32, antenna ea01&ea07;ea01&ea10;ea01&ea11;ea01&ea16;ea02&ea12;ea02&ea13;ea02&ea14;ea26&ea27;ea25&ea27;ea24&ea26;ea23&ea28;ea19&ea27;ea19&ea25;ea19&ea23;ea18&ea28;ea17&ea28;ea14&ea16;ea12&ea20;ea11&ea24;ea11&ea15;ea11&ea14;ea10&ea24;ea11&ea14;ea11&ea15;ea10&ea24;ea10&ea20;ea09&ea24;ea09&ea23;ea09&ea20;ea09&ea16;ea09&ea15;ea09&ea14;ea07&ea17;ea06&ea20;ea06&ea16;ea06&ea08;ea05&ea26;ea05&ea24;ea05&ea20;ea05&ea14;ea05&ea10;ea04&ea17;ea04&ea13;ea04&ea12;ea04&ea05;ea03&ea23;ea03&ea17;ea03&ea14;ea03&ea13;ea03&ea12;ea03&ea10;ea03&ea09;ea03&ea08;ea03&ea07;ea03&ea05;ea03&ea04;ea02&ea16
+
+# Field 1, spw 14, chan 5-10,16-25,33-42,52,  antenna ea01&ea02;ea01&ea03;ea01&ea04;ea01&ea12;ea02&ea04;ea02&ea05;ea02&ea06;ea02&ea08;ea02&ea09;ea02&ea10;ea03&ea05;ea03&ea06;ea03&ea10;ea03&ea11;ea03&ea13;ea03&ea14;ea03&ea16;ea03&ea17;ea03&ea18;ea03&ea24;ea03&ea28;ea04&ea06,ea25&ea27;ea23&ea25;ea20&ea27;ea20&ea25;ea17&ea18;ea16&ea27;ea15&ea16;ea12&ea24;ea12&ea16;ea11&ea26;ea09&ea15;ea05&ea10;ea05&ea12;ea05&ea25;ea06&ea26;ea06&ea10;ea07&ea28;ea07&ea20;ea07&ea17;ea07&ea13;ea07&ea12;ea07&ea04;ea08&ea11;ea08&ea13;ea08&ea14;ea08&ea15;ea08&ea20;ea08&ea24;ea08&ea26
+# Field 1, spw 14, chan all, antenna ea01&ea27
+
+# Make commands to manual flag
+flagdata(vis=myvis,mode='manual',field='1',spw='14',antenna='ea01&ea27')
+flagdata(vis=myvis,mode='manual',field='1',spw='12:18~22',antenna='ea01&ea08')
+flagdata(vis=myvis,mode='manual',field='1',spw='13:24~32',antenna='ea01&ea07;ea01&ea10;ea01&ea11;ea01&ea16;ea02&ea12;ea02&ea13;ea02&ea14;ea26&ea27;ea25&ea27;ea24&ea26;ea23&ea28;ea19&ea27;ea19&ea25;ea19&ea23;ea18&ea28;ea17&ea28;ea14&ea16;ea12&ea20;ea11&ea24;ea11&ea15;ea11&ea14;ea10&ea24;ea11&ea14;ea11&ea15;ea10&ea24;ea10&ea20;ea09&ea24;ea09&ea23;ea09&ea20;ea09&ea16;ea09&ea15;ea09&ea14;ea07&ea17;ea06&ea20;ea06&ea16;ea06&ea08;ea05&ea26;ea05&ea24;ea05&ea20;ea05&ea14;ea05&ea10;ea04&ea17;ea04&ea13;ea04&ea12;ea04&ea05;ea03&ea23;ea03&ea17;ea03&ea14;ea03&ea13;ea03&ea12;ea03&ea10;ea03&ea09;ea03&ea08;ea03&ea07;ea03&ea05;ea03&ea04;ea02&ea16')
+flagdata(vis=myvis,mode='manual',field='1',spw='14:5~10;16~25;33~42;52~52',antenna='ea01&ea02;ea01&ea03;ea01&ea04;ea01&ea12;ea02&ea04;ea02&ea05;ea02&ea06;ea02&ea08;ea02&ea09;ea02&ea10;ea03&ea05;ea03&ea06;ea03&ea10;ea03&ea11;ea03&ea13;ea03&ea14;ea03&ea16;ea03&ea17;ea03&ea18;ea03&ea24;ea03&ea28;ea04&ea06;ea25&ea27;ea23&ea25;ea20&ea27;ea20&ea25;ea17&ea18;ea16&ea27;ea15&ea16;ea12&ea24;ea12&ea16;ea11&ea26;ea09&ea15;ea05&ea10;ea05&ea12;ea05&ea25;ea06&ea26;ea06&ea10;ea07&ea28;ea07&ea20;ea07&ea17;ea07&ea13;ea07&ea12;ea07&ea04;ea08&ea11;ea08&ea13;ea08&ea14;ea08&ea15;ea08&ea20;ea08&ea24;ea08&ea26')
+
+
+## FIELD 2 (Serpens South)
+plotms(vis=myvis,xaxis='channel',yaxis='amp',avgtime='1e8',spw='0',field='2',iteraxis='baseline',correlation='RR,LL',coloraxis='corr')
+
+# Because the signal in Serpens south is weak and noisy, the RFI does not show a distinct pattern, especially in sp windows with little RFI.
+# Therefore, I will look only at spectral windows 12,13 and 14 and look for very distinct outliers to flag.
+# Another note of interest is the flagdata rflag keyword and the sub-keywords with it; it looks like a nice flagging algorithm if given specific parameters. 
+
+# A bit of hand flagging, but Jeff seems to think looking for RFI patterns in field 2 is just not worth it, too much general noise. 
+# I'm looking at the rflag documentation to see if I could implement it to do a simple sigma cut or something before I start calibrations.
+# I am being careful though, not to cut too much data using it.
+
+# Look at uv plots for field 2 (UV plots for field 1 look pretty decent, for a phase calibrator that is...)
+# Look for spiked baseline behavior that doesn't occur uniformly in all spectral windows (this is probably very bad RFI), locate the baseline and eliminate it (not the whole antenna, just that baseline).
+# You can also specify a  uvrange, to get spiked basline behavior for a certain uv range if it is very spiked and the rest of the baseline looks good!!!!!
+
+# What are the default units in plotms for UVDIST? Is it lambda or kilo-lambda or meters? Just uvdist is in meters,  uvdist_l is in lambda.. 
+
+plotms(vis=myvis,xaxis='uvdist',yaxis='amp',spw='0~7',avgchannel='64',correlation='RR,LL',iteraxis='spw',coloraxis='antenna1',field='2')
+
+### FIELD 2 ###
+
+# Shortest two baseline spikes are probably from the HII region off to the left of Serpens South.
+# It is seen in every spectral window. Keep in mind we are looking for point source like objects, so getting rid of a small baseline will not really affect our image of the proto-stars.
+# Another note: I am noticing that the spikes in uvdistance correlate only to either RR  or LL polarizations, not a mix of the two.
+
+# So... I created the list below by going after each individual spike in each spw for the uvdist vs. amplitdue plot.
+# But I am realizing that most of the spikes correspond more closely to certain antennas, not baselines. So, you could just pick an antenna and then do a flag over intervals of different uvdist, which would make the list more compact, and require fewer flagdata() calls. 
+# But again, I only noticed this halfway through spw12, so spw 13 and 14 will probably follow a different method of flagging.
+# Also, specify the Correlation! It will keep data of the other correlation that isn't affected!
+
+
+## Spw: 0
+# Baseline: ea11&ea17, uvrange: 1414~1417 (units of meters)
+# Baseline: ea09&ea17, uvrange: 1724~1725
+# Baseline: ea14&ea15, uvrange: 44.775~44.795
+# Baseline: ea13&ea14, uvrange: 36.05~36.25
+
+
+## Spw: 1
+# Baseline: ea02&ea05, uvrange: 510~525
+# Baseline: ea11&ea20, uvrange: 299~303 
+
+
+## Spw: 2 / 3
+# Baseline: ea15&ea16, uvrange: 384~390
+
+
+## Spw: 12
+# Baseline: ea04&ea15, uvrange: 101.8~102.2
+# Baseline: ea14&ea24, uvrange: 118~123 
+# Baseline: ea11&ea24, uvrange:	118~123
+# Baseline: ea02&ea16, uvrange: 139~140.5
+# Baseline: ea04&ea10, uvrange: 147.5~147.8
+# Baseline: ea20&ea24, uvrange: 195~197
+# Baseline: ea02&ea14, uvrange: 222~227
+# Baseline: ea04&ea15, uvrange: 249.6~250.2
+# Baseline: ea13&ea16, uvrange: 372.5~374
+# Baseline: ea06&ea16, uvrange: 372~373.5
+# Baseline: ea08&ea06, uvrange: 466~473
+# Baseline: ea12&ea14, uvrange: 480~483
+# Baseline: ea07&ea12, uvrange: 483~485
+# Baseline: ea11&ea16, uvrange: 488~494
+# Baseline: ea05&ea16, uvrange: 636~640
+# Baseline: ea06&ea14, uvrange: 717.5~730;732~734
+# Baseline: ea06&ea13, uvrange: 752.5~755
+# Baseline: ea06&ea24, uvrange: 775~777
+# Baseline: ea09&ea16, uvrange: 813~817
+# Baseline: ea05&ea06, uvrange: 922~935
+# Antenna: ea08, Corr: LL, uvrange: 1238~1243;1251~1256;1285~1288;1471~1475
+# Antenna: ea08, Corr: RR, uvrange: 1496~1503
+
+
+## Spw: 13
+# Antenna: ea14, Corr: RR, uvrange: 110~111.75;223.5~226;358~361
+# Antenna: ea14, Corr: LL, uvrange: 114~115;364~363
+# Antenna: ea15, Corr: RR, uvrange: 139~141
+# Antenna: ea05, Corr: LL, uvrange: 920~930;1369~1370;1628~1636
+
+
+## Spw: 14
+# Antenna: ea20, Corr: LL/RR, uvrange: 143~140;182~190;622~632;840~860;1360~1380
+# Antenna: ea11, Corr: LL, uvrange: 123~126;150~159;265~285;
+# Antenna: ea11, Corr: RR, uvrange: 365~380;1045~1057;1285~1290;1295~1305;1554~1562
+# Antenna: ea10, Corr: LL, uvrange: 102.3~102.45;102.55~103;147~147.3;147.4~147.6;147.55~147.8;236~244;334~340;470~480
+# Antenna: ea10, Corr: RR, uvrange: 147.9~148.1;236~244;344~340
+# Antenna: ea14, Corr: LL/RR, uvrange: 118~123;222~227;735~750;955~965;1215~1220;
+# Antenna: ea24, Corr: LL/RR, uvrange: 115~125;145~155;184~190;270~290;760~780;999~1007;1240~1255;1512.5~1530
+# Antenna: ea05, Corr: LL, uvrange: 140~165;180~195;270~290;350~450;600~640
+# Antenna: ea12, Corr: LL/RR, uvrange: 187.8~189;225~226;335~337;438~440
+# Antenna: ea02, Corr: RR, uvrange: 220~230;250~260;332.5~340;360~380;505~520;732~746;840~875;955~1000;1250~1270;
+# Antenna: ea04, Corr: LL, uvrange: 147.4~148.2;188~188.6;249.5~251;294~296;316~322;550~665
+# Antenna: ea06, Corr: LL/RR, uvrange: 368~372;459~471;510~515;615~632;1050~1070
+# Antenna: ea16, Corr: RR/LL, uvrange: 385~398;580~600;830~850
+# Antenna: ea01, Corr: LL/RR, uvrange: 500~530;580~600;730~750;930~980;995~1010;1240~1250
+
+## Make flagdata commands
+
+## Flagdata won't let me do the combined runs in lists, so I made .txt files to be compatible with mode='list'
+# Written with write_flag.py, parameters are kept in flag_spw0.txt
+
+#spw='0',mode='list',antenna=['ea11&ea17','ea09&ea17','ea14&ea15','ea13&ea14'],uvrange=['1414~1417meters','1724~1725meters','44.775~44.795meters','36.05~36.25meters']
+#spw='1',antenna=['ea02&ea05','ea11&ea20'],uvrange=['510~525','299~303']
+
+#spw='12',antenna=['ea04&ea15','ea14&ea24','ea11&ea24','ea02&ea16','ea04&ea10','ea20&ea24','ea02&ea14','ea04&ea15','ea13&ea16','ea06&ea16','ea08&ea06','ea12&ea14','ea07&ea12','ea11&ea16','ea05&ea16','ea06&ea14','ea06&ea13','ea06&ea24','ea09&ea16','ea05&ea06','ea08'],uvrange=['101.8~102.2','118~123','118~123','139~140.5','147.5~147.8','195~197','222~227','249.6~250.2','372.5~374','372~373.5','466~473','480~483','483~485','488~494','636~640','717.5~730;732~734','752.5~755','775~777','813~817','922~935','1238~1243;1251~1256;1285~1288;1471~1475;1496~1503']
+
+#spw='13',correlation=['RR','LL','RR','LL'],antenna=['ea14','ea14','ea15','ea05'],uvrange=['110~111.75;223.5~226;358~361','114~115;364~363','139~141','920~930;1369~1370;1628~1636']
+
+#spw='14',correlation=['','LL','RR','LL','RR','','','LL','','RR','LL','','',''],antenna=['ea20','ea11','ea11','ea10','ea10','ea14','ea24','ea05','ea12','ea02','ea04','ea06','ea16','ea01'],uvrange=['143~140;182~190;622~632;840~860;1360~1380','123~126;150~159;265~285','365~380;1045~1057;1285~1290;1295~1305;1554~1562','102.3~102.45;102.55~103;147~147.3;147.4~147.6;147.55~147.8;236~244;334~340;470~480','147.9~148.1;236~244;344~340','118~123;222~227;735~750;955~965;1215~1220','115~125;145~155;184~190;270~290;760~780;999~1007;1240~1255;1512.5~1530','140~165;180~195;270~290;350~450;600~640','187.8~189;225~226;335~337;438~440','220~230;250~260;332.5~340;360~380;505~520;732~746;840~875;955~1000;1250~1270','147.4~148.2;188~188.6;249.5~251;294~296;316~322;550~665','368~372;459~471;510~515;615~632;1050~1070','385~398;580~600;830~850','500~530;580~600;730~750;930~980;995~1010;1240~1250']
+
+flagdata(vis=myvis,field='2',spw='0~15',antenna='ea13&ea14;ea14&ea15')
+flagdata(vis=myvis,field='2',spw='2,3',antenna='ea15&ea16',uvrange='384~390')
+flagdata(vis=myvis,mode='list',inpfile='flags_spw0.txt')
+flagdata(vis=myvis,mode='list',inpfile='flags_spw12.txt')
+flagdata(vis=myvis,mode='list',inpfile='flags_spw13.txt')
+flagdata(vis=myvis,mode='list',inpfile='flags_spw14.txt')
+
+##### FINALLY DONE WITH FLAGGING (I THINK...) ######
+
+##################################################
+############# C A L I B R A T I O N S ############
+##################################################
+
+gencal(vis=myvis,caltable='gaincurve.cal',caltype='gceff')
+myTau = plotweather(vis=myvis,doPlot=T)
+gencal(vis=myvis,caltable='opacity.cal',caltype='opac',spw='0~15',parameter=myTau)
+gencal(vis=myvis,caltable='antpos.cal',caltype='antpos',antenna='')
+setjy(vis=myvis,listmodels=T)
+setjy(vis=myvis,field='3',spw='0~15',modimage='3C286_C.im')
+gaincal(vis=myvis,caltable='delays.cal',field='3',refant='ea10,ea14,ea15',gaintype='K',gaintable=['gaincurve.cal','opacity.cal'])
+gaincal(vis=myvis,caltable='bpphase.gcal',field='3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='int',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal'])
+bandpass(vis=myvis,caltable='bandpass.bcal',field='3',refant='ea10,ea14,ea15',solint='inf',solnorm=T,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bpphase.gcal'])
+applycal(vis=myvis,field='3',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'],gainfield=['','','3','3'],calwt=F)
+plotms(vis=myvis,xaxis='channel',yaxis='phase',ydatacolumn='corrected',field='3',correlation='RR',spw='0~7:6~58',antenna='ea10',avgtime='1e8',coloraxis='antenna2',iteraxis='spw')
+gaincal(vis=myvis,caltable='intphase.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='int',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'])
+gaincal(vis=myvis,caltable='scanphase.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'])
+gaincal(vis=myvis,caltable='scanphase.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal'])
+gaincal(vis=myvis,caltable='amp.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='ap',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal'])
+plotcal(caltable='amp.gcal',xaxis='time',yaxis='phase',iteration='antenna',subplot=331,plotrange=[-1,-1,-10,10])
+fluxscale(vis=myvis,caltable='amp.gcal',fluxtable='flux.cal',reference='3',incremental=T)
+applycal(vis=myvis,field='1',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal','amp.gcal','flux.cal'],gainfield=['','','3','3','1','1','1'],calwt=F)
+applycal(vis=myvis,field='3',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal','amp.gcal','flux.cal'],gainfield=['','','3','3','3','3','3'],calwt=F)
+applycal(vis=myvis,field='2',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass.bcal','intphase.gcal','amp.gcal','flux.cal'],gainfield=['','','3','3','1','1','1'],calwt=F)
+
+plotms(vis=myvis,field='1',xaxis='time',yaxis='amp',ydatacolumn='corrected',correlation='RR,LL',avgchannel='64',spw='0~15:6~58',coloraxis='antenna1')
+
+# You can see some quack issues with field 1 (beginning of scan issues). Going to flag that and perhaps try and get some of the noise in that and other fields
+
+# Get rid of antenna ea02 in field 1 and 2 for spw 0~15
+# Get rid of antenna ea11&ea20 in field 2 for spw 1 and timerange='7:55:00~8:03:20'
+# Get rid of antenna ea20&ea24 in field 2 for spw 14 and timerange='07:55:20~08:20:00'
+
+flagdata(vis=myvis,field='1',spw='0~15',timerange='07:42:16~07:42:17,07:54:46~07:54:47,08:07:10~08:07:11,08:19:37~08:19:38')
+flagdata(vis=myvis,field='1,2',spw='0~15',antenna='ea02')
+flagdata(vis=myvis,field='2',spw='1',antenna='ea11&ea20',timerange='07:55:00~08:03:20')
+flagdata(vis=myvis,field='2',spw='14',antenna='ea20&ea24',timerange='07:55:20~08:20:00')
+
+### Run Calibrations again with _redo ###
+
+gaincal(vis=myvis,caltable='bpphase_redo.gcal',field='3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='int',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal'])
+bandpass(vis=myvis,caltable='bandpass_redo.bcal',field='3',refant='ea10,ea14,ea15',solint='inf',solnorm=T,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bpphase_redo.gcal'])
+gaincal(vis=myvis,caltable='intphase_redo.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='int',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass_redo.bcal'])
+gaincal(vis=myvis,caltable='scanphase_redo.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='p',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass_redo.bcal'])
+gaincal(vis=myvis,caltable='amp_redo.gcal',field='1,3',spw='0~15:6~58',refant='ea10,ea14,ea15',calmode='ap',solint='inf',minsnr=2.0,gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass_redo.bcal','intphase_redo.gcal'])
+fluxscale(vis=myvis,caltable='amp_redo.gcal',fluxtable='flux_redo.cal',reference='3',incremental=T)
+
+applycal(vis=myvis,field='1',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass_redo.bcal','intphase_redo.gcal','amp_redo.gcal','flux_redo.cal'],gainfield=['','','3','3','1','1','1'],calwt=F)
+applycal(vis=myvis,field='3',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass_redo.bcal','intphase_redo.gcal','amp_redo.gcal','flux_redo.cal'],gainfield=['','','3','3','3','3','3'],calwt=F)
+applycal(vis=myvis,field='2',gaintable=['gaincurve.cal','opacity.cal','delays.cal','bandpass_redo.bcal','intphase_redo.gcal','amp_redo.gcal','flux_redo.cal'],gainfield=['','','3','3','1','1','1'],calwt=F)
+
+
+
+#######################################################
+#######################################################
+############ I M A G I N G ############################
+#######################################################
+#######################################################
+
+
+
+split(vis=myvis,field='1',outputvis='J1804_2')
+clearcal(vis='J1804_2')
+split(vis=myvis,field='2',outputvis='SERPS_2')
+clearcal(vis='SERPS_2')
+
+### Do a few different kinds of cleans ###
+
+# Primary beam for lower: 10''
+# Primary beam for upper: 6''
+
+# Dirty Clean of Continuum (Remember There is no spectral line data)
+clean(vis='SERPS_2',imagename='SERPS_2.lower.dirty',imagermode='csclean',mode='mfs',spw='0~7:6~58',imsize=2048,cell=['.7arcsec'],niter=0)
+clean(vis='SERPS_2',imagename='SERPS_2.upper.dirty',imagermode='csclean',mode='mfs',spw='8~15:6~58',imsize=2048,cell=['.7arcsec'],niter=0)
+
+# Lower average noise level of 30uJansky, or 3e-5 Janksy, or .03mJanksy 
+# Upper average noise level of 13uJansky 
+
+### Try doing different cleaning methods and thresholds, and perhaps doing a mask around the primary beam.
+
+#### Clean with mask around primary beam and briggs weighting #####
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.briggs',imagermode='csclean',mode='mfs',threshold='.1mJy',spw='0~7:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],interactive=T,niter=100)
+# Restoring beam is 4.8 x 3.8 arcsec
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.briggs',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.05mJy',spw='8~15:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],niter=10000)
+# Restoring beam is 3.1 x 2.5 arcsec
+
+#### Clean with mask around primary beam and uniform weighting ####
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.uniform',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.1mJy',spw='0~7:6~58',weighting='uniform',imsize=2048,cell=['.7arcsec'],niter=10000)
+# Restoring beam is 3.8 x 3.2 arcsec
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.uniform',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.05mJy',spw='8~15:6~58',weighting='uniform',imsize=2048,cell=['.7arcsec'],niter=10000)
+# Restoring beam is 2.6 x 2.2 arcsec
+
+#### Clean with mask around primary beam and natural weighting ####
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.natural',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.1mJy',spw='0~7:6~58',weighting='natural',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.natural',imagermode='csclean',mask='SERPS_2.upper.mask.briggs.mask',mode='mfs',threshold='.05mJy',spw='8~15:6~58',weighting='natural',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+
+#### 3 Sigma Clip, briggs
+immath(imagename=['SERPS_2.lower.mask.briggs.image'],mode='evalexpr',expr='iif( abs(IM0) >= (3.0*0.000030), IM0 , 0.0)',outfile='SERPS_2.lower.mask.briggs.3sig')
+immath(imagename=['SERPS_2.upper.mask.briggs.image'],mode='evalexpr',expr='iif( abs(IM0) >= (3.0*0.000013), IM0 , 0.0)',outfile='SERPS_2.upper.mask.briggs.3sig')
+
+#### 4 Sigma Clip, briggs
+immath(imagename=['SERPS_2.lower.mask.briggs.image'],mode='evalexpr',expr='iif( abs(IM0) >= (4.0*0.000030), IM0 , 0.0)',outfile='SERPS_2.lower.mask.briggs.4sig')
+immath(imagename=['SERPS_2.upper.mask.briggs.image'],mode='evalexpr',expr='iif( abs(IM0) >= (4.0*0.000013), IM0 , 0.0)',outfile='SERPS_2.upper.mask.briggs.4sig')
+
+
+## Export fits files ##
+exportfits(imagename='SERPS_2.lower.mask.briggs.image',fitsimage='SERPS_2.lower.mask.briggs.image.fits')
+exportfits(imagename='SERPS_2.upper.mask.briggs.image',fitsimage='SERPS_2.upper.mask.briggs.image.fits')
+exportfits(imagename='SERPS_2.upper.mask.uniform.image',fitsimage='SERPS_2.upper.mask.uniform.image.fits')
+exportfits(imagename='SERPS_2.lower.mask.uniform.image',fitsimage='SERPS_2.lower.mask.uniform.image.fits')
+exportfits(imagename='SERPS_2.upper.mask.natural.image',fitsimage='SERPS_2.upper.mask.natural.image.fits')
+exportfits(imagename='SERPS_2.lower.mask.natural.image',fitsimage='SERPS_2.lower.mask.natural.image.fits')
+
+exportfits(imagename='SERPS_2.lower.mask.briggs.3sig',fitsimage='SERPS_2.lower.mask.briggs.3sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.briggs.3sig',fitsimage='SERPS_2.upper.mask.briggs.3sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.briggs.4sig',fitsimage='SERPS_2.lower.mask.briggs.4sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.briggs.4sig',fitsimage='SERPS_2.upper.mask.briggs.4sig.fits')
+
+
+### DEEPER CLEAN ###  
+
+## Make mask around only proto-star sources...
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.deeper.briggs',imagermode='csclean',mode='mfs',threshold='.015mJy',spw='0~7:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],interactive=T,niter=0)
+
+# Interactive Clean to make mask around proto-stars     
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.deeper.briggs',imagermode='csclean',mask='SERPS_2.lower.mask.deeper.briggs.mask',mode='mfs',threshold='.015mJy',spw='8~15:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],niter=10000)
+
+# Mask excluding extra galactic sources didn't help.
+
+## Use normal mask from before.....
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.deeper.natural',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',gain=0.3,threshold='.015mJy',spw='0~7:6~58',weighting='natural',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.natural',imagermode='csclean',mask='SERPS_2.upper.mask.briggs.mask',mode='mfs',gain=0.3,threshold='.015mJy',spw='8~15:6~58',weighting='natural',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.uniform',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.015mJy',spw='0~7:6~58',weighting='uniform',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.uniform',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.015mJy',spw='8~15:6~58',weighting='uniform',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+### NONE OF THESE CLEANS CONVERGED, EVEN WITH GAIN = 0.3, try higher threshold... ###
+
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.deeper.briggs',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.03mJy',spw='0~7:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],niter=10000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.deeper.briggs',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.03mJy',spw='8~15:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],niter=10000)
+# Above clean didn't converge!!
+
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.deeper.uniform',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.03mJy',spw='0~7:6~58',weighting='uniform',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.deeper.uniform',imagermode='csclean',mask='SERPS_2.lower.mask.briggs.mask',mode='mfs',threshold='.03mJy',spw='8~15:6~58',weighting='uniform',imsize=2048,cell=['.7arcsec'],niter=10000)
+
+### 2 Sigma Clipping of deeper images
+immath(imagename=['SERPS_2.lower.mask.deeper.uniform.image'],mode='evalexpr',expr='iif( abs(IM0) >= (2.0*0.000030), IM0 , 0.0)',outfile='SERPS_2.lower.mask.deeper.uniform.2sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.uniform.image'],mode='evalexpr',expr='iif( abs(IM0) >= (2.0*0.000013), IM0 , 0.0)',outfile='SERPS_2.upper.mask.deeper.uniform.2sig')
+
+# Export fits
+exportfits(imagename='SERPS_2.lower.mask.deeper.uniform.image',fitsimage='SERPS_2.lower.mask.deeper.uniform.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.uniform.image',fitsimage='SERPS_2.upper.mask.deeper.uniform.fits')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.uniform.2sig',fitsimage='SERPS_2.lower.mask.deeper.uniform.2sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.uniform.2sig',fitsimage='SERPS_2.upper.mask.deeper.uniform.2sig.fits')
+
+
+### We want natural weighting!!!, try doing a mask around each source ###
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.deeper.natural',imagermode='csclean',mode='mfs',threshold='.03mJy',spw='0~7:6~58',weighting='natural',imsize=2048,cell=['.7arcsec'],interactive=T,niter=10000)
+# Avg noise rms of 25.1uJansky
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.deeper.natural',imagermode='csclean',mask='SERPS_2.lower.mask.deeper.natural.mask',mode='mfs',threshold='.03mJy',spw='8~15:6~58',weighting='natural',imsize=2048,cell=['.7arcsec'],niter=10000)
+# Avg noise rms of 11.4uJansky
+
+# The above plots converged! perhaps use the same mask, but go deeper? Also try briggs??
+clean(vis='SERPS_2',imagename='SERPS_2.lower.mask.deeper2.briggs',imagermode='csclean',mask='SERPS_2.lower.mask.deeper.natural.mask',gain=.3,mode='mfs',threshold='.02mJy',spw='0~7:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],niter=10000)
+# Avg noise rms of 18.0uJansky
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.mask.deeper2.briggs',imagermode='csclean',mask='SERPS_2.lower.mask.deeper.natural.mask',gain=.3,mode='mfs',threshold='.02mJy',spw='8~15:6~58',weighting='briggs',robust=0.5,imsize=2048,cell=['.7arcsec'],niter=10000)
+# Avg noise rms of 7.6uJansky
+
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.image',fitsimage='SERPS_2.lower.mask.deeper.natural.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.image',fitsimage='SERPS_2.upper.mask.deeper.natural.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.image',fitsimage='SERPS_2.lower.mask.deeper2.briggs.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.image',fitsimage='SERPS_2.upper.mask.deeper2.briggs.fits')
+
+#### 2 Sigma Clipping
+immath(imagename=['SERPS_2.lower.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.0*0.0000251),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper.natural.2sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.0*0.0000114),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper.natural.2sig')
+immath(imagename=['SERPS_2.lower.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.0*0.0000180),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper2.briggs.2sig')
+immath(imagename=['SERPS_2.upper.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.0*0.0000076),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper2.briggs.2sig')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.2sig',fitsimage='SERPS_2.lower.mask.deeper.natural.2sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.2sig',fitsimage='SERPS_2.upper.mask.deeper.natural.2sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.2sig',fitsimage='SERPS_2.lower.mask.deeper2.briggs.2sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.2sig',fitsimage='SERPS_2.upper.mask.deeper2.briggs.2sig.fits')
+
+#### 2.5 Sigma Clipping
+immath(imagename=['SERPS_2.lower.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.5*0.0000251),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper.natural.2.5sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.5*0.0000114),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper.natural.2.5sig')
+immath(imagename=['SERPS_2.lower.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.5*0.0000180),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper2.briggs.2.5sig')
+immath(imagename=['SERPS_2.upper.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(2.5*0.0000076),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper2.briggs.2.5sig')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.2.5sig',fitsimage='SERPS_2.lower.mask.deeper.natural.2.5sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.2.5sig',fitsimage='SERPS_2.upper.mask.deeper.natural.2.5sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.2.5sig',fitsimage='SERPS_2.lower.mask.deeper2.briggs.2.5sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.2.5sig',fitsimage='SERPS_2.upper.mask.deeper2.briggs.2.5sig.fits')
+
+#### 3 Sigma Clipping
+immath(imagename=['SERPS_2.lower.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(3.0*0.0000251),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper.natural.3sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(3.0*0.0000114),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper.natural.3sig')
+immath(imagename=['SERPS_2.lower.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(3.0*0.0000180),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper2.briggs.3sig')
+immath(imagename=['SERPS_2.upper.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(3.0*0.0000076),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper2.briggs.3sig')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.3sig',fitsimage='SERPS_2.lower.mask.deeper.natural.3sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.3sig',fitsimage='SERPS_2.upper.mask.deeper.natural.3sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.3sig',fitsimage='SERPS_2.lower.mask.deeper2.briggs.3sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.3sig',fitsimage='SERPS_2.upper.mask.deeper2.briggs.3sig.fits')
+
+
+#### 4 Sigma Clipping
+immath(imagename=['SERPS_2.lower.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.0*0.0000251),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper.natural.4sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.0*0.0000114),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper.natural.4sig')
+immath(imagename=['SERPS_2.lower.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.0*0.0000180),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper2.briggs.4sig')
+immath(imagename=['SERPS_2.upper.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.0*0.0000076),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper2.briggs.4sig')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.4sig',fitsimage='SERPS_2.lower.mask.deeper.natural.4sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.4sig',fitsimage='SERPS_2.upper.mask.deeper.natural.4sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.4sig',fitsimage='SERPS_2.lower.mask.deeper2.briggs.4sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.4sig',fitsimage='SERPS_2.upper.mask.deeper2.briggs.4sig.fits')
+
+
+#### 4.5 Sigma Clipping
+immath(imagename=['SERPS_2.lower.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.5*0.0000251),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper.natural.4.5sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.5*0.0000114),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper.natural.4.5sig')
+immath(imagename=['SERPS_2.lower.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.5*0.0000180),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper2.briggs.4.5sig')
+immath(imagename=['SERPS_2.upper.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(4.5*0.0000076),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper2.briggs.4.5sig')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.4.5sig',fitsimage='SERPS_2.lower.mask.deeper.natural.4.5sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.4.5sig',fitsimage='SERPS_2.upper.mask.deeper.natural.4.5sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.4.5sig',fitsimage='SERPS_2.lower.mask.deeper2.briggs.4.5sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.4.5sig',fitsimage='SERPS_2.upper.mask.deeper2.briggs.4.5sig.fits')
+
+
+#### 5 Sigma Clipping
+immath(imagename=['SERPS_2.lower.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(5.0*0.0000251),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper.natural.5sig')
+immath(imagename=['SERPS_2.upper.mask.deeper.natural.image'],mode='evalexpr',expr='iif(abs(IM0)>=(5.0*0.0000114),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper.natural.5sig')
+immath(imagename=['SERPS_2.lower.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(5.0*0.0000180),IM0,0.0)',outfile='SERPS_2.lower.mask.deeper2.briggs.5sig')
+immath(imagename=['SERPS_2.upper.mask.deeper2.briggs.image'],mode='evalexpr',expr='iif(abs(IM0)>=(5.0*0.0000076),IM0,0.0)',outfile='SERPS_2.upper.mask.deeper2.briggs.5sig')
+
+exportfits(imagename='SERPS_2.lower.mask.deeper.natural.5sig',fitsimage='SERPS_2.lower.mask.deeper.natural.5sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper.natural.5sig',fitsimage='SERPS_2.upper.mask.deeper.natural.5sig.fits')
+exportfits(imagename='SERPS_2.lower.mask.deeper2.briggs.5sig',fitsimage='SERPS_2.lower.mask.deeper2.briggs.5sig.fits')
+exportfits(imagename='SERPS_2.upper.mask.deeper2.briggs.5sig',fitsimage='SERPS_2.upper.mask.deeper2.briggs.5sig.fits')
+
+# About the analysis: I'm using a script to do the imfit techniques.
+# We need gaussian estimates not only for our own radio maps, but from the
+# spitzer fits images to try and estimate a luminosity.
+
+# Do Gaussian fits with stat_calc.py
+
+# Radio maps need different regions than Spitzer maps, so do Radio maps first
+
+execfile('stat_calc.py')
+filename='SerpStrongSources3.crtf'
+radio_regions = get_regions(filename,out=True)
+radio_images = ['SERPS_2.lower.mask.deeper2.briggs.fits','SERPS_2.upper.mask.deeper2.briggs.fits']
+r_data,r_flux,r_flux_err,r_freq,r_lam,r_converged = fit_gauss(radio_images,radio_regions,out=True)
+filename='SerpStrongSources3_azalt.crtf'
+micron_regions = get_regions(filename,out=True)
+micron_images = ['../SpitzerFits/SPITZER_3.6_micron.fits','../SpitzerFits/SPITZER_4.5_micron.fits','../SpitzerFits/SPITZER_8.0_micron.fits','../SpitzerFits/SPITZER_24_micron.fits']
+m_data,m_flux,m_flux_err,m_freq,m_lam,m_converged = fit_gauss(micron_images,micron_regions,out=True,w=[3.6e-6,4.5e-6,8.0e-6,2.4e-5])
+
+r_spix = calc_vspix(r_flux[1],r_flux[0],r_freq[1],r_freq[0],out=True)	# 4.1cm - 6.3cm
+m1_spix = calc_vspix(m_flux[1],m_flux[0],m_freq[1],m_freq[0],out=True)	# 3.6um - 4.5um
+m2_spix = calc_vspix(m_flux[2],m_flux[1],m_freq[2],m_freq[1],out=True)	# 4.5um - 8.0um
+m3_spix = calc_vspix(m_flux[3],m_flux[2],m_freq[3],m_freq[2],out=True)	# 8.0um - 24um
+
+# I went through and looked at which radio regions match up to micron sources:
+# Sources (1st ordered!): 3,4,5,6,7,13,15,16,18,19
+match = array([2,3,4,5,6,12,14,15,17,18])
+
+# Now which of those sources have fluxes in all 6 bands?
+# Sources (1st ordered!): 3,4,13,18,19
+
+# Make a plot of the spectral energy distribution!
+flux_3 = list(r_flux.T[2])+list(m_flux.T[2])
+flux_4 = list(r_flux.T[3])+list(m_flux.T[3])
+flux_13 = list(r_flux.T[12])+list(m_flux.T[12])
+flux_18 = list(r_flux.T[17])+list(m_flux.T[17])
+flux_19 = list(r_flux.T[18])+list(m_flux.T[18])
+
+freq_3 = list(r_freq.T[2])+list(m_freq.T[2])
+freq_4 = list(r_freq.T[3])+list(m_freq.T[3])
+freq_13 = list(r_freq.T[12])+list(m_freq.T[12])
+freq_18 = list(r_freq.T[17])+list(m_freq.T[17])
+freq_19 = list(r_freq.T[18])+list(m_freq.T[18])
+
+# This is great and all, but Jeff mentioned that b/c these things are point
+# source like, we can just take the peak flux (Jy/beam) and use those as our
+# fluxes for spectral index. I made an .ods spreadsheet with the ra and dec
+# of each 1-d gaussian (fitted within the CASA viewer) and with peak fluxes
+# and spectral indicies. 
+
+# After getting peak fluxes from CASA viewer peak flux (Jy/beam) and using
+# spectral index equation by hand, I put it into a spreadsheet, labeled
+# Serpens_South_Centimeter_Data.ods.
+# I also made images ending with .jpg or .png of some of the regions. All are
+# in /lustre/naasc/nkern/serp_south_nm/
+
+# Lastly, I am using the Shirley flux_cm vs. Lbol correlation to use our cm
+# fluxes to 'estimate' very loosely what an Lbol might be with errors.
+# This is done by hand and appended to the spreadsheet. Because we have 6.3
+# and 4.1 cm data, not 3.6 or 6.0, I took the spectral index extrapolated out
+# to those wavelengths to get an approximate flux. 
+
+# I only did the 3.6 cm relation.
+# Using the peak fluxes from the table I constructed the slopes and y
+# intercepts for each euler method 'line' and then extrapolated out to 8.3 GHz
+
+lower_flux=[]
+for j in range(21):
+      lower_flux.append(raw_input(""))
+
+lower_flux.pop(6)
+
+upper_flux=[]  
+for j in range(21):
+     upper_flux.append(raw_input(""))
+
+upper_flux.pop(6)
+
+lower_flux=array(lower_flux,float)
+upper_flux=array(upper_flux,float)
+
+# Where after asking for raw_input, I just pasted the flux column from the
+# spreadsheet and it read in the data
+
+spec_slope=(upper_flux-lower_flux)/(r_freq[1]-r_freq[0])
+yint = upper_flux-spec_slope*r_freq[1]
+extrap_flux = spec_slope*8.33e9+yint
+
+# I used a distance of 260 and 415 pc to do the log(Sv*D^2) calculation
+
+D1 = .260        
+D2 = .415
+extrap_cmlum1 = log(extrap_flux*D1**2/.001)
+
+extrap_cmlum2 = log(extrap_flux*D2**2/.001)
+
+# Just copied figures quoted from Shirley et. al 2007 equation (2)
+
+bol_slope = .71		#From Shirley 2007 eq(2)
+bol_int = -2.24		#From Shirley 2007 eq(2)
+
+log_Lbol1 = (extrap_cmlum1-bol_int)/bol_slope
+est_Lbol1 = exp(log_Lbol1)
+
+log_Lbol2 = (extrap_cmlum2-bol_int)/bol_slope
+est_Lbol2 = exp(log_Lbol2)
+
+# errors were created by using the error Shirley quotes on the y intercept and
+# just taking the range in L bol values created by range in L bol created by
+# that scatter. Ex. y int error = +/- 0.03, Lbol_pos_err = (y-(b-.03))/m,
+# Lbol_neg_err = (y-(b + .03))/m
+
+log_Lbol_pos_err1 = (extrap_cmlum1-(bol_int-.03))/bol_slope
+log_Lbol_neg_err1 = (extrap_cmlum1-(bol_int+.03))/bol_slope 
+
+log_Lbol_pos_err2 = (extrap_cmlum2-(bol_int-.03))/bol_slope
+log_Lbol_neg_err2 = (extrap_cmlum2-(bol_int+.03))/bol_slope
+
+
+est_Lbol_pos_err2 = exp(log_Lbol_pos_err2-log_Lbol2) 
+est_Lbol_neg_err2 = exp(log_Lbol_neg_err2-log_Lbol2)
+
+est_Lbol_pos_err2 = exp(log_Lbol_pos_err2-log_Lbol2)
+est_Lbol_neg_err2 = exp(log_Lbol_neg_err2-log_Lbol2)
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+#log# Automatic Logger file. *** THIS MUST BE THE FIRST LINE ***
+#log# DO NOT CHANGE THIS LINE OR THE TWO BELOW -* coding: US-ASCII *-
+#log# opts = Struct({'__allownew': True,
+ 'autocall': 2,
+ 'banner': 0,
+ 'colors': 'LightBG',
+ 'ipythondir': '/Users/nkern/.casa/ipython',
+ 'logfile': 'ipython-20140507-070309.log',
+ 'messages': 0,
+ 'prompt_in1': 'CASA <\\#>: '})
+#log# args = []
+#log# It is safe to make manual edits below here.
+#log#-----------------------------------------------------------------------
+execfile("/Applications/CASA.app/Contents/Resources/python/assignmentFilter.py")
+execfile('SERPS_Gauss_Fit.py')
+help(imfit)
+_ip.system("ls -F ")
+_ip.system("less Fit_Results.txt")
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+sources[10]
+sources[8]
+sources[0]
+sources[8]
+imagelist[8]
+regions[8]
+regions[9]
+regions[5]
+_ip.system("less Fit_Results.txt")
+_ip.system("less Fit_Results.txt")
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+regions
+sources
+imagelist
+len(sources)
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+execfile('SERPS_Gauss_Fit.py')
+sources[33]
+sources[34]
+execfile('SERPS_Gauss_Fit.py')
