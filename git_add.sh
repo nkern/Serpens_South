@@ -55,6 +55,7 @@ git add Gauss_Fitting/sigfig.py
 git add Gauss_Fitting/Fit_Files/*.txt
 
 git add Paper/paper.tex
+git add Paper/paper.pdf
 git add Paper/references.bib
 git add Paper/apj.bst
 git add Paper/figures/SerpSouth_FOV-eps-converted-to.pdf
