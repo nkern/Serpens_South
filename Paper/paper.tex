@@ -1,0 +1,283 @@
+%% Document Class
+\documentclass[apj]{emulateapj}
+
+%% Document Preamble
+% Packages
+\usepackage{graphicx}	% Graphics
+\usepackage{natbib}		% Bibliography
+\usepackage{amsmath}	% Equations
+\usepackage[backref,breaklinks,colorlinks,citecolor=blue]{hyperref}		% References
+\renewcommand*{\backref}[1]{[#1]}	
+\usepackage[all]{hypcap}	% Workaround for hyperref
+\usepackage{cleveref}		% Better than autoref
+\usepackage{indentfirst}	
+\usepackage{fancyhdr}	% Header and Footer
+\usepackage{amssymb}	% More symbols
+%\usepackage{stfloats}		% For Figures on bottom of page
+
+
+%% Begin Document
+\begin{document}
+%\submitted{Submitted: \today}
+\title{Radio Properties of Protostars in the Serpens South Protocluster}
+\author{Authors}
+
+%% Abstract %%
+\begin{abstract}
+
+We present 4.14 and 6.31 centimeter continuum observations of the Serpens South protocluster with the Karl G. Jansky Very Large Array in its C configuration. Our focus is a 4' x 4' area around the central filament ($\alpha=18^{\text{h}}30^{\text{m}}05.00^{\text{s}}, \delta=-02^{\circ}02^{'}30.0^{''}$, J2000.0). We detect roughly 18 sources, 10 of which are probably protostellar in nature. We characterize the radio emission and put it in context with 2MASS, Spitzer and Herschel data from the region. We find new embedded protostars that have yet to be resolved at shorter wavelengths, and in some cases confirm compact centimeter emission in previously labeled starless cores. We compare our radio sources to the known centimeter vs. bolometric luminosity relationship. With our relatively short integration time and weak detection of many more possible radio sources, we speculate that longer, higher resolution radio measurements of the region would yield confident detections of many more radio protostars. 
+
+\end{abstract}
+
+\maketitle
+\newpage
+
+%% Begin Paper %%
+
+%($\alpha=18^{\text{h}}30^{\text{m}}05.00^{\text{s}}, \delta=-02^{\circ}02^{'}30.0^{''}$, J2000.0)
+%% Introduction
+\section{Introduction}
+\label{sec:introduction}
+
+	Serpens South is a young stellar cluster that is apart of the broader Aquila Rift extinction feature. It lies south of the Serpens Main cloud, and is just West of the bright W40 HII region. Discovered in 2008 by \citet{Gutermuth08} as a part of the Spitzer Space Telescope's Gould Belt Legacy survey, Serpens South has been found to harbor an unusually high ratio of Class I to Class II protostars, suggesting it is in a very early phase of cluster formation. Since its discovery, it has become the center of a wide range of scholarship. This has consisted of near, mid and far infrared mappings with Spitzer and Herschel tracing heated dust around protostars \citep{Gutermuth08, Bontemps10}, millimeter mappings with MAMBO on the IRAM 30-meter tracing cold dust \citep{Maury11}, near infrared polarimetry revealing the importance of global magnetic fields in the cluster's formation history \citep{Sugitani11}, molecular outflows studies \citep{Nakamura11, Teixeira12}, and a wealth of spectral line surveys probing filamentary infall \citep{Kirk13, Friesen13, Tanaka13, FernandezLopez14,Nakamura14a}. X-ray studies of Serpens South have yet to be published. To-date, only one radio study of Serpens South has been conducted, which used the VLA in its A configuration in 2011 (Ortiz-Leon et al. in prep), meaning that there has yet to be a radio study of Serpens South since the VLA upgraded its facilities 2012. Beyond this study, further radio studies of Serpens South will be important in understanding the star formation process across the electromagnetic spectrum. 
+	 
+	 
+	The VLA has been a proven tool in searching for and detecting radio emission around protostars since the early 1990s \citep[e.g.][]{Curiel89, Anglada98, Reipurth99, Eiroa05, Shirley07, Rodriguez10}. Early radio studies of protostars found an excess of radio emission in comparison to the Lyman-Alpha continuum drop off expected from a normal ZAMS star. Theory and observations have best explained protostellar radio emission as having two components: thermal and non-thermal. Thermal radio emission is generally assumed to be free-free emission created from an HII region. High mass protostars have a high enough internal luminosity to support a compact or ultra-compact HII region, however, low mass protostars do not. HII regions surrounding low-mass protostars are created from thermal jets that shock the material surrounding the protostar. Non-thermal emission around low and high mass protostars is still not clearly understood; it is thought to come from gyrosynchrotron emission or possibly from jets that produce synchrotron emission in their tails. 
+	
+%	  Centimeter continuum emission is largely associated with free-free emission created from ionized regions within the dense envelope surrounding the star \citep{Anglada95}. High-mass protostars are strong enough to create this region from stellar winds, while low-mass protostars likely create these regions from compact, collimated thermal outflows, however photoionization and stellar winds from low-mass protostars may also help sustain HII regions around the protostar \citep{Scaife12}. Because radio observations probe deep into the stellar envelope, centimeter observations of this nature have been a proven tool in the detection of outflow sources \citep{Rodriguez97} and in the exploration of the physical dynamics of the youngest protostellar objects \citep{Anglada98,Shirley07}. In this respect, centimeter observations of protostars are a crucial asset in our understanding of regions of active star formation.
+
+
+
+\subsection{Distance to Serpens South}
+\label{subsec:distance to serpens south}
+
+The distances to Serpens South, W40 and the Serpens Main cloud are not agreed upon in the literature. When Serpens South was discovered in 2008, a distance of 260 pc $\pm$ 37 pc was adopted based on evidence that its LSR velocities matched LSR velocities of the Serpens Main cloud, which was then thought to be a part of the larger Aquila Rift extinction feature whose distance was estimated at 260 pc by \citet{Straizys03}. However, VLBA parallax measurements done in 2010 have established the distance to the Serpens Main cloud as 429 $\pm$ 2 pc \citep{Dzib11}, meaning that Serpens Main is distinct from the the Aquila Rift if the latter is to have a distance of 260 pc. 
+
+\citet{Gutermuth08} also argued that Serpens South lies in front of W40, claiming that it is seen in absorption against emission from W40. Therefore, we know Serpens Main is at 429 pc, and we know that Serpens South lies in front of W40. What we don't know are the absolute distances to both W40 or Serpens South. If we are to follow the initial LSR velocity analysis by \citet{Gutermuth08}, we would equate Serpens South to Serpens Main and say Serpens South lies at approximately 429 pc, while W40 lies further away. Indeed, recent radio and x-ray studies adopt a distance of 600 pc to W40, although they admit the distance is poorly constrained \citep{Kuhn10, Rodriguez10}. Here, we adopt a distance of 429 pc for Serpens South, although we comment on how a 260 pc distance estimate would change our analysis.
+
+
+
+
+
+%Perhaps talk generally about protostars, classifications, problems, unique opportunities for use of radio astronomy?
+
+%Introduction of the discovery of Serpens South by Gutermuth 2008. Basic properties of the region and current thoughts on age, distance, evolution, filamentary accretion flows, and also the basic properties of protostars seen in the radio. Why radio is interesting for protostars and what it may tell us, previous uses of radio emission to determine properties.
+
+%% VLA Observations
+\section{Observations}
+\label{sec:observations}
+
+%%%%%%%%%%%% Begin Table %%%%%%%%%%%%%%%%
+\capstartfalse
+\begin{deluxetable}{cccc}
+\tabletypesize{\footnotesize}
+\tablecaption{EVLA Image Properties}
+\tablehead{
+	\multicolumn{1}{c}{Wavelength}			&
+	\multicolumn{1}{c}{Beam Size$^{a}$}		&
+	\multicolumn{1}{c}{Position Angle}			&
+	\multicolumn{1}{c}{Image RMS}					\\
+	\colhead{(cm)}							&
+	\colhead{(arcsec x arcsec)}					&
+	\colhead{(degrees)}							&
+	\colhead{($\mu$Jy beam$^{-1}$)}			}
+\startdata
+6.31	&	4.8 x 3.9	&	13.4	&	11.1	\\[1ex]
+4.14	&	3.2 x 2.5	&	12.7	&	8.5
+\enddata
+\tablenotetext{a}{Images deconvolved with robust (Briggs) weighting, \emph{robust}=0.5 \citep{Briggs95}.}
+\label{tab:image_pars}
+\end{deluxetable}
+\capstarttrue
+%%%%%%%%%%% End Table %%%%%%%%%%%%%%%
+
+We observed Serpens South on July 2, 2013, for 1 hour with the EVLA in its C array configuration. The increased bandwidth of the EVLA allowed us to split our C band observation into two subbands centered at 4.75 GHz (6.31 cm) and 7.25 GHz (4.14 cm), with a bandwidth of 1.024 GHz for each subband. We focused on a 3.5 arcsec x 3.5 arcsec region around Serpens South's central filament, with a phase center positioned at $\alpha(\text{J2000})=18^{\text{h}}30^{\text{m}}05.00^{\text{s}}, \delta(\text{J2000})=-02^{\circ}02^{'}30.0^{''}$. Gain calibrations were done by switching to J1804 + 0101 every 10 minutes during our hour-long observation.
+
+We manually flagged, calibrated and imaged our data with standard procedures using Common Astronomy Software Applications (CASA) 4.1.0. We used J1331+305 (3C286) as a flux and bandpass calibrator, and J1804+0101 as a gain and phase calibrator ($S_{6.31\text{cm}}$ = 0.70 $\pm$ 0.02 Jy, $S_{4.14\text{cm}}$ = 0.66 $\pm$ 0.02 Jy). We deconvolved the Stokes $I$ images with the Cotton-Schwab algorithm \citep{Schwab84} using the CLEAN method \citep{Hogbom74,Clark80}. We experimented with natural, robust and uniform weighting, and found the best compromise between noise level and source resolution with robust weighting, also known as Briggs weighting \citep{Briggs95}, with a \emph{robust} parameter set to 0.5. The synthesized beam sizes and RMS values for our two images are detailed in \autoref{tab:image_pars}. We also deconvolved the Stokes $V$ images, but did not find any significant signal.
+
+Observing Serpens South at radio wavelengths is difficult because of the extended and bright HII region W40 directly to the East, which adds to over-resolved flux and increases the RMS noise level in our images. In addition, our short integration time--45 minutes on source--left us with a less than desirable UV coverage at long UV distances. Long UV distance coverage is particularly important because we are trying to resolve point source emission. Further EVLA studies of Serpens South would benefit from extended array configurations and longer integration times.
+
+%% Results & Analysis
+\section{Results}
+\label{sec:results}
+
+\subsection{Radio Source Selection}
+In choosing our sources, we restrict ourself to a circular region centered on our phase center and extending out to 50\% of the primary beam strength. We choose our sources based on their strength in our 4.1 and 6.3 cm maps, their possible spatial alignment with infrared sources, and by referencing our Sextractor source extracted sample \citep{Bertin96}. We were left with a total of 18 radio sources. We then ran source extractions on these spatial positions over near and far infrared data from the JHK bands of 2MASS, the four IRAC bands of Spitzer, the 24 $\mu$m MIPS band on Spitzer, and the 70 $\mu$m PACS band on Herschel. We used a 2 arcsecond maximum matching tolerance for these extractions. Apertures and adopted corrections are consistent with the HOPS survey \{What source should I cite?\}
+
+Eight of our radio sources have at least one infrared source match from 1.25 $\mu$m to 70 $\mu$m, four of which spatially match Spitzer identified Class I/II protostars within 1 arcsecond. A total of ten out of our 18 sources have signs that indicate they are protostellar in nature. One of our radio sources matches a 1.2 mm source within 1 arcsecond identified by \citep{Maury11}, which they state as Class 0 and starless. Here, we confirm compact radio emission with a rising spectral index indicative of mixed optically thin and thick free-free emission, which suggests the presence of a compact core.
+
+We can calculate the number of random background sources we would expect to find in our images. We use the formulation found in \citet{Shirley07}, who draw from radio studies done by \citet{Fomalont91}. The density of random background radio sources above a flux limit of $S\ \mu$Jy at 6 cm is given by $N(>S) = 0.42\cdot(S/30\ \mu \text{Jy})^{-1.18}$ arcmin$^{-2}$. Therefore, the total number of sources with flux $S$ greater than 50 $\mu$Jy at 6 cm is 0.229 arcmin$^{-2}$. This leads to a 0.4\% chance that a background source falls inside any one synthesized beam centered on a compact star, and gives us on average $\sim$9 background sources above 50 $\mu$Jy within our 3.5' x 3.5' region of interest. This agrees with our analysis, as we find roughly 8 sources that are likely background sources.
+
+
+
+\
+
+%Centered on Serpens South ($\alpha=18^{\text{h}}30^{\text{m}}05.00^{\text{s}}, \delta=-02^{\circ}02^{'}30.0^{''}$, J2000.0), we collected data in the VLA C band, using two spectral windows centered at 6.311 cm and 4.135 cm, each with a bandpass width of 1,024 MHz, with two polarization pairs. Gain calibrations were done by switching to J1804 + 0101 every 10 minutes during our hour long observation time. Flux density and bandpass calibrations were done using observations of quasar 3C 286. We obtained a total of 45 minutes of integration on source. 
+%
+%The data were manually inspected for radio frequency interference (RFI), and we removed obvious RFI from our visibilities. The data were then reduced using standard reduction techniques in CASA 4.1.0. Artifacts and streaks in our final images are products of incomplete $u-v$ coverage of our point spread function, which was slightly enhanced because we did not receive data from 2 of the 27 antennas in the array during our observation, in addition to the bright HII region to the east of Serpens South, contributing extended source signal to our short baselines. 
+%
+%The Stokes \emph{I} image was deconvolved multiple times with the CLEAN task \citep{Hogbom74, Clark80}, using natural, robust and uniform weighting, utilizing the Cotton-Schwab algorithm \citep{Schwab84}. We find that the best compromise between noise level and source resolution is achieved with robust weighting \citep{Briggs95}. The deconvolutions that produced the highest signal to noise ratios involved using masks around our protostellar sources. We cleaned our 6.3 and 4.1 cm maps down to a RMS noise level of 18$\mu$Jy and 8$\mu$Jy respectively. Table 1 outlines these observations.
+%
+%We used a circular CLEANing mask centered on the image phase center with a radial extent of $\sim$3 arcseconds, corresponding to 80\% of primary beam strength at the center. Our short integration time, $\sim$45 minutes, left us with a less than desirable point source function, and we therefore set `psfmode' to `hogbom' in the CLEANing process. 
+%
+%Two particularly strong radio sources in the northern part of our field of view created psf artifacts that were visible in our dirty maps. In addition to this, and the fact that our protostellar sources are relatively weak, we could not readily distinguish between weak protostar emission and a weak compact artifact. Therefore, instead of masking around individual sources, we used a circular mask around 80\% of primary beam strength during the CLEANing process. We compared the final CLEANed image with our psf to check for remaining psf artifacts, and used Spitzer 3.6 $\mu$m maps to spatially confirm centimeter emission from known Spitzer protostars. For the case where compact emission of seemingly protostellar nature does not spatially match a Spitzer protostar, nor an obvious psf artifact, we use its measured radio spectral index and the calculated random probability that it is a background source to discern whether it is a newly detected protostar.  
+
+%We used the Jansky Very Large Array (VLA) to image radio continuum emission coming from the Serpens South cluster, taken on July 2nd, 2013. We focused on RA xxxxx DEC xxxxxx, and were sensitive to an area of xxx square degrees. The array was in the C configuration during the observation, which is the second smallest configuration with a maximum baseline length of 3.4 km. We imaged the cluster in the C band, which spans 4238.0 MHz -- 7762.0 MHz. We broke this bandwidth up into two subbands, the first ranging from 4238.00 MHz -- 5262.00 MHz with the middle at $\lambda=6.311$ cm, and the second ranging from 6738.00 MHz -- 7762.00 MHz with the middle at $\lambda=4.135$ cm.
+
+
+\begin{figure}[h!]
+\label{fig:serpsouth_fov}
+\centering
+\includegraphics[keepaspectratio=True,scale=.6]{figures/SerpSouth_FOV.eps}
+\caption{\small{Herschel SPIRE 350 $\mu$m greyscale image of Serpens South. Blue and red triangles indicate Spitzer identified Class I and Class II protostars respectively. The green box indicates our region of interest with the EVLA.}}
+\end{figure}
+
+\begin{figure}[h!]
+\label{fig:serpsouth_fov_contour}
+\centering
+\includegraphics[keepaspectratio=True,scale=.35]{figures/SerpSouth_fov_contour.eps}
+\caption{\small{ 
+}}
+\end{figure}
+
+\begin{figure}[h!]
+\label{fig:serpsouth_zoom_contour}
+\centering
+\includegraphics[keepaspectratio=True,scale=.35]{figures/SerpSouth_zoom_contour.eps}
+\caption{\small{ 
+}}
+\end{figure}
+
+\begin{figure}[h!]
+\label{fig:serpsouth_zoom_color_contour}
+\centering
+\includegraphics[keepaspectratio=True,scale=.35]{figures/SerpSouth_zoom_color_contour.eps}
+\caption{\small{ 
+}}
+\end{figure}
+
+
+
+
+%%%%%%%%%%%% Begin Table %%%%%%%%%%%%%%%%
+\capstartfalse
+\begin{deluxetable*}{lccccccc}%cccc}
+\label{tab:radio_properties_table}
+\tabletypesize{\footnotesize}
+\tablecaption{Radio Properties of VLA Sources}
+\tablehead{
+	\multicolumn{1}{c}{Source}								&
+	\multicolumn{2}{c}{Position$^{a}$}							&
+	\multicolumn{1}{c}{$S_{6.3 \text{cm}}\ ^{b}$}				&
+	\multicolumn{1}{c}{$S^{\text{peak}}_{6.3 \text{cm}}$}		&
+	\multicolumn{1}{c}{$S_{4.1 \text{cm}}$}					&
+	\multicolumn{1}{c}{$S^{\text{peak}}_{4.1 \text{cm}}$}		&
+	\multicolumn{1}{c}{$\alpha_{\text{radio}}\ ^{c}$}				\\ [.25ex]		
+%	\multicolumn{1}{c}{L$_{\text{infrared}}$}				&
+%	\multicolumn{1}{c}{L$_{\text{bol}}$}					&
+%	\multicolumn{1}{c}{Match?}						&
+%	\multicolumn{1}{c}{Evolutionary}					\\ [.25ex]
+	\cline{2-3}										\\ [-1.5ex]
+	\colhead{}										&
+	\colhead{RA}									&
+	\colhead{Dec.}									&
+	\colhead{($\mu$Jy)}								&
+	\colhead{($\mu$Jy beam$^{-1}$)}					&
+	\colhead{($\mu$Jy)}								&
+	\colhead{($\mu$Jy beam$^{-1}$)}					&
+	\colhead{}										
+%	\colhead{(L$_{\text{sun}}$)}						&
+%	\colhead{(L$_{\text{sun}}$)}						&
+%	\colhead{(MM/Hersc/Spitz)}						&
+%	\colhead{Stage}								
+	}
+\startdata
+
+6.31\dotfill		&	1.024	&	4.8 x 3.9	&	13.4	&	11.1	\\[1ex]
+
+4.14\dotfill		&	1.024	&	3.2 x 2.5	&	12.7	&	8.5
+
+\enddata
+\tablenotetext{a}{Centers of 2D gaussian fits for sources in 4.1 cm map, quoted in J2000 coordinates.}
+\tablenotetext{b}{Flux values from images deconvolved with Briggs weighting, \emph{robust}=0.5 \citep{Briggs95}.}
+\tablenotetext{c}{Spectral index of peak flux from 6.3 to 4.1 cm, see \autoref{sec:results} for details on calculation.}
+
+\end{deluxetable*}
+\capstarttrue
+%%%%%%%%%%% End Table %%%%%%%%%%%%%%%
+
+\subsection{VLA 1, 2, 3 and 4}
+\label{subsec:vla1_2_3_4}
+
+
+
+\subsection{VLA 6, 7 and 8}
+\label{subsec:vla6_7_8}
+
+
+
+\subsection{VLA 9 to 17}
+\label{subsec:vla9_to_17}
+
+
+
+
+\subsection{VLA 5 and 18}
+\label{subsec:vla18}
+
+
+
+
+
+
+%% Discussion
+\section{Discussion}
+
+\subsection{Protostars in the Central Filament}
+Spitzer observations revealed dozens of Class I and II protostars spatially correlated to the central filament \citep{Gutermuth08}. Herschel observations revealed colder clumps of dust corresponding to younger Class 0 protostars \citep{Bontemps10}, however, with their poor spatial resolution they cannot reasonably resolve individual compact cores. 
+
+
+\subsection{$L_{\text{infrared}}$ and $L_{\text{bol}}$ Relationship}
+
+
+
+
+
+\subsection{The $S_{\text{radio}}$ and $L_{\text{bol}}$ Relationship}
+
+
+
+
+\subsection{Sources of Molecular Outflow}
+
+
+
+
+The Serpens South embedded cluster occupies a region in projected proximity to the larger Aquila Rift complex, the W40 HII region and the Serpens Main molecular cloud. The Aquila Rift, as previously noted, is a local complex of dark molecular clouds extending several degrees, encompassing the Serpens Main molecular cloud, Serpens South and the W40 HII region (see Figure 1), which are the three main regions of star formation in the direction of the Aquila Rift \citep{Eiroa08}. 
+
+
+%% Conclusions
+\section{Conclusions}
+
+
+
+%% Bibliography %%
+\bibliographystyle{apj}		
+\bibliography{references}{}
+
+
+
+\appendix
+{\large These are my edit notes for the paper.} \\[.25in]
+
+-- What does Rob say about SS distance?\\
+
+-- What paper should I quote for infrared source extraction photometry analysis?
+
+
+
+
+%% End Document
+\end{document}
+
+

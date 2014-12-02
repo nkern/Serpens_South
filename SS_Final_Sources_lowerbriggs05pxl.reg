@@ -1,0 +1,21 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+physical
+circle(425.49132,659.24947,5) # color=blue text={VLA 1}
+circle(516.74768,657.6875,5) # color=blue text={VLA 2}
+circle(558.9466,639.87486,5) # color=blue text={VLA 3}
+circle(577.98481,635.74971,5) # color=blue text={VLA 4}
+circle(482.68143,589.24995,5) # color=blue text={VLA 6}
+circle(497.69085,569.56249,5) # color=blue text={VLA 7}
+circle(477.37875,536.12492,5) # color=blue text={VLA 8}
+circle(554.24257,518.93739,5) # color=blue text={VLA 9}
+circle(551.60046,511.31241,5) # color=blue text={VLA 10}
+circle(543.61796,492.99995,5) # color=blue text={VLA 11}
+circle(529.56437,472.68749,5) # color=blue text={VLA 12}
+circle(540.50733,464.87496,5) # color=blue text={VLA 13}
+circle(534.56738,460.18748,5) # color=blue text={VLA 14}
+circle(520.49517,458.00001,5) # color=blue text={VLA 15}
+circle(545.81007,442.37494,5) # color=blue text={VLA 16}
+circle(581.74919,421.74969,5) # color=blue text={VLA 17}
+circle(430.49757,389.24954,5) # color=blue text={VLA 18}
+circle(329.5708,591.43518,5) # color=blue text={VLA 5}

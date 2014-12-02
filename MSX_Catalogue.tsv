@@ -1,0 +1,94 @@
+#
+#   VizieR Astronomical Server vizier.u-strasbg.fr
+#    Date: 2014-10-10T16:03:44 [V1.99+ (14-Oct-2013)]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	votable-version=1.99+ (14-Oct-2013)	
+#INFO	-ref=VIZ5437fff7afc5	
+#INFO	-out.max=50	
+#INFO	queryParameters=34	
+#-oc.form=dec
+#-out.max=50
+#-out.add=_r
+#-out.add=_RAJ,_DEJ
+#-sort=_r
+#-order=I
+#-out.src=J/ApJS/208/11/table1,J/ApJS/208/11/table2
+#-nav=cat:J/ApJS/208/11&tab:{J/ApJS/208/11/table1}&tab:{J/ApJS/208/11/table2}&key:source=J/ApJS/208/11&key:c=Serpens South&pos:Serpens South( 2 arcmin J2000)&HTTPPRM:&&-ref=VIZ5437fff7afc5&-out.max=50&-out.form=HTML Table&-out.add=_r&-out.add=_RAJ,_DEJ&-sort=_r&-oc.form=sexa&-c=Serpens South&-c.eq=J2000&-c.r=8&-c.u=arcmin&-c.geom=r&-x.rs=10&-order=I&-out=Name&-out=M&-out=RAJ2000&-out=DEJ2000&-out=Type&-out=fcc&-out=vLSR&-out=Near&-out=Far&-out=Dist&-out=Rgc&-out=Lbol&-out=IRAS&-out=MSX6C&-ignore=MSX6C=*&MSX6C=MSX6C&-out=f_Name&-out=OName&-out=SimbadName&-file=.&-meta.ucd=2&-meta=1&-meta.foot=1&-usenav=1&-bmark=POST&-out.src=J/ApJS/208/11/table1,J/ApJS/208/11/table2
+#-c=Serpens South
+#-c.eq=J2000
+#-c.r=  8
+#-c.u=arcmin
+#-c.geom=r
+#-sort=_r
+#-x.rs=10
+#-source=J/ApJS/208/11/table1 J/ApJS/208/11/table2
+#-order=I
+#-out=Name
+#-out=M
+#-out=RAJ2000
+#-out=DEJ2000
+#-out=Type
+#-out=fcc
+#-out=vLSR
+#-out=Near
+#-out=Far
+#-out=Dist
+#-out=Rgc
+#-out=Lbol
+#-out=IRAS
+#-out=MSX6C
+#-out=f_Name
+#-out=OName
+#-out=SimbadName
+#
+#INFO	CatalogsExamined=2	
+#  2 catalogues with potential matches were examined.
+#
+#INFO	-c=277.512500-02.032833,rm=8.	
+#
+
+#RESOURCE=yCat_22080011
+#Name: J/ApJS/208/11
+#Title: The Red MSX Source Survey: massive protostars (Lumsden+, 2013)
+#Table	J_ApJS_208_11_table1:
+#Name: J/ApJS/208/11/table1
+#Title: The full RMS (Red MSX Source Survey) catalog
+#Column	_r	(F6.4)	Distance from center (18 30 03.00-02 01 58.2)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	_RAJ2000	(F9.5)	Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data)	[ucd=pos.eq.ra]
+#Column	_DEJ2000	(F9.5)	Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data)	[ucd=pos.eq.dec]
+#Column	Name	(A18)	Full RMS catalog name of the source (GLLL.llll+BB.bbbbA)	[ucd=meta.id;meta.main]
+#Column	M	(A1)	{\bf } indicates a Massive protostar (more in table 2)	[ucd=meta.ref.url]
+#Column	RAJ2000	(A11)	Hour of Right Ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A11)	Degree of Declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Type	(a14)	Object type as defined in the paper (3)	[ucd=meta.bib]
+#Column	fcc	(A1)	[N/Y] Failing near infrared color cuts? (4)	[ucd=meta.code]
+#Column	vLSR	(F6.1)	? Local Standard of Rest velocity	[ucd=phys.veloc;pos.lsr]
+#Column	Near	(F4.1)	[0/30.5]? Near distance for source (1)	[ucd=pos.distance;pos.heliocentric]
+#Column	Far	(F4.1)	[0/30.5]? Far distance for source (1)	[ucd=pos.distance;pos.heliocentric]
+#Column	Dist	(F4.1)	[-1/17.2]? Adopted Distance (2)	[ucd=pos.distance;pos.heliocentric]
+#Column	Rgc	(F4.1)	[2.9/15.1]? Distance from Galactic center	[ucd=pos.distance]
+#Column	Lbol	(I7)	[0/2612430]? Bolometric luminosity [NULL integer written as an empty string]	[ucd=phys.luminosity]
+#Column	IRAS	(A11)	IRAS counterpart within MSX beam; "NULL" if none	[ucd=meta.id.assoc;phys.veloc.ang]
+#Column	MSX6C	(a5)	Details from MSX6C (V/114)	[ucd=meta.ref.url]
+_r	_RAJ2000	_DEJ2000	Name	M	RAJ2000	DEJ2000	Type	fcc	vLSR	Near	Far	Dist	Rgc	Lbol	IRAS	MSX6C
+arcmin	deg	deg	 	 	"h:m:s"	"d:m:s"	 	 	km/s	kpc	kpc	kpc	kpc	Lsun	 	
+------	---------	---------	------------------	-	-----------	-----------	--------------	-	------	----	----	----	----	-------	-----------	-----
+1.7986	277.50546	 -2.06197	G028.6477+03.8174 	 	18 30 01.31	-02 03 43.1	YSO           	Y	   7.2	 0.7	14.0	 0.7	 7.8	     50	18274-0205 	MSX6C
+
+#Table	J_ApJS_208_11_table2:
+#Name: J/ApJS/208/11/table2
+#Title: Complete list of massive protostars with L>20000L_{sun}_
+#Column	_r	(F6.4)	Distance from center (18 30 03.00-02 01 58.2)[FK5/J2000]	[ucd=pos.angDistance]
+#Column	_RAJ2000	(F9.5)	Right ascension (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data)	[ucd=pos.eq.ra]
+#Column	_DEJ2000	(F9.5)	Declination (FK5, Equinox=J2000.0) (computed by VizieR, not part of the original data)	[ucd=pos.eq.dec]
+#Column	Name	(A18)	RMS name (GLLL.llll+BB.bbbbA) \linkRole{Full RMS catalog data (table 1)}	[ucd=meta.id;meta.main]
+#Column	RAJ2000	(A11)	Hour of right ascension (J2000)	[ucd=pos.eq.ra;meta.main]
+#Column	DEJ2000	(A11)	Degree of declination (J2000)	[ucd=pos.eq.dec;meta.main]
+#Column	Dist	(F4.1)	[1.4/14.5] Heliocentric istance	[ucd=pos.distance;pos.heliocentric]
+#Column	Lbol	(I6)	[20000/259200] Bolometric luminosity	[ucd=phys.luminosity]
+#Column	f_Name	(A1)	[*] * = HII region central star	[ucd=meta.code]
+#Column	OName	(a20)	Other name (1)	[ucd=meta.id]
+#Column	SimbadName	(a28)	Designation understandable by the {\bf\fg{FireBrick}Simbad} data-base	[ucd=meta.id]
