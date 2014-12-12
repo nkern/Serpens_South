@@ -58,6 +58,9 @@ git add Paper/paper.tex
 git add Paper/paper.pdf
 git add Paper/references.bib
 git add Paper/apj.bst
+git add Paper/emulateapj.cls
+git add Paper/deluxetable.sty
+git add Paper/mn2e.cls
 git add Paper/figures/SerpSouth_FOV-eps-converted-to.pdf
 git add Paper/figures/SerpSouth_fov_contour-eps-converted-to.pdf
 git add Paper/figures/SerpSouth_zoom_color_contour-eps-converted-to.pdf

@@ -18,8 +18,8 @@ from matplotlib.widgets import Slider
 savefig = False
 
 plot1 = False
-plot2 = True
-plot3 = False
+plot2 = False
+plot3 = True
 
 
 def sexig_to_deg(ra,dec):
@@ -224,7 +224,6 @@ if plot2 == True:
 	else: 
 		fig.recenter(277.525,-2.038,width=0.082,height=0.082)
 
-
 	if savefig == True:
 		fig.save('Paper/figures/SerpSouth_zoom_contour.eps',adjust_bbox='tight')
 
@@ -315,7 +314,6 @@ if plot3 == True:
 	else: 
 		fig.recenter(277.525,-2.038,width=0.082,height=0.082)
 
-	savefig=False
 	if savefig == True:
 		fig.save('Paper/figures/SerpSouth_zoom_color_contour.eps',adjust_bbox='tight')
 

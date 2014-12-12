@@ -127,7 +127,7 @@ mag_rel_errs = np.array([0.15]*9)
 zeroflux_rel_errs = np.array([jmag_zero_err,hmag_zero_err,kmag_zero_err,i1mag_zero_err,i2mag_zero_err,i3mag_zero_err,i4mag_zero_err,m24mag_zero_err,p70mag_zero_err])/np.array([jmag_zero,hmag_zero,kmag_zero,i1mag_zero,i2mag_zero,i3mag_zero,i4mag_zero,m24mag_zero,p70mag_zero])
 
 # Total Error On Flux (Relative) add in quadrature
-infra_rel_errs = np.sqrt( mag_rel_errs**2 + zeroflux_rel_errs**2)
+guter_rel_errs = np.sqrt( mag_rel_errs**2 + zeroflux_rel_errs**2)
 
 
 ########################################################################################
@@ -243,8 +243,8 @@ ir_fitted = np.array([6,10,12,15,16])
 # infrared pointings
 for i in range(source_num):
 	if (i in ir_fitted) == True:
-		ir_spix.append( infr_spix(guter_fluxes[i][7],guter_fluxes[i][6],ir_upper_lam,ir_lower_lam,infra_rel_errs[7],infra_rel_errs[6])[0] )
-		ir_spix_err.append( infr_spix(guter_fluxes[i][7],guter_fluxes[i][6],ir_upper_lam,ir_lower_lam,infra_rel_errs[7],infra_rel_errs[6])[1] )
+		ir_spix.append( infr_spix(guter_fluxes[i][7],guter_fluxes[i][6],ir_upper_lam,ir_lower_lam,guter_rel_errs[7],guter_rel_errs[6])[0] )
+		ir_spix_err.append( infr_spix(guter_fluxes[i][7],guter_fluxes[i][6],ir_upper_lam,ir_lower_lam,guter_rel_errs[7],guter_rel_errs[6])[1] )
 	else:
 		ir_spix.append(np.nan)
 		ir_spix_err.append(np.nan)	
@@ -266,6 +266,29 @@ def cross_match(array1,array2):
 		else: array1_temp.append(array1[array2[i]])
 	return np.array(array1_temp)
 
+def sigfigs(array,cut_str):
+	''' iterates a float manipulation command
+	try using "'%.3f'" as cut_str '''
+	return np.array(map(lambda x:cut_str % x, array))
+	
+def replace_nan(array,sub,round_num=2,flt=True):
+	''' replaces numpy array's np.nan with sub '''
+	length = len(array)
+	new_array = []
+	try: nans = np.isnan(array)
+	except: nans = array == 'nan'
+	for i in range(length):
+		if nans[i] == True:
+			new_array.append(sub)
+		else:
+			if flt == True:
+				new_array.append(('%.'+str(round_num)+'f')%array[i])
+			else:
+				new_array.append(array[i])
+	return np.array(new_array)
+
+
+
 ## Create data dictionary for arrays with ordering identical to SS_Final_Sources
 data = {}
 
@@ -278,9 +301,6 @@ source_names = np.array(source_names)
 # Order by descending Dec, and match cm sources with infra sources
 # 18 cm sources
 # 23 infrared sources
-
-# Match w/ SS_Final_Source Ordering
-ir_spix = cross_match(ir_spix,ir_source_id)
 
 # Load Gutermuth Spitzer Protostellar Data
 # index, RA, DEC, Class
@@ -300,25 +320,103 @@ spitz_source_id = np.array(spitz_source_id)
 # Match w/ SS_Final_Source Ordering
 ir_spitz_class = cross_match(spitz_class,spitz_source_id)
 
-## Create L mid-infrared as defined by equation 6 from Kryukova+2012, defined in solar luminosities
+
+### Dunham08 70micron vs. Linternal ###
+L_int_dunham08 = 3.3e8 * guter_fluxes.T[-1]*c/70e-6 * 1e-23	# Lsun
+L_int_dunham08_err = 3.3e8 * guter_fluxes.T[-1]*guter_rel_errs[-1]*c/70e-6 * 1e-23	# Lsun
+
+### Kryukova12 Lmir vs. Lbol ###
 dist1 = 429	# pc
 dist2 = 260	# pc
 
 Lmir1 = (19.79*guter_fluxes.T[0] + 16.96*guter_fluxes.T[1] + 10.49*guter_fluxes.T[2] + 5.50*guter_fluxes.T[3] + 4.68*guter_fluxes.T[4] + 4.01*guter_fluxes.T[5] + 4.31*guter_fluxes.T[6] + 0.81*guter_fluxes.T[7]) * 1e-6 * dist1**2
 
+Lmir1_err = (19.79*guter_fluxes.T[0]*guter_rel_errs[0] + 16.96*guter_fluxes.T[1]*guter_rel_errs[1] + 10.49*guter_fluxes.T[2]*guter_rel_errs[2] + 5.50*guter_fluxes.T[3]**guter_rel_errs[3] + 4.68*guter_fluxes.T[4]*guter_rel_errs[4] + 4.01*guter_fluxes.T[5]*guter_rel_errs[5] + 4.31*guter_fluxes.T[6]*guter_rel_errs[6] + 0.81*guter_fluxes.T[7]*guter_rel_errs[7]) * 1e-6 * dist1**2
+
 Lmir2 = (19.79*guter_fluxes.T[0] + 16.96*guter_fluxes.T[1] + 10.49*guter_fluxes.T[2] + 5.50*guter_fluxes.T[3] + 4.68*guter_fluxes.T[4] + 4.01*guter_fluxes.T[5] + 4.31*guter_fluxes.T[6] + 0.81*guter_fluxes.T[7]) * 1e-6 * dist2**2
 
-Lmir1 = cross_match(Lmir1,ir_source_id)
-Lmir2 = cross_match(Lmir2,ir_source_id)
+Lmir2_err = (19.79*guter_fluxes.T[0]*guter_rel_errs[0] + 16.96*guter_fluxes.T[1]*guter_rel_errs[1] + 10.49*guter_fluxes.T[2]*guter_rel_errs[2] + 5.50*guter_fluxes.T[3]**guter_rel_errs[3] + 4.68*guter_fluxes.T[4]*guter_rel_errs[4] + 4.01*guter_fluxes.T[5]*guter_rel_errs[5] + 4.31*guter_fluxes.T[6]*guter_rel_errs[6] + 0.81*guter_fluxes.T[7]*guter_rel_errs[7]) * 1e-6 * dist2**2
+
+# For alpha > 0.3
+Lbol_kryukova_rising1 = Lmir1 / (-0.466 * np.log(ir_spix) + 0.337)**2
+Lbol_kryukova_rising2 = Lmir2 / (-0.466 * np.log(ir_spix) + 0.337)**2
+
+Lbol_kryukova_rising1_err = Lmir1 / ( np.sqrt( (0.014 * np.log(ir_spix))**2 + 0.053**2)/(-0.466 * np.log(ir_spix) + 0.337)**2 * np.sqrt(2))
+
+Lbol_kryukova_flat1 = Lmir1 * 0.338
+Lbol_kryukova_flat2 = Lmir2 * 0.338
+
+
+### Dunham13 Lmir vs. Lbol ###
+Lbol_dunham13_rising1 = Lmir1 / (-0.298 * np.log(ir_spix) + 0.270)**2
+Lbol_dunham13_rising2 = Lmir2 / (-0.298 * np.log(ir_spix) + 0.270)**2
 
 
 
+
+
+
+# Convert RA and DEC to J2000
+ra = upper_ra
+ra_frac = ra/360. * 24
+ra_h = np.array(np.floor(ra_frac),int)
+ra_m = np.array(np.floor((ra_frac - ra_h)*60),int)
+ra_s = np.around(((ra_frac - ra_h)*60 - ra_m)*60,2)
+ra_s = np.array(map(lambda x:"%05.2f" % x, ra_s))
+ra_sexig = np.array([a+':'+b+':'+c for a,b,c in zip(np.array(ra_h,str),np.array(ra_m,str),np.array(ra_s,str))])
+
+dec = upper_dec
+dec_deg = np.ceil(dec)
+dec_m = np.array(np.floor((dec_deg-dec)*60),int)
+dec_s = np.around( ((dec_deg-dec)*60 - dec_m)*60,1)
+dec_deg = np.array(map(lambda x: "%03d" % (x), dec_deg))
+dec_m = np.array(map(lambda x:"%02d" % (x), dec_m))
+dec_s = np.array(map(lambda x:"%04.1f" % (x), dec_s))
+dec_sexig = np.array([a+':'+b+':'+c for a,b,c in zip(np.array(dec_deg,str),np.array(dec_m,str),np.array(dec_s,str))])
+
+## Put Data into "Data" Dictionary
 # Order arrays into SS_Final_Sources ordering
-for i in range(source_num):
-	data['source_names'] = source_names
-	data['ra'] = upper_ra
-	data['dec'] = upper_dec
-	
+data['source_names'] = np.array(map(lambda x: x[0:3]+'\\'+x[3:],source_names))
+data['ra'] = np.array(ra,str)
+data['dec'] = np.array(dec,str)
+data['ra_sexig'] = ra_sexig
+data['dec_sexig'] = dec_sexig
+data['flux_upper'] = np.array(np.array(upper_data.T[0]*1e6,int),str)	# Put into  microJy unit and make integer
+data['flux_upper_err'] = np.array(np.array(upper_data.T[1]*1e6,int),str)
+data['flux_upper_peak'] = np.array(np.array(upper_peak_flux[1]*1e6,int),str)
+data['flux_upper_peak_err'] = np.str(np.around(upper_rms*1e6,1))
+data['flux_lower'] = np.array(np.array(lower_data.T[0]*1e6,int),str)	# Put into  microJy unit and make integer
+data['flux_lower_err'] = np.array(np.array(lower_data.T[1]*1e6,int),str)
+data['flux_lower_peak'] = np.array(np.array(lower_peak_flux[1]*1e6,int),str)
+data['flux_lower_peak_err'] = np.str(np.around(lower_rms*1e6,1))
+data['cm_int_spix'] = np.array(np.around(cm_int_spix,2),str)
+data['cm_int_spix_err'] = np.array(np.around(cm_int_spix_err,2),str)
+data['cm_peak_spix'] = np.array(np.around(cm_peak_spix,2),str)
+data['cm_peak_spix_err'] = np.array(np.around(cm_peak_spix_err,2),str)
+data['ir_spix'] = replace_nan(ir_spix,'--',1)
+data['ir_spix_err'] = replace_nan(ir_spix_err,'--',1)
+data['ir_spitz_class'] = replace_nan(ir_spitz_class,'--',flt=False)
+
+
+
+##################################################
+########## PRINT STRINGS FOR FLUX TABLE ##########
+##################################################
+
+print_strings = False
+if print_strings == True:
+
+	tc = ['source_names','ra_sexig','dec_sexig','flux_upper','flux_upper_err',
+	'flux_upper_peak','flux_lower','flux_lower_err','flux_lower_peak','cm_int_spix',
+	'cm_int_spix_err','cm_peak_spix','cm_peak_spix_err',
+	]
+
+	length = len(data['source_names'])
+
+	for i in range(length):
+		print ""
+		print data[tc[0]][i]+"\t&\t"+data[tc[1]][i]+"\t&\t"+data[tc[2]][i]+"\t&\t"+data[tc[3]][i]+" $\pm$ "+data[tc[4]][i]+"\t&\t"+data[tc[5]][i]+"\t&\t"+data[tc[6]][i]+" $\pm$ "+data[tc[7]][i]+"\t&\t"+data[tc[8]][i]+"\t&\t"+data[tc[9]][i]+" $\pm$ "+data[tc[10]][i]+"\t&\t"+data[tc[11]][i]+" $\pm$ "+data[tc[12]][i]+"\\\\[1ex]"
+
 
 
 #############################################
@@ -352,6 +450,7 @@ if write_data == True:		# Write Radio Properties Data Files
 	file.write('# 13 Peak Flux Spix, Error, unitless\n')
 	file.write('# 14 Image RMS, microJy/beam\n')
 	file.write('# 15 SNR Ratio Peak Flux to RMS, unitless\n') 
+
 
 
 
