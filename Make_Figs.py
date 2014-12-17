@@ -18,8 +18,8 @@ from matplotlib.widgets import Slider
 savefig = False
 
 plot1 = False
-plot2 = False
-plot3 = True
+plot2 = True
+plot3 = False
 
 
 def sexig_to_deg(ra,dec):
@@ -128,6 +128,12 @@ if plot1 == True:
 ### Radio Contours
 if plot2 == True:
 
+	zoom = False
+	vla10 = True
+
+	figname = 'Paper/figures/SerpSouth_VLA10_contour.eps'
+	#figname = 'Paper/figures/SerpSouth_zoom_contour.eps'
+
 	# Choose Image
 	color_im = 'FITS/PACS_100_micron_cropped.fits'
 	contour_im = 'FITS/SERPS_2.upper.briggs05.deeper.fits'
@@ -144,10 +150,17 @@ if plot2 == True:
 	# Initialize Upper Subband Plot
 	fig = aplpy.FITSFigure(color_im, subplot=(1,1,1), figsize=(11,9))
 
-
 	fig.show_colorscale(cmap='CMRmap',stretch='power',exponent=.30,pmin=0,pmax=100.005)
 	fig.hide_colorscale()
 	fig.show_contour('FITS/SERPS_2.upper.briggs05.deeper.fits',alpha=1,cmap='Greys_r',levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
+
+	if vla10 == True:
+		fig.hide_layer('contour_set_1')
+		fig.show_contour('FITS/SERPS_2.upper.briggs05.deeper.fits',alpha=0.8,cmap='Blues_r',levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
+		contour_im = 'FITS/SERPS_2.lower.briggs05.deeper.fits'
+		contour_data = fits.open(contour_im)[0].data
+		rms = np.std(contour_data[~np.isnan(contour_data)])
+		fig.show_contour('FITS/SERPS_2.lower.briggs05.deeper.fits',alpha=0.8,cmap='Reds_r',levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50],linestyles='dashed')
 
 	# Draw Beam
 	beam_dict = {'bmaj':contour_head['bmaj'],'bmin':contour_head['bmin'],'bpa':contour_head['bpa']}
@@ -163,10 +176,10 @@ if plot2 == True:
 	fig.ticks.show_y()
 	fig.axis_labels.set_xtext('Right Ascension (J2000)')
 	fig.axis_labels.set_ytext('Declination (J2000)')
-	fig.axis_labels.set_font(size=16)
+	fig.axis_labels.set_font(size=18)
 	fig.axis_labels.set_xpad(15)
 	fig.axis_labels.set_ypad(10)
-	fig._figure.axes[0].tick_params(labelsize=16)
+	fig._figure.axes[0].tick_params(labelsize=18)
 	fig.refresh()
 
 	fig.recenter(277.520,-2.048,width=0.055,height=0.055)
@@ -188,7 +201,7 @@ if plot2 == True:
 		fig.hide_layer('region_set_1')
 
 	# Add IRAM Millimeter sources
-	add_iram = True
+	add_iram = False
 	if add_iram == True:
 		iram_source_name, iram_ra, iram_dec, iram_Lbol, iram_class, iram_S, iram_S_err, iram_FWHM = np.loadtxt('IRAM_sources.txt',unpack=True,delimiter=',',dtype='str')
 		iram_ra_deg, iram_dec_deg = sexig_to_deg(iram_ra, iram_dec)
@@ -200,8 +213,8 @@ if plot2 == True:
 		spitzer = np.loadtxt('gutermuth2008_serps_ysos1.txt',unpack=True,dtype='str')
 		spitz_radec = np.array([np.array(spitzer[1],float),np.array(spitzer[2],float)])
 		classI = spitzer[3]=='I'
-		fig.show_markers(spitz_radec[0][classI],spitz_radec[1][classI],s=250,marker='x',facecolor='None',edgecolor='blue',lw=1,zorder=1,alpha=.7)
-		fig.show_markers(spitz_radec[0][~classI],spitz_radec[1][~classI],s=250,marker='x',facecolor='None',edgecolor='red',lw=1,zorder=1,alpha=.7)
+		fig.show_markers(spitz_radec[0][classI],spitz_radec[1][classI],s=550,marker='x',facecolor='None',edgecolor='blue',lw=1,zorder=1,alpha=1)
+		fig.show_markers(spitz_radec[0][~classI],spitz_radec[1][~classI],s=550,marker='x',facecolor='None',edgecolor='red',lw=1,zorder=1,alpha=1)
 
 	# Add VLA Labels
 	add_labels = True
@@ -209,30 +222,35 @@ if plot2 == True:
 		label_ra,label_dec,label_num = np.loadtxt('SS_Labels.txt',delimiter=',',unpack=True)
 		label_num = np.array(label_num,int)
 		for i in range(len(label_num)):
-			fig.add_label(label_ra[i],label_dec[i],'VLA '+str(label_num[i]),clip_on=True,zorder=5)
+			fig.add_label(label_ra[i],label_dec[i],'VLA '+str(label_num[i]),clip_on=True,zorder=5,size=22)
+
+	# Add arrows 
+	if vla10 == True:
+		pass
 
 	# Add SPIRE 350 micron contour from figure 1
 	add_spire = False
 	if add_spire == True:
 		fig.show_contour('FITS/SPIRE_350_micron.fits', alpha=.8, cmap='Greys_r', levels=[380], hdu=1)
 
-
-	zoom = True
 	if zoom == True:
 		fig.recenter(277.518,-2.043,width=0.045,height=0.045)
 		fig.hide_layer('rectangle_set_1')
+	elif vla10 == True:
+		fig.recenter(277.512,-2.043,width=0.01,height=0.01)
 	else: 
 		fig.recenter(277.525,-2.038,width=0.082,height=0.082)
 
 	if savefig == True:
-		fig.save('Paper/figures/SerpSouth_zoom_contour.eps',adjust_bbox='tight')
+		fig.save(figname,adjust_bbox='tight')
 
 
 ### Radio Contours over Herschel Maps
 if plot3 == True:
 	# Choose Image
-	color_im = 'FITS/PACS_70_micron_cropped.fits'
+	color_im = 'FITS/Spitzer_8.0_micron_crop.fits'
 	#color_im = 'FITS/Spitzer_24_micron.fits'
+	color_im = 'FITS/PACS_70_micron_cropped.fits'
 	#color_im = 'FITS/SPIRE_250_micron.fits'
 	#contour_im = 'FITS/SERPS_2.lower.briggs05.deeper.fits'
 	contour_im = 'FITS/SERPS_2.upper.briggs05.deeper.fits'
@@ -249,8 +267,8 @@ if plot3 == True:
 	# Initialize Upper Subband Plot
 	fig = aplpy.FITSFigure(color_im, subplot=(1,1,1), figsize=(10.5,9))
 
-	fig.show_colorscale(cmap='afmhot_r',stretch='power',exponent=.20,pmin=0,pmax=99.99)
-	fig.show_contour('FITS/SERPS_2.upper.briggs05.deeper.fits',cmap='winter',alpha=1,levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
+	fig.show_colorscale(cmap='gist_heat_r',stretch='power',exponent=.20,pmin=0,pmax=99.8)
+	fig.show_contour('FITS/SERPS_2.upper.briggs05.deeper.fits',cmap='Greys',alpha=1,levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
 
 	# Draw Beam
 	beam_dict = {'bmaj':contour_head['bmaj'],'bmin':contour_head['bmin'],'bpa':contour_head['bpa']}
@@ -301,12 +319,17 @@ if plot3 == True:
 		fig.show_markers(spitz_radec[0][~classI],spitz_radec[1][~classI],s=250,marker='+',facecolor='None',edgecolor='red',lw=2,zorder=1)
 
 	# Add VLA Labels
-	add_labels = True
+	add_labels = False
 	if add_labels == True:
 		label_ra,label_dec,label_num = np.loadtxt('SS_Labels.txt',delimiter=',',unpack=True)
 		label_num = np.array(label_num,int)
 		for i in range(len(label_num)):
 			fig.add_label(label_ra[i],label_dec[i],'VLA '+str(label_num[i]),clip_on=True,zorder=5)
+
+	# Add Caption
+	add_cap = False
+	if add_cap == True:
+		fig.add_label(0.1,0.8,'(b)',size=20,zorder=5,color='white')
 
 	zoom = True
 	if zoom == True:

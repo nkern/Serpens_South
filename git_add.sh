@@ -35,7 +35,8 @@ git add gutermuth2008_serps_ysos1.txt
 git add notes_serpsouth_reduction.txt
 git add serps_yso1.reg
 git add vla_serps_merger_gutermuth_try1.csv
-
+git add IRAM_sources.reg
+git add Radio_Correlations.py
 git add AAS_2015/225th_AAS_Abstract.rtf
 
 git add Data/reduction_notes.txt

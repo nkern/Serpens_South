@@ -1,0 +1,28 @@
+# Region file format: DS9 version 4.1
+global color=magenta dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+circle(18:19:37.70,-01:50:57.8,15") # color=green text={MM1}
+circle(18:19:38.60,-01:51:04.1,13") # color=green text={MM2}
+circle(18:19:42.10,-01:50:22.7,22") # color=green text={MM3}
+circle(18:19:43.34,-01:56:47.9,15") # color=green text={MM4}
+circle(18:19:46.84,-02:06:52.7,19") # color=green text={MM5}
+circle(18:19:46.85,-01:55:46.9,13") # color=green text={MM6}
+circle(18:19:57.30,-01:57:29.4,20") # color=green text={MM7}
+circle(18:19:57.50,-01:57:58.8,17") # color=green text={MM8}
+circle(18:19:57.80,-01:58:46.4,25") # color=green text={MM9}
+circle(18:19:59.66,-02:01:03.2,16") # color=green text={M10}
+circle(18:30:00.83,-02:07:00.0,19") # color=green text={M11}
+circle(18:30:01.06,-02:06:14.6,15") # color=green text={M12}
+circle(18:30:01.50,-02:10:23.3,17") # color=green text={M13}
+circle(18:30:01.53,-02:08:13.3,19") # color=green text={M14}
+circle(18:30:02.45,-02:01:10.0,29") # color=green text={M15}
+circle(18:30:02.50,-02:02:48.5,19") # color=green text={M16}
+circle(18:30:03.38,-02:04:32.8,20") # color=green text={M17}
+circle(18:30:04.13,-02:03:02.1,18") # color=green text={M18}
+circle(18:30:04.60,-01:59:57.5,14") # color=green text={M19}
+circle(18:30:06.23,-02:05:11.3,23") # color=green text={M20}
+circle(18:30:10.40,-02:06:04.2,17") # color=green text={M21}
+circle(18:30:12.28,-02:06:53.0,20") # color=green text={M22}
+circle(18:30:16.46,-02:08:31.3,19") # color=green text={M23}
+circle(18:30:17.17,-02:09:58.6,25") # color=green text={M24}
+circle(18:30:25.81,-02:10:40.7,15") # color=green text={M25}

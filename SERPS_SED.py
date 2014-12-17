@@ -322,8 +322,8 @@ ir_spitz_class = cross_match(spitz_class,spitz_source_id)
 
 
 ### Dunham08 70micron vs. Linternal ###
-L_int_dunham08 = 3.3e8 * guter_fluxes.T[-1]*c/70e-6 * 1e-23	# Lsun
-L_int_dunham08_err = 3.3e8 * guter_fluxes.T[-1]*guter_rel_errs[-1]*c/70e-6 * 1e-23	# Lsun
+Lint_dunham = 3.3e8 * guter_fluxes.T[-1]*c/70e-6 * 1e-23	# Lsun
+Lint_dunham_err = 3.3e8 * guter_fluxes.T[-1]*guter_rel_errs[-1]*c/70e-6 * 1e-23	# Lsun
 
 ### Kryukova12 Lmir vs. Lbol ###
 dist1 = 429	# pc
@@ -338,22 +338,25 @@ Lmir2 = (19.79*guter_fluxes.T[0] + 16.96*guter_fluxes.T[1] + 10.49*guter_fluxes.
 Lmir2_err = (19.79*guter_fluxes.T[0]*guter_rel_errs[0] + 16.96*guter_fluxes.T[1]*guter_rel_errs[1] + 10.49*guter_fluxes.T[2]*guter_rel_errs[2] + 5.50*guter_fluxes.T[3]**guter_rel_errs[3] + 4.68*guter_fluxes.T[4]*guter_rel_errs[4] + 4.01*guter_fluxes.T[5]*guter_rel_errs[5] + 4.31*guter_fluxes.T[6]*guter_rel_errs[6] + 0.81*guter_fluxes.T[7]*guter_rel_errs[7]) * 1e-6 * dist2**2
 
 # For alpha > 0.3
-Lbol_kryukova_rising1 = Lmir1 / (-0.466 * np.log(ir_spix) + 0.337)**2
-Lbol_kryukova_rising2 = Lmir2 / (-0.466 * np.log(ir_spix) + 0.337)**2
+Lbol_kryukova_rising1 = Lmir1 / (-0.466 * np.log10(ir_spix) + 0.337)**2
+Lbol_kryukova_rising2 = Lmir2 / (-0.466 * np.log10(ir_spix) + 0.337)**2
 
-Lbol_kryukova_rising1_err = Lmir1 / ( np.sqrt( (0.014 * np.log(ir_spix))**2 + 0.053**2)/(-0.466 * np.log(ir_spix) + 0.337)**2 * np.sqrt(2))
+Lbol_kryukova_rising1_err = Lmir1 / ( np.sqrt( (0.014 * np.log10(ir_spix))**2 + 0.053**2)/(-0.466 * np.log10(ir_spix) + 0.337)**2 * np.sqrt(2))
 
-Lbol_kryukova_flat1 = Lmir1 * 0.338
-Lbol_kryukova_flat2 = Lmir2 * 0.338
-
+Lbol_kryukova_flat1 = Lmir1 * (-0.466 * np.log10(0.3) + 0.337)**2
+Lbol_kryukova_flat2 = Lmir2 * (-0.466 * np.log10(0.3) + 0.337)**2
 
 ### Dunham13 Lmir vs. Lbol ###
-Lbol_dunham13_rising1 = Lmir1 / (-0.298 * np.log(ir_spix) + 0.270)**2
-Lbol_dunham13_rising2 = Lmir2 / (-0.298 * np.log(ir_spix) + 0.270)**2
+Lbol_dunham_rising1 = Lmir1 / (-0.298 * np.log10(ir_spix) + 0.270)**2
+Lbol_dunham_rising2 = Lmir2 / (-0.298 * np.log10(ir_spix) + 0.270)**2
+
+Lbol_dunham_flat1 = Lmir1 / (-0.298 * np.log10(0.3) + 0.270)**2
+Lbol_dunham_flat2 = Lmir2 / (-0.298 * np.log10(0.3) + 0.270)**2
 
 
 
-
+# Classification
+classes = ['Extragal.?','Extragal.','Extragal.','Extragal.','Extragal.?','Extragal.','Class I','Extragal.?','Class 0?','Unknown','Class 0','Class 0$^{*}$','Class 0$^{*}$','Class 0$^{*}$','Extragal.','Class II','Class I','Extragal.?']
 
 
 # Convert RA and DEC to J2000
@@ -363,7 +366,7 @@ ra_h = np.array(np.floor(ra_frac),int)
 ra_m = np.array(np.floor((ra_frac - ra_h)*60),int)
 ra_s = np.around(((ra_frac - ra_h)*60 - ra_m)*60,2)
 ra_s = np.array(map(lambda x:"%05.2f" % x, ra_s))
-ra_sexig = np.array([a+':'+b+':'+c for a,b,c in zip(np.array(ra_h,str),np.array(ra_m,str),np.array(ra_s,str))])
+ra_sexig = np.array([a+' '+b+' '+c for a,b,c in zip(np.array(ra_h,str),np.array(ra_m,str),np.array(ra_s,str))])
 
 dec = upper_dec
 dec_deg = np.ceil(dec)
@@ -372,7 +375,7 @@ dec_s = np.around( ((dec_deg-dec)*60 - dec_m)*60,1)
 dec_deg = np.array(map(lambda x: "%03d" % (x), dec_deg))
 dec_m = np.array(map(lambda x:"%02d" % (x), dec_m))
 dec_s = np.array(map(lambda x:"%04.1f" % (x), dec_s))
-dec_sexig = np.array([a+':'+b+':'+c for a,b,c in zip(np.array(dec_deg,str),np.array(dec_m,str),np.array(dec_s,str))])
+dec_sexig = np.array([a+' '+b+' '+c for a,b,c in zip(np.array(dec_deg,str),np.array(dec_m,str),np.array(dec_s,str))])
 
 ## Put Data into "Data" Dictionary
 # Order arrays into SS_Final_Sources ordering
@@ -396,6 +399,17 @@ data['cm_peak_spix_err'] = np.array(np.around(cm_peak_spix_err,2),str)
 data['ir_spix'] = replace_nan(ir_spix,'--',1)
 data['ir_spix_err'] = replace_nan(ir_spix_err,'--',1)
 data['ir_spitz_class'] = replace_nan(ir_spitz_class,'--',flt=False)
+data['classes'] = classes
+
+data['Lbol_kryukova_rising1'] = Lbol_kryukova_rising1
+data['Lbol_kryukova_rising2'] = Lbol_kryukova_rising2
+data['Lbol_kryukova_flat1'] = Lbol_kryukova_flat1
+data['Lbol_kryukova_flat2'] = Lbol_kryukova_flat2
+data['Lbol_dunham_rising1'] = Lbol_dunham_rising1
+data['Lbol_dunham_rising2'] = Lbol_dunham_rising2
+data['Lbol_dunham_flat1'] = Lbol_dunham_flat1
+data['Lbol_dunham_flat2'] = Lbol_dunham_flat2
+
 
 
 
@@ -406,16 +420,16 @@ data['ir_spitz_class'] = replace_nan(ir_spitz_class,'--',flt=False)
 print_strings = False
 if print_strings == True:
 
-	tc = ['source_names','ra_sexig','dec_sexig','flux_upper','flux_upper_err',
-	'flux_upper_peak','flux_lower','flux_lower_err','flux_lower_peak','cm_int_spix',
-	'cm_int_spix_err','cm_peak_spix','cm_peak_spix_err',
+	tc = ['source_names','ra_sexig','dec_sexig','flux_lower','flux_lower_err',
+	'flux_lower_peak','flux_upper','flux_upper_err','flux_upper_peak','cm_int_spix',
+	'cm_int_spix_err','cm_peak_spix','cm_peak_spix_err','classes'
 	]
 
 	length = len(data['source_names'])
 
 	for i in range(length):
 		print ""
-		print data[tc[0]][i]+"\t&\t"+data[tc[1]][i]+"\t&\t"+data[tc[2]][i]+"\t&\t"+data[tc[3]][i]+" $\pm$ "+data[tc[4]][i]+"\t&\t"+data[tc[5]][i]+"\t&\t"+data[tc[6]][i]+" $\pm$ "+data[tc[7]][i]+"\t&\t"+data[tc[8]][i]+"\t&\t"+data[tc[9]][i]+" $\pm$ "+data[tc[10]][i]+"\t&\t"+data[tc[11]][i]+" $\pm$ "+data[tc[12]][i]+"\\\\[1ex]"
+		print data[tc[0]][i]+"\t&\t"+data[tc[1]][i]+"\t&\t"+data[tc[2]][i]+"\t&\t"+data[tc[3]][i]+" $\pm$ "+data[tc[4]][i]+"\t&\t"+data[tc[5]][i]+"\t&\t"+data[tc[6]][i]+" $\pm$ "+data[tc[7]][i]+"\t&\t"+data[tc[8]][i]+"\t&\t"+data[tc[9]][i]+" $\pm$ "+data[tc[10]][i]+"\t&\t"+data[tc[11]][i]+" $\pm$ "+data[tc[12]][i]+"\t&\t"+data[tc[13]][i]+"\\\\[1ex]"
 
 
 
@@ -423,8 +437,16 @@ if print_strings == True:
 ######### W R I T E   D A T A ###############
 #############################################
 
-write_data = False
-if write_data == True:		# Write Radio Properties Data Files 
+write_pkl = False
+if write_pkl == True:
+	import pickle as pkl
+	file = open('Radio_Data.pkl','wb')
+	output = pkl.Pickler(file)
+	output.dump(data)
+	file.close()
+
+write_csv = False
+if write_csv == True:		# Write Radio Properties Data Files 
 	file = open('VLA_Sources_Radio_Properties.csv','w')
 	file.write('# EVLA C band C configuration Observation of Serpens South Central Filament in July 2013.\n')
  	file.write('# This file contains radio properties for 18 VLA radio sources in SS.\n')
@@ -470,7 +492,7 @@ if plot == True:
 	# Allow Tex Rendering, its slow though...
 	#mp.rc('text', usetex=True)
 	#mp.rc('font',**{'family':'sans-serif'})
-	infra_seds = np.array([0,1,2,3,6,7,12,13,20,22])
+	infra_seds = np.array([6,9,10,11,12,15,16])
 
 	if oneplot == True:
 		fig = mp.figure()
