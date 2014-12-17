@@ -38,6 +38,7 @@ git add vla_serps_merger_gutermuth_try1.csv
 git add IRAM_sources.reg
 git add Radio_Correlations.py
 git add AAS_2015/225th_AAS_Abstract.rtf
+git add uv_space.png
 
 git add Data/reduction_notes.txt
 
