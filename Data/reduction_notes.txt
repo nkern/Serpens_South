@@ -157,7 +157,7 @@ clean(vis='SERPS_2',imagename='SERPS_2.upper.natural.stokesV',
         weighting='natural',interactive=T,niter=0,mask='SERPS_2.upper.briggs.source_clean.mask')
 
 
-## Try clean with deeper2.mask from Charlottesville
+## Try clean with robust = 0.5
 clean(vis='SERPS_2',imagename='SERPS_2.lower.briggs05.deeper',
         imagermode='csclean',mode='mfs',
         imsize=[1024,1024],cell='0.8arcsec',outframe='LSRK',
@@ -169,6 +169,20 @@ clean(vis='SERPS_2',imagename='SERPS_2.upper.briggs05.deeper',
         imsize=[1024,1024],cell='0.5arcsec',outframe='LSRK',
         spw='8~15:10~54',threshold=0,cyclefactor=1.5,
         weighting='briggs',robust=0.5,interactive=T,niter=0)
+
+## Same but with twice the size
+clean(vis='SERPS_2',imagename='SERPS_2.lower.briggs05.deeper.large',
+        imagermode='csclean',mode='mfs',
+        imsize=[2048,2048],cell='0.8arcsec',outframe='LSRK',
+        spw='0~7:10~54',threshold='0.020mJy',cyclefactor=1.5,mask='SERPS_2.lower.briggs05.deeper.mask',
+        weighting='briggs',robust=0.5,interactive=F,niter=100000)
+
+clean(vis='SERPS_2',imagename='SERPS_2.upper.briggs05.deeper.large',
+        imagermode='csclean',mode='mfs',
+        imsize=[2048,2048],cell='0.5arcsec',outframe='LSRK',
+        spw='8~15:10~54',threshold='0.018mJy',cyclefactor=1.5,mask='SERPS_2.upper.briggs05.deeper.mask',
+        weighting='briggs',robust=0.5,interactive=F,niter=100000)
+
 
 
 ## Turn into FITS and do Primary Beam Correction yo!
@@ -187,6 +201,9 @@ exportfits(imagename='SERPS_2.lower.briggs05.deeper.image.pbcorr',fitsimage='../
 exportfits(imagename='SERPS_2.upper.briggs05.deeper.image.pbcorr',fitsimage='../FITS/SERPS_2.upper.briggs05.deeper.image.pbcorr.fits')
 exportfits(imagename='SERPS_2.lower.briggs05.deeper.image',fitsimage='../FITS/SERPS_2.lower.briggs05.deeper.fits')
 exportfits(imagename='SERPS_2.upper.briggs05.deeper.image',fitsimage='../FITS/SERPS_2.upper.briggs05.deeper.fits')
+exportfits(imagename='SERPS_2.lower.briggs05.deeper.large.image',fitsimage='../FITS/SERPS_2.lower.briggs05.deeper.large.fits')
+exportfits(imagename='SERPS_2.upper.briggs05.deeper.large.image',fitsimage='../FITS/SERPS_2.upper.briggs05.deeper.large.fits')
+
 
 
 

@@ -13,20 +13,19 @@
 \usepackage{indentfirst}	
 \usepackage{fancyhdr}	% Header and Footer
 \usepackage{amssymb}	% More symbols
-%\usepackage{stfloats}		% For Figures on bottom of page
+%\usepackage{stfloats}	% For Figures on bottom of page
 \usepackage{rotating}		% Rotated figures
-
 
 %% Begin Document
 \begin{document}
 %\submitted{Submitted: \today}
-\title{Radio Sources in the Central Filament of the Serpens South Protocluster}
+\title{Radio Properties of Young Protostars in the Central Filament of the Serpens South Infrared Dark Cloud}
 \author{Authors}
 
 %% Abstract %%
 \begin{abstract}
 
-We present 4.14 and 6.31 centimeter continuum observations of the Serpens South protocluster with the Karl G. Jansky Very Large Array in its C configuration. Our focus is a 3.5' x 3.5' area around the central filament. We detect roughly 18 sources, 10 of which are probably protostellar in nature. We characterize the radio emission and put it in context with 2MASS, Spitzer and Herschel data from the region. We find new embedded protostars that have yet to be resolved at shorter wavelengths, and in some cases confirm compact centimeter emission in previously identified starless cores. We compare our radio sources to the known centimeter vs. bolometric luminosity relationship. With our relatively short integration time and weak detection of many more possible radio sources, we speculate that longer, higher resolution radio measurements of the region would yield confident detections of many more protostars at centimeter wavelengths. 
+We present 4.14 and 6.31 centimeter continuum observations of the Serpens South protocluster with the Karl G. Jansky Very Large Array in its C configuration. Our focus is a 3.5' x 3.5' area around the central filament. We detect roughly 18 sources, 10 of which are probably protostellar in nature. We characterize the radio emission and put it in context with 2MASS, Spitzer and Herschel data from the region. We compare our radio sources to the known centimeter vs. bolometric luminosity relationship. With our relatively short integration time and weak detection of many more possible radio sources, we speculate that longer, higher resolution radio measurements of the region would yield confident detections of many more protostars at centimeter wavelengths. [Not finished...]
 
 \end{abstract}
 
@@ -40,13 +39,15 @@ We present 4.14 and 6.31 centimeter continuum observations of the Serpens South 
 \section{Introduction}
 \label{sec:introduction}
 
-	Serpens South is a young stellar cluster that is a part of the broader Aquila Rift extinction feature. It lies south of the Serpens Main cloud and is just West of the bright W40 HII region. Discovered in 2008 by \citet{Gutermuth08} as a part of the Spitzer Space Telescope's Gould Belt Legacy survey, Serpens South has been found to harbor an unusually high ratio of Class I to Class II protostars suggesting it is in a very early phase of cluster formation. Since its discovery, it has become the center of a wide range of scholarship. This has consisted of near, mid and far infrared mappings with Spitzer and Herschel tracing heated dust around protostars \citep{Gutermuth08, Bontemps10}, millimeter mappings with MAMBO on the IRAM 30-meter tracing cold dust \citep{Maury11}, near infrared polarimetry revealing the importance of global magnetic fields in the cluster's formation history \citep{Sugitani11}, molecular outflows studies \citep{Nakamura11, Teixeira12}, and a wealth of spectral line surveys probing filamentary infall \citep{Kirk13, Friesen13, Tanaka13, FernandezLopez14,Nakamura14a}. X-ray studies of Serpens South have yet to be published. Presently only one radio study of Serpens South has been conducted, which used the Karl G. Jansky Very Large Array (VLA) in its A configuration in 2011 (Ortiz-Leon et al. in prep). 
+	Serpens South is a young stellar cluster that is a part of the broader Aquila Rift extinction feature. It lies south of the Serpens Main cloud and is just West of the bright W40 HII region. Discovered in 2008 by \citet{Gutermuth08} as a part of the Spitzer Space Telescope's Gould Belt Legacy Survey, Serpens South has been found to harbor an unusually high ratio of Class I to Class II protostars suggesting it is in a very early phase of cluster formation. 
 	
-	Because of its isolated formation, Serpens South presents a unique opportunity to study the environmental influences on protostars in a young stellar cluster. A multi-wavelength approach will be key to fully understanding to non-normative behaviors of protostars in a high-density environment such as Serpens South.
+	Since its discovery, it has become the center of a wide range of scholarship. This has consisted of near, mid and far infrared mappings with Spitzer and Herschel tracing heated dust around protostars \citep{Gutermuth08, Bontemps10}, millimeter mappings tracing cold dust \citep{Maury11}, near infrared polarimetry revealing the importance of global magnetic fields in the cluster's formation history \citep{Sugitani11}, molecular outflows studies \citep{Nakamura11, Teixeira12}, and a wealth of spectral line surveys probing filamentary infall \citep{Kirk13, Friesen13, Tanaka13, FernandezLopez14, Nakamura14a}. X-ray studies of Serpens South have yet to be published. Presently only one radio study of Serpens South has been conducted, which used the Karl G. Jansky Very Large Array (VLA) in its A configuration in 2011 (Ortiz-Leon et al. in prep). 
+	
+%	Because of its isolated formation, Serpens South presents a unique opportunity to study the environmental influences on protostars in a young stellar cluster. A multi-wavelength approach will be key to fully understanding to non-normative behaviors of protostars in a high-density environment such as Serpens South.
 	 
-	The VLA has been a proven tool in searching for and detecting radio emission around protostars since the early 1990s \citep[e.g.,][]{Curiel89, Anglada98, Reipurth99, Beltran01, Eiroa05, Shirley07, Rodriguez10}. Early radio studies of protostars found an excess of radio emission in comparison to the Lyman-Alpha continuum drop off expected from a normal ZAMS star. Theory and observations have best explained protostellar radio emission as having two components, thermal and non-thermal. Thermal radio emission is generally assumed to be free-free emission created from an HII region. High mass protostars have a high enough internal luminosity to support a compact or ultra-compact HII region, however, low mass protostars do not. Free-free emission around low-mass protostars arises from shocks at the base of protostellar jets that shock the surrounding envelope material. Non-thermal emission around young (Class 0 and I), low and high mass protostars is still not clearly understood; it is thought to come from gyrosynchrotron emission created by stellar magnetic fields. (The gyrosynchrotron can also be magnetic reconnection events in their coronae I believe, check some of the recent Goulds Belt distance papers for their explanations.) %or possibly from jets that produce synchrotron emission in their tails. 
+	Early radio studies of protostars found an excess of radio emission compared to the Lyman-Alpha continuum drop off expected from a normal ZAMS star. Theory and observations have best explained protostellar radio emission as having two components, thermal and non-thermal. Thermal radio emission is generally assumed to be free-free emission created from an HII region. High mass protostars have a high enough internal luminosity to support a compact or ultra-compact HII region, however, low mass protostars do not. Free-free emission around low-mass protostars arises from shocks at the base of protostellar jets that shock the surrounding envelope material. Non-thermal emission around young (Class 0 and I), low and high mass protostars is still not clearly understood; it is thought to come from gyrosynchrotron emission created by stellar magnetic fields. (The gyrosynchrotron can also be magnetic reconnection events in their coronae I believe, check some of the recent Goulds Belt distance papers for their explanations.) %or possibly from jets that produce synchrotron emission in their tails. 
 
-	Towards the two goals of 1) locating new embedded protostars in the Serpens South protocluster and 2) better understanding the mechanisms of protostellar radio emission on a global scale, we carried out EVLA observations of Serpens South's central filament at 4.1 and 6.3 centimeters. In $\S 2$ we present our observations. In $\S 3$ we present our results. In $\S 4$ we discuss the implications of our study and in $\S 5$ we summarize our results.
+	The VLA has been a proven tool for detecting radio emission around protostars since the early 1990s \citep[e.g.,][]{Curiel89, Anglada98, Reipurth99, Beltran01, Eiroa05, Shirley07, Rodriguez10,Dzib13}. With the goal of locating embedded protostars in the Serpens South protocluster, we carried out VLA observations of Serpens South's central filament at 4.1 and 6.3 centimeters. In $\S 2$ we present our observations. In $\S 3$ we present our results. In $\S 4$ we discuss the implications of our study and in $\S 5$ we summarize our results.
 
 \subsection{Distance to Serpens South}
 \label{subsec:distance to serpens south}
@@ -91,18 +92,20 @@ The distances to Serpens South, W40 and the Serpens Main cloud are not agreed up
 \capstarttrue
 %%%%%%%%%%% End Table %%%%%%%%%%%%%%%
 
-We observed Serpens South on July 2, 2013, for 1 hour with the EVLA in its C array configuration. The increased bandwidth of the EVLA allowed us to split our C band observation into two subbands centered at 4.75 GHz (6.31 cm) and 7.25 GHz (4.14 cm), with a bandwidth of 1.024 GHz for each subband. We focused on a 3.5 arcmin x 3.5 arcmin region around Serpens South's central filament, with a phase center positioned at $\alpha(\text{J2000})=18^{\text{h}}30^{\text{m}}05.00^{\text{s}}, \delta(\text{J2000})=-02^{\circ}02^{'}30.0^{''}$. The 6.31 and 4.14 cm images had primary beam diameters of 9.5 and 6.2 arcminutes respectively. Gain calibrations were done by switching to J1804 + 0101 every 10 minutes during our hour-long observation. \autoref{fig:serpsouth_fov} shows Serpens South at 350 micron and outlines our field of view.
+We observed Serpens South on July 2, 2013, for 1 hour with the VLA in its C array configuration. In order to derive a spectral index, we split our C band observation into two subbands centered at 4.75 GHz (6.31 cm) and 7.25 GHz (4.14 cm) with a bandwidths of 1.024 GHz. At 4.75 and 7.25 GHz, our images had primary beam diameters of 9.5 and 6.2 arcminutes respectively. Our observation focused on a 3.5 arcmin x 3.5 arcmin region around Serpens South's central filament, with a phase center positioned at $\alpha(\text{J2000})=18^{\text{h}}30^{\text{m}}05.00^{\text{s}}, \delta(\text{J2000})=-02^{\circ}02^{'}30.0^{''}$ (\autoref{fig:serpsouth_fov}). During our hour-long observation, we switched from Serpens South to J1804 + 0101 every 10 minutes for gain calibrations.  
 
 \begin{figure}[h!]
 \label{fig:serpsouth_fov}
 \centering
 \includegraphics[keepaspectratio=True,scale=.55]{figures/SerpSouth_FOV.eps}
-\caption{\small{Herschel SPIRE 350 $\mu$m greyscale image of Serpens South. Blue and red triangles indicate Spitzer identified Class I and Class II protostars respectively. The green box indicates our region of interest with the EVLA.}}
+\caption{\small{Herschel SPIRE 350 $\mu$m greyscale image of Serpens South outlining its filamentary structure. Blue and red triangles indicate Spitzer identified Class I and Class II protostars respectively. The green box indicates our region of interest with the VLA. The black contour intensity level is set at 365 mJy/sr.}}
 \end{figure}
 
-We manually flagged, calibrated and imaged our data with standard procedures using Common Astronomy Software Applications (CASA) 4.1.0. We used J1331+305 (3C286) as a flux and bandpass calibrator, and J1804+0101 as a gain and phase calibrator ($S_{6.31\text{cm}}$ = 0.70 $\pm$ 0.02 Jy, $S_{4.14\text{cm}}$ = 0.66 $\pm$ 0.02 Jy). We deconvolved the Stokes $I$ images with the Cotton-Schwab algorithm \citep{Schwab84} using the CLEAN method \citep{Hogbom74,Clark80}. We experimented with natural, robust and uniform weighting, and found the best compromise between noise level and source resolution with robust weighting, also known as Briggs weighting \citep{Briggs95}, with a \emph{robust} parameter set to 0.5. The synthesized beam sizes and RMS values for our two images are detailed in \autoref{tab:image_pars}.
+We manually flagged, calibrated and imaged our data with standard procedures using Common Astronomy Software Applications (CASA) 4.1.0. We used J1331+305 (3C286) as a flux and bandpass calibrator, and J1804+0101 as a gain and phase calibrator ($S_{6.31\text{cm}}$ = 0.70 $\pm$ 0.02 Jy, $S_{4.14\text{cm}}$ = 0.66 $\pm$ 0.02 Jy). We deconvolved the Stokes $I$ images with the Cotton-Schwab algorithm \citep{Schwab84} using the CLEAN method \citep{Hogbom74,Clark80}. We experimented with natural, robust and uniform weighting, and found the best compromise between noise level and source resolution using robust weighting \citep{Briggs95}, with the \emph{robust} parameter set to 0.5. The synthesized beam sizes and RMS values for our two images are detailed in \autoref{tab:image_pars}. We performed a primary beam correction on our images by convolving the CLEANed images with the array's modeled flux response.
 
-Observing Serpens South at radio wavelengths is difficult because of the extended and bright HII region W40 directly to the East, which adds to over-resolved flux and increases the RMS noise level in our images. In addition, our short integration time--45 minutes on source--left us with a less than desirable UV coverage at long UV distances. Long UV distance coverage is particularly important because we are trying to resolve point source emission. Further EVLA studies of Serpens South would benefit from extended array configurations and longer integration times.
+%Observing Serpens South at radio wavelengths is difficult because of the extended and bright HII region W40 directly to the East, which adds to over-resolved flux and increases the RMS noise level in our images. In addition, our short integration time--45 minutes on source--left us with a less than desirable UV coverage at long UV distances. Long UV distance coverage is particularly important because we are trying to resolve point source emission. Further VLA studies of Serpens South would benefit from extended array configurations and longer integration times.
+
+
 
 %% Results & Analysis
 \section{Results}
@@ -146,41 +149,42 @@ Observing Serpens South at radio wavelengths is difficult because of the extende
 	}
 \startdata
 
-VLA\_1	&	18 30 09.68	&	-02 00 32.8	&	749 $\pm$ 6	&	718	&	844 $\pm$ 8	&	794	&	0.28 $\pm$ 0.01	&	0.24 $\pm$ 0.02	&	Extragal.?\\[1ex]
+VLA\_1	&	18 30 09.68	&	-02 00 32.8	&	749 $\pm$ 42	&	718	&	844 $\pm$ 43	&	794	&	0.28 $\pm$ 0.08	&	0.24 $\pm$ 0.07	&	Extragal.?\\[1ex]
 
-VLA\_2	&	18 30 04.79	&	-02 00 34.1	&	177 $\pm$ 7	&	138	&	87 $\pm$ 7	&	72	&	-1.67 $\pm$ 0.09	&	-1.55 $\pm$ 0.14	&	Extragal.\\[1ex]
+VLA\_2	&	18 30 04.79	&	-02 00 34.1	&	177 $\pm$ 5	&	138	&	87 $\pm$ 8	&	72	&	-1.67 $\pm$ 0.1	&	-1.55 $\pm$ 0.16	&	Extragal.\\[1ex]
 
-VLA\_3	&	18 30 02.55	&	-02 00 48.5	&	140 $\pm$ 2	&	99	&	116 $\pm$ 10	&	87	&	-0.46 $\pm$ 0.1	&	-0.3 $\pm$ 0.15	&	Extragal.\\[1ex]
+VLA\_3	&	18 30 02.55	&	-02 00 48.5	&	140 $\pm$ 6	&	99	&	116 $\pm$ 12	&	87	&	-0.46 $\pm$ 0.11	&	-0.3 $\pm$ 0.16	&	Extragal.\\[1ex]
 
-VLA\_4	&	18 30 01.53	&	-02 00 51.6	&	1663 $\pm$ 32	&	1178	&	946 $\pm$ 28	&	515	&	-1.33 $\pm$ 0.04	&	-1.96 $\pm$ 0.02	&	Extragal.\\[1ex]
+VLA\_4	&	18 30 01.53	&	-02 00 51.6	&	1663 $\pm$ 50	&	1178	&	946 $\pm$ 55	&	515	&	-1.33 $\pm$ 0.07	&	-1.96 $\pm$ 0.07	&	Extragal.\\[1ex]
 
-VLA\_5	&	18 30 14.79	&	-02 01 27.3	&	106 $\pm$ 5	&	95	&	167 $\pm$ 10	&	173	&	1.07 $\pm$ 0.08	&	1.41 $\pm$ 0.13	&	Extragal.?\\[1ex]
+VLA\_5	&	18 30 14.79	&	-02 01 27.3	&	106 $\pm$ 12	&	95	&	167 $\pm$ 13	&	173	&	1.07 $\pm$ 0.14	&	1.41 $\pm$ 0.14	&	Extragal.?\\[1ex]
 
-VLA\_6	&	18 30 06.62	&	-02 01 28.9	&	79 $\pm$ 7	&	61	&	33 $\pm$ 4	&	56	&	-2.04 $\pm$ 0.16	&	-0.22 $\pm$ 0.23	&	Extragal.\\[1ex]
+VLA\_6	&	18 30 06.62	&	-02 01 28.9	&	79 $\pm$ 3	&	61	&	33 $\pm$ 4	&	56	&	-2.04 $\pm$ 0.15	&	-0.22 $\pm$ 0.24	&	Extragal.\\[1ex]
 
-VLA\_7	&	18 30 05.81	&	-02 01 44.9	&	48 $\pm$ 4	&	40	&	84 $\pm$ 7	&	63	&	1.29 $\pm$ 0.13	&	1.08 $\pm$ 0.31	&	Class I\\[1ex]
+VLA\_7	&	18 30 05.81	&	-02 01 44.9	&	48 $\pm$ 8	&	40	&	84 $\pm$ 8	&	63	&	1.29 $\pm$ 0.2	&	1.08 $\pm$ 0.31	&	Class I\\[1ex]
 
-VLA\_8	&	18 30 06.89	&	-02 02 11.5	&	39 $\pm$ 3	&	46	&	50 $\pm$ 6	&	50	&	0.55 $\pm$ 0.15	&	0.18 $\pm$ 0.29	&	Extragal.?\\[1ex]
+VLA\_8	&	18 30 06.89	&	-02 02 11.5	&	39 $\pm$ 5	&	46	&	50 $\pm$ 6	&	50	&	0.55 $\pm$ 0.19	&	0.18 $\pm$ 0.3	&	Extragal.?\\[1ex]
 
-VLA\_9	&	18 30 02.80	&	-02 02 25.3	&	66 $\pm$ 1	&	50	&	60 $\pm$ 1	&	44	&	-0.22 $\pm$ 0.03	&	-0.31 $\pm$ 0.29	&	Class 0?\\[1ex]
+VLA\_9	&	18 30 02.80	&	-02 02 25.3	&	66 $\pm$ 3	&	50	&	60 $\pm$ 3	&	44	&	-0.22 $\pm$ 0.07	&	-0.31 $\pm$ 0.3	&	Class 0$^{*}$?\\[1ex]
 
-VLA\_10	&	18 30 02.95	&	-02 02 32.2	&	287 $\pm$ 6	&	119	&	260 $\pm$ 17	&	73	&	-0.23 $\pm$ 0.07	&	-1.15 $\pm$ 0.15	&	Unknown\\[1ex]
+VLA\_10	&	18 30 02.95	&	-02 02 32.2	&	287 $\pm$ 14	&	119	&	260 $\pm$ 21	&	73	&	-0.23 $\pm$ 0.1	&	-1.15 $\pm$ 0.16	&	Unknown\\[1ex]
 
-VLA\_11	&	18 30 03.36	&	-02 02 45.8	&	38 $\pm$ 2	&	36	&	73 $\pm$ 4	&	58	&	1.5 $\pm$ 0.09	&	1.14 $\pm$ 0.34	&	Class 0\\[1ex]
+VLA\_11	&	18 30 03.36	&	-02 02 45.8	&	38 $\pm$ 6	&	36	&	73 $\pm$ 5	&	58	&	1.5 $\pm$ 0.17	&	1.14 $\pm$ 0.34	&	Class 0\\[1ex]
 
-VLA\_12	&	18 30 04.11	&	-02 03 02.1	&	30 $\pm$ 2	&	24	&	79 $\pm$ 2	&	58	&	2.31 $\pm$ 0.09	&	2.06 $\pm$ 0.48	&	Class 0$^{*}$\\[1ex]
+VLA\_12	&	18 30 04.11	&	-02 03 02.1	&	30 $\pm$ 8	&	24	&	79 $\pm$ 4	&	58	&	2.31 $\pm$ 0.27	&	2.06 $\pm$ 0.48	&	Class 0\\[1ex]
 
-VLA\_13	&	18 30 03.54	&	-02 03 08.4	&	186 $\pm$ 1	&	178	&	231 $\pm$ 3	&	227	&	0.51 $\pm$ 0.02	&	0.58 $\pm$ 0.07	&	Class 0$^{*}$\\[1ex]
+VLA\_13	&	18 30 03.54	&	-02 03 08.4	&	186 $\pm$ 11	&	178	&	231 $\pm$ 12	&	227	&	0.51 $\pm$ 0.08	&	0.58 $\pm$ 0.1	&	Class 0\\[1ex]
 
-VLA\_14	&	18 30 03.84	&	-02 03 12.2	&	31 $\pm$ 0	&	37	&	83 $\pm$ 2	&	61	&	2.29 $\pm$ 0.04	&	1.19 $\pm$ 0.33	&	Class 0$^{*}$\\[1ex]
+VLA\_14	&	18 30 03.84	&	-02 03 12.2	&	31 $\pm$ 4	&	37	&	83 $\pm$ 4	&	61	&	2.29 $\pm$ 0.15	&	1.19 $\pm$ 0.33	&	Class 0$^{*}$\\[1ex]
 
-VLA\_15	&	18 30 04.60	&	-02 03 14.1	&	68 $\pm$ 1	&	52	&	49 $\pm$ 4	&	51	&	-0.74 $\pm$ 0.09	&	-0.08 $\pm$ 0.27	&	Extragal.\\[1ex]
+VLA\_15	&	18 30 04.60	&	-02 03 14.1	&	68 $\pm$ 2	&	52	&	49 $\pm$ 4	&	51	&	-0.74 $\pm$ 0.1	&	-0.08 $\pm$ 0.28	&	Extragal.\\[1ex]
 
-VLA\_16	&	18 30 03.25	&	-02 03 26.6	&	63 $\pm$ 2	&	58	&	55 $\pm$ 1	&	65	&	-0.28 $\pm$ 0.04	&	0.27 $\pm$ 0.23	&	Class II\\[1ex]
+VLA\_16	&	18 30 03.25	&	-02 03 26.6	&	63 $\pm$ 3	&	58	&	55 $\pm$ 3	&	65	&	-0.28 $\pm$ 0.08	&	0.27 $\pm$ 0.24	&	Class II\\[1ex]
 
-VLA\_17	&	18 30 01.32	&	-02 03 42.9	&	146 $\pm$ 3	&	135	&	161 $\pm$ 4	&	167	&	0.22 $\pm$ 0.04	&	0.5 $\pm$ 0.1	&	Class I\\[1ex]
+VLA\_17	&	18 30 01.32	&	-02 03 42.9	&	146 $\pm$ 8	&	135	&	161 $\pm$ 9	&	167	&	0.22 $\pm$ 0.08	&	0.5 $\pm$ 0.12	&	Class I\\[1ex]
 
-VLA\_18	&	18 30 09.40	&	-02 04 08.8	&	170 $\pm$ 3	&	182	&	167 $\pm$ 10	&	134	&	-0.04 $\pm$ 0.07	&	-0.71 $\pm$ 0.09	&	Extragal.?
+VLA\_18	&	18 30 09.40	&	-02 04 08.8	&	170 $\pm$ 9	&	182	&	167 $\pm$ 13	&	134	&	-0.04 $\pm$ 0.1	&	-0.71 $\pm$ 0.11	&	Extragal.?
+
 
 
 \enddata
@@ -188,52 +192,52 @@ VLA\_18	&	18 30 09.40	&	-02 04 08.8	&	170 $\pm$ 3	&	182	&	167 $\pm$ 10	&	134	&	-
 \tablenotetext{b}{Flux values from images deconvolved with Briggs weighting, \emph{robust}=0.5 \citep{Briggs95}.}
 \tablenotetext{c}{Spectral index of integrated flux from 6.3 to 4.1 cm, see \autoref{sec:results} for details on calculation.}
 \tablenotetext{d}{Spectral index of peak flux from 6.3 to 4.1 cm.}
-\tablenotetext{e}{Classification of source. Unless otherwise noted, Class 0 classifications come from Herschel \citep{Bontemps10} and Class I \& II  from Spitzer \citep{Gutermuth08}. (?) denotes uncertaintity. ($^{*}$) denotes classified by this work.}
+\tablenotetext{e}{Classification of source. Unless otherwise noted, Class 0 classifications come from Herschel \citep{Bontemps10} and Class I \& II  from Spitzer \citep{Gutermuth08}. (?) denotes uncertainty. ($^{*}$) denotes classified by this work.}
 
 \end{deluxetable*}
 \capstarttrue
 %%%%%%%%%%% End Table %%%%%%%%%%%%%%%
 
-
 \subsection{Radio Source Selection}
 \label{sec:radio source selection}
 
-In choosing our sources, we restricted ourself to a circular region centered on our phase center and extending out to 50\% of the primary beam strength. We chose our sources based on their strength in our 4.1 and 6.3 cm maps, their possible spatial alignment with infrared sources, and by referencing a source extracted sample using Sextractor \citep{Bertin96}. We took only sources that had at least a $4\sigma$ strength in the 4.1 cm image, and were left with a total of 18 radio sources. We note that we found $\sim$6 sources at the $2\sigma$ level that aligned within 2 arcsecond of an infrared association, however, we do not consider them strong detections and do not include them in our final source list. As stated in \autoref{sec:observations}, further observations with longer integration will likely be able to confidently detect these protostellar radio sources.
+Out of the 50+ Spitzer identified Class I and II YSOs located in and around Serpens South's central filament, we detect 18 radio sources at our sensitivity level. In choosing our sources, we restricted ourselves to a circular region centered on our phase center extending out to 50\% of the primary beam response. We chose our sources based on their appearance and strength in both our 4.1 and 6.3 cm images, their spatial proximity to infrared associations, and by referencing a source extracted sample using Sextractor \citep{Bertin96}. We only took sources that had at least a $4\sigma$ detection in the 4.1 cm image. We note that we found $\sim$6 sources at the $2\sigma$ level that aligned within 2 arcsecond of infrared associations, however, we do not consider them strong detections and do not include them in our final source list. Further observations with higher sensitivity will likely be able to confidently detect these protostellar radio sources.
 
-\begin{figure}[h!]
+\begin{figure}
 \label{fig:serpsouth_fov_contour}
 \centering
 \includegraphics[keepaspectratio=True,scale=.35]{figures/SerpSouth_fov_contour.eps}
-\caption{\small{Serpens South radio continuum at 6.3 cm, focused in on green box from \autoref{fig:serpsouth_fov}. Radio contours start at 4$\sigma$ and end at 50$\sigma$. The loose black contour is the same SPIRE 350 $\mu$m contour found in \autoref{fig:serpsouth_fov}. 
+\caption{\small{Serpens South's central filament at 4.1 cm, focused in on the green box from \autoref{fig:serpsouth_fov}. Radio contours start at 4$\sigma$ and end at 50$\sigma$. The loose black contour is the same SPIRE 350 $\mu$m contour found in \autoref{fig:serpsouth_fov}. 
 }}
 \end{figure}
 
 \begin{figure*}
 \label{fig:zoom}
 \epsscale{1.15}
-
 \plottwo{figures/SerpSouth_zoom_contour.eps}{figures/SerpSouth_zoom_color_contour.eps}
-\caption{{\bfseries Left}: Radio continuum at 6.3 cm focused in on red box from \autoref{fig:serpsouth_fov_contour}. Blue and red crosses correspond to Spitzer identified Class I and II protostars. Green crosses correspond to 1.2 mm dust peaks identified by IRAM. {\bfseries Right}: Identical contours on the left but with a background PACS 70 $\mu$m image. The radio contour beam size is shown to the lower-left.}
+\caption{{\bfseries Left}: Radio continuum of our sources VLA 6 to VLA 17 at 4.1 cm. Blue and red crosses correspond to Class I and II protostars, respectively, identified by Spitzer. Green crosses correspond to 1.2 mm dust peaks identified by IRAM. {\bfseries Right}: Identical contours on the left but with a background PACS 70 $\mu$m image. The radio image beam size is shown to the lower-left.}
 \end{figure*}
 
-We ran source extractions on the spatial positions of our final source list over the JHK bands of 2MASS, the four IRAC bands of Spitzer, the 24 $\mu$m MIPS band on Spitzer, and the 70 $\mu$m PACS band on Herschel. We used a 2 arcsecond maximum matching tolerance for these extractions. Apertures and adopted corrections were consistent with the HOPS survey. 
+We used CASA's IMFIT function to fit 2D gaussians to our chosen radio sources. For strong and relatively isolated sources, we can reasonably rely on the 2D gaussian integrated flux densities. For somewhat blended sources, such as VLA 9 and 14, manually-calculated peak fluxes are likely more reliable for spectral index calculations. Integrated flux errors were calculated by adding in quadrature the flux error output from IMFIT with an assumed 5\% systematic flux calibration error. Peak flux errors were calculated by adding in quadrature the relative error of the image RMS with an assumed 5\% systematic flux calibration error.
 
-Eight of our radio sources have at least one infrared source match from 1.25 $\mu$m to 70 $\mu$m, four of which spatially match Spitzer identified Class I/II protostars within 1 arcsecond. A total of ten out of our 18 sources have signs that indicate they are protostellar in nature. One of our radio sources, VLA 12, matches a 1.2 mm source within 1 arcsecond identified by \citep{Maury11}, which they quote as starless.
+We cross-referenced our radio source positions with the 2MASS catalogue, and ran source extractions over the four IRAC bands of Spitzer, the 24 $\mu$m MIPS band on Spitzer, and the 70 $\mu$m PACS band on Herschel. We used a 2 arcsecond maximum matching tolerance for these extractions. Apertures and adopted corrections were consistent with the HOPS survey (Gutermuth et al. in prep).
 
-We can calculate the number of random background sources we would expect to find in our images. We use the formulation found in \citet{Shirley07}, who draw from radio studies done by \citet{Fomalont91}. The density of random background radio sources above a flux limit of $S\ \mu$Jy at 6 cm is given by $N(>S) = 0.42\cdot(S/30\ \mu \text{Jy})^{-1.18}$ arcmin$^{-2}$. Therefore, the total number of sources with flux $S$ greater than 50 $\mu$Jy at 6 cm is 0.229 arcmin$^{-2}$. This leads to a 0.4\% chance that a background source falls inside any one synthesized beam centered on a compact radio source, and gives us on average $\sim$9 background sources above 50 $\mu$Jy within our 3.5' x 3.5' region of interest. This agrees with our analysis, as we find roughly 8 sources that are likely background sources.
+Eight of our radio sources have at least one infrared source match from 1.25 $\mu$m to 70 $\mu$m, four of which spatially match a Spitzer identified Class I or II protostar within 1 arcsecond. A total of ten out of our 18 sources have signs that indicate they are protostellar in nature. One of our radio sources, VLA 12, matches a 1.2 mm source within 1 arcsecond identified by \citep{Maury11}, which they identify as Class 0.
 
+We can calculate the number of random background sources we would expect to find in our images. We use the formulation found in \citet{Shirley07} and \citet{Dzib13}, who draw from radio studies done by \citet{Fomalont91}. The density of random background radio sources above a flux limit of $S\ \mu$Jy at 6 cm is given by 
+\begin{equation*}
+n(>S) = 0.42\pm0.05\left(\frac{S}{30\ \mu \text{Jy}}\right)^{-1.18\pm0.19} \text{arcmin}^{-2}
+\end{equation*}
+Therefore, the total number of sources with flux $S$ greater than 30 $\mu$Jy at 6 cm is 0.42 arcmin$^{-2}$. This leads to a 0.7\% chance that a background source falls inside a 4.8 x 3.9 arcsec synthesized beam centered on a compact radio source. It also gives us on average $\sim6\pm1$ background sources within our 3.5' x 3.5' region of interest above a 3$\sigma$ level. We find roughly 5 to 8 sources that we identify as extragalactic, which is at worst within 2 standard deviations from the expectation.
 
-%\subsection{Spectral Indices}
-%\label{sec:spix}
-%A spectral index is the slope of the flux density in log space between two wavelengths. At radio wavelengths, the spectral index is defined as
-%
-%\begin{equation}
-%\label{eq:radio_spix}
-%\alpha_{\text{radio}} = \frac{\ln({S_{\lambda_{1}}/S_{\lambda_{2}})}}{\ln({\lambda_{2}/\lambda_{1}})}
-%\end{equation}
-%where $\lambda_{2} > \lambda_{1}$ \citep{Shirley07}. Note that we have defined $S_{\lambda}$ in terms of a flux density (e.g. Jansky) not a flux (e.g. $\lambda S_{\lambda}$ or $\nu S_{\nu}$). Theoretical studies have shown that 
-%
-
+\subsection{Spectral Indices}
+\label{sec:spix}
+At radio wavelengths, the spectral index is defined as
+\begin{equation}
+\label{eq:radio_spix}
+\alpha_{\text{radio}} = \frac{\ln({S_{\lambda_{1}}/S_{\lambda_{2}})}}{\ln({\lambda_{2}/\lambda_{1}})}
+\end{equation}
+where $\lambda_{2} > \lambda_{1}$ \citep{Shirley07}. Note that we have defined $S_{\lambda}$ in terms of a flux density (e.g. Jansky) and not a flux (e.g. $\lambda S_{\lambda}$ or $\nu S_{\nu}$). Flat radio spectral indices ($\alpha > -0.1$) are generally indicative of optically thin free-free emission, while rising indices ($\alpha \sim 2.0$) are representative of optically thick free-free emission \citep{Anglada98}. 
 
 \subsection{Radio Source Classifications}
 \label{sec:radio source classifications}
@@ -241,56 +245,100 @@ We can calculate the number of random background sources we would expect to find
 \newcommand{\sourcenote}[1]{\textit{#1 ---}}
 
 \sourcenote{Extragalactic Sources}
-VLA 2, 3, 4, 6, and 15 are very likely extragalactic in nature. They have no visible associations from 1$\mu$m to 70$\mu$m and have negative radio spectral indices indicative of non-thermal synchrotron emission. 
+VLA 2, 3, 4, 6, and 15 are very likely extragalactic in nature. They have no visible associations from 1$\mu$m to 70$\mu$m and have negative radio spectral indices indicative of non-thermal synchrotron emission typical of a galaxy's radio spectrum.
 
 \sourcenote{Unclear Sources}
-While VLA 1 and 5 have no infrared, far-infrared or millimeter associations and are isolated from the filament, they have a flat and rising radio spectral indices suggesting optically thin and thick free-free emission respectively. Although galaxies can produce free-free emission from large HII clouds, the dominant component of a galaxy's radio emission output comes from non-thermal synchrotron emission with a declining spectrum. Nonetheless, we tentatively classify these sources as extragalactic due to their lack of associations. 
+While VLA 1 and 5 have no infrared, far-infrared or millimeter associations and are isolated from the filament, they have a flat or rising radio spectral indices suggesting optically thin or thick free-free emission respectively. Although galaxies can produce free-free emission from large HII clouds, the dominant component of a galaxy's radio emission output comes from non-thermal synchrotron emission with a declining spectrum. Moreover, in \citet{Dzib13}'s study of 190 radio sources in the Ophiuchus star forming cloud, they didn't find a single extragalactic source with a radio spectral index larger than $\sim$0. Nonetheless, we tentatively classify these sources as extragalactic due to their lack of any association at shorter wavelengths. 
 
-VLA 18 is spatially distinct from the filament but has a flat radio spectral index and actually has three very weak infrared associations at 3.6, 4.5 and 5.8 $\mu$m. However, we speculate that these associations are coincidental and tentatively classify VLA 18 as extragalactic. 
+VLA 18 is spatially distinct from the filament but has a flat radio spectral index and actually has three very weak infrared associations at 3.6, 4.5 and 5.8 $\mu$m. However, we speculate that these associations are coincidental due to their odd linear behavior, and tentatively classify VLA 18 as extragalactic. 
 
-\begin{figure}
-\label{fig:serpsouth_vla10_contour}
-\centering
-\includegraphics[keepaspectratio=True,scale=.3]{figures/SerpSouth_VLA10_contour.eps}
-\caption{\small{Zoom in of the elongated VLA 10 source. Blue solid and red dashed contours correspond to 4.1 and 6.3 cm images respectively. The lower-left beam is the 4.1 cm beam size. Blue crosses represent Spitzer identified Class I sources.
-}}
-\end{figure}
+We are unsure as to the nature of VLA 10. We treat the whole elongated structure as one source. At our higher resolution 4.1 cm image, we can resolve two distinct emission components that are blended at our lower resolution 6.3 cm image (\autoref{fig:vla10 and vla12}). We cannot confidently rely on our gaussian fitted fluxes due to the morphology of the source. For VLA 10's peak flux, we used the Northern structure in the 4.1 cm map. Although our measured peak fluxes are highly uncertain due to confusion at 6.3 cm, VLA 10's peak flux derived spectral index is strongly negative suggesting non-thermal emission and an extragalactic classification. However, VLA 10's Southern structure is also within 2 arcseconds of a Spitzer identified Class I source. This raises the possibility that the Northern structure is a background source while the Southern structure is a Class I protostellar radio source. 
 
-We are unsure as to the nature of VLA 10. We treat the whole elongated structure as one source. At our higher resolution 4.1 cm image, we can resolve two distinct emission components that are blended at our lower resolution 6.3 cm image (\autoref{fig:serpsouth_vla10_contour}). We cannot confidently rely on our gaussian fitted fluxes or spectral index due to the morphology of the source. For VLA 10's peak flux, we used the Northern structure in the 4.1 cm map. Although our measured peak fluxes are highly uncertain due to confusion at 6.3 cm, VLA 10's peak flux derived spectral index is strongly negative suggesting non-thermal emission and an extragalactic classification. However, VLA 10's Southern structure is also within 2 arcseconds of a Spitzer identified Class I source. This raises the possibility that the Northern structure is a background source while the Southern structure is a Class I protostellar radio source. 
+Another possibility is that VLA 10 is representative of an outflow shock emanating from either the Southern VLA 10 structure or from sources VLA 11 or 9. An H$_{2}$ study conducted by \citet{Teixeira12}, however, labeled VLA 11 as an outflow source with a jet running from North-East to South-West, almost perpendicular to the direction necessary for it to be an outflow source powering VLA 10's emission. Further evidence that would support a non-extragalactic classification of both the South and North structures of VLA 10 is the fact that the dust seen at and longward of 70 $\mu$m neatly fits around VLA 10's elongated morphology, as seen in \autoref{fig:zoom}. 
 
-Another possibility is that VLA 10 is representative of an outflow shock emanating from either the Southern VLA 10 structure or from sources VLA 11 or 9. An H$_{2}$ study conducted by \citet{Teixeira12}, however, labeled VLA 11 as an outflow source with a jet running from North-East to South-West, almost perpendicular to the direction necessary for it to be an outflow source powering VLA 10's emission. Further evidence that would support a non-extragalactic classification of both the South and North structures of VLA 10 is the fact that the cold dust seen at and longward of 70 $\mu$m neatly fits around VLA 10's elongated morphology, as seen in \autoref{fig:zoom}.
+Lastly, the fact that VLA 10 is elongated anti-parallel to the synthesized beam's natural eccentricity emphasizes the fact that the morphology is true source structure and not artificial. Higher resolution observations should be able to spatially separate and resolve the individual emission components and better determine the nature behind its radio signal.
 
 \sourcenote{Protostellar Sources}
-The remainder of our 18 sources, VLA 7, 9, 11, 12, 13, 14, 16 and 17 are likely protostellar in nature. With the exception of VLA 9, all of these sources have either flat or rising radio spectral indices indicative of optically thin or thick free-free emission. We classify VLA 12, 13 and 14 as three newly identified embedded Class 0 protostars, separated form each other by less than 15 arcseconds.
+The remainder of our sources, VLA 7, 9, 11, 12, 13, 14, 16 and 17, are likely protostellar in nature. VLA 7, 11, 12, 13, 16, and 17 are associated with Spitzer and Herschel identified Class 0, I and II protostars. All sources have either flat or rising radio spectral indices indicative of optically thin or thick free-free emission expected from an ionized plasma created by protostellar processes.
+
+\begin{figure*}
+\label{fig:vla10 and vla12}
+\epsscale{1.17}
+\plottwo{figures/SerpSouth_VLA10_contour.eps}{figures/SerpSouth_VLA12_contour.eps}
+\caption{
+{\bfseries Left}: Zoom-in of the elongated VLA 10 source. Blue solid and red dashed contours correspond to 4.1 and 6.3 cm images, respectively, and start at the 4$\sigma$ level. The lower-left beam is the 4.1 cm beam size. Blue crosses represent Spitzer identified Class I sources.
+{\bfseries Right}: Zoom-in of VLA 12 and surrounding sources. Blue solid contour is 4.1 cm data and red dashed contour is 6.3 cm data. Both radio contours start at their respective 3$\sigma$ level. Blue crosses are Spitzer identified Class I sources. Green cross is IRAM 1.2 mm identified Class 0 source.
+}
+\end{figure*}
+
+VLA 7 and 17 correspond to Spitzer Class I sources and have an average radio spectral index of $0.8 \pm 0.2$. VLA 16 is our only radio source associated with a Spitzer Class II protostar. Its peak flux-derived spectral index is likely more reliable than its integrated flux-derived spectral index due to weak spurious signal in close proximity at 6.3 cm.
+
+While the infrared source associated with VLA 11 was initially classified as Class I with Spitzer data, it was later classified as Class 0 with Herschel images \citep{Bontemps10}. We report a confident detection  of compact radio emission at both 6.3 and 4.1 cm with a rising spectrum suggesting optically thick free-free emission, which agrees with the notion that it is perhaps more embedded than previously thought. 
+
+VLA 12 is not visible short-ward of 24 microns. It is, however, the peak structure of diffuse 1.2 mm emission tracing cold dust and was therefore classified as a Class 0 source \citep{Maury11}. This classification used a 25 arcsecond FWHM fit, which encompassed the infrared sources associated with VLA 13 and 14. Here, we confirm VLA 12's Class 0 classification with the detection of compact radio emission, which \citet{Andre00} list as one of the qualifications for a Class 0 protostar.
+
+For VLA 13, we find infrared associations on the IRAC 2, 3 and 4 bands but not on the IRAC 1 band at 3.6 $\mu$m. We report an infrared spectral index from 8 to 24 $\mu$m of $\sim$2.4, which, according to \citet{Lada87}'s classification scheme, would make it a Class I protostar. Herschel studies, however, classify it as a Class 0 source \citep{Bontemps10}. While we classify it as Class 0, it may in fact be in a late Class 0 phase transitioning to a Class I protostar.
+
+In far-infrared images from 24 to 250 $\mu$m, it is clear that VLA 14 lies within or around a gaseous envelope (\autoref{fig:infrared_associations}). However, because of the low resolution of the PACS and SPIRE images, we do not retrieve any source extractions within 2 arcseconds of its radio peak. Even in the MIPS 24 $\mu$m image, it is not seen as an individual source but rather an extension of the emission structure from VLA 13 (\autoref{fig:infrared_associations}). This is likely why previous studies missed this source, and implies that if a compact source exists it is likely extremely young or extremely embedded. Here, we show that VLA 14 is a distinct radio source with a steeply rising radio spectral index of $\sim 1.2$, revealing the presence of an embedded Class 0 protostar. The 5 arcsecond separation between VLA 13 and 14 corresponds to an angular separation of only 0.01 pc ($\sim$2,000 AU) if Serpens South lies at a distance of 429 pc away. However, VLA 13 could lie much further away from VLA 14 in 3D coordinates.
+
+We also tentatively classify VLA 9 as another Class 0 source, although this is somewhat speculative. Like VLA 14, it has no strong infrared associations--although it does lie within 5 arcseconds of a weak infrared source. Also similar to VLA 14, VLA 9 is placed in a region of high protostellar density and falls in front of diffuse far-infrared emission. Its 6.3 cm emission does, however, begin to blend with VLA 10 at the 3$\sigma$ level, raising the possibility that it is tied to the structure powering VLA 10's radio emission (\autoref{fig:vla10 and vla12}).
+
 
 %% Discussion
 \section{Discussion}
+\label{sec:discussion}
 
 \subsection{Protostars in the Central Filament}
-Spitzer observations revealed dozens of Class I and II protostars spatially correlated to the central filament \citep{Gutermuth08}. Herschel observations revealed colder clumps of dust corresponding to younger Class 0 protostars \citep{Bontemps10}, however, with their poor spatial resolution they cannot reasonably resolve individual compact cores. 
+\label{sec:central filament}
 
+[Comment on how out of 50+ Spitzer identified Class I and II protostars and half a dozen Class 0 protostars identified by Herschel in our field of view, we only confidently detect $\sim6$, and weakly detect $\sim11$. Anything to be said about the clustering of the three Class 0 protostars in the center of our field of view? VLA 13 and 14 have an angular separation of only 0.01 pc, anything interesting we can say?]
 
-\subsection{$L_{\text{infrared}}$ and $L_{\text{bol}}$ Relationship}
+\subsection{Sources of Outflow}
+\label{sec:outflows}
+Radio continuum images have shown elongation with respect to radio jets etc etc...
 
-The internal luminosity $L_{\text{int}}$ of a protostar is defined as the total luminosity from the protostar and its circumstellar disk if present. The bolometric luminosity of a source can then defined as $L_{\text{bol}}$ = $L_{\text{int}}$ + $L_{\text{ext}}$, where the external luminosity comes from the heated protostellar envelope. It is estimated that $L_{\text{ext}}$ contributes to $L_{\text{bol}}$ on the order of 0.1 $L_{\odot}$ \citet{Dunham08} developed a scaling law relating an embedded protostar's 70 $\mu$m flux to its internal luminosity $L_{\text{int}}$.
+H$_{2}$ $\nu$ = 1--0 S(1) 2.122 $\mu$m line imaging conducted by \citet{Teixeira12} showed that the infrared sources associated with VLA 11, 13 and 17 are sources driving large scale outflows. VLA 11 and 13's radio emission structures at 4.1 cm mildly reflect this, as they are slightly elongated in the proposed direction of outflow (\autoref{fig:vla10 and vla12}). VLA 17's morphology does not exceed the natural eccentricity of the beam. Future sub-arcsecond resolution observations will likely be able to resolve the radio-loud jets at the center of VLA 11 and 13.
 
+\citet{Nakamura11} carried out CO (J = 3--2) and HCO$^{+}$ (J = 4--3) observations towards Serpens South to map the broad-scale outflow from the central filament.  
 
+We can't directly correlate outflow and envelope mass properties due to blending of dust sources etc etc.
 
 \subsection{The $S_{\text{radio}}$ and $L_{\text{bol}}$ Relationship}
+\label{sec:correlations}
 
+-- talk about anglada, beltran, shirley, scaife and others who have plotted Sradio vs. Lbol
 
+-- mention that we cannot easily derive Lbol estimates due to source blending
 
+-- talk about Kryukova and Dunham relationship, mention errors etc.
 
-\subsection{Sources of Molecular Outflow}
+-- present plots
 
-
+\subsection{VeLLOs}
+\label{sec:vellos}
+The internal luminosity $L_{\text{int}}$ of a protostar is defined as the total luminosity from the protostar and its circumstellar disk if present. The bolometric luminosity of a source can then defined as $L_{\text{bol}}$ = $L_{\text{int}}$ + $L_{\text{ext}}$, where the external luminosity comes from the heated protostellar envelope. It is estimated that $L_{\text{ext}}$ contributes to $L_{\text{bol}}$ on the order of 0.1 $L_{\odot}$ \citet{Dunham08} developed a scaling law relating an embedded protostar's 70 $\mu$m flux to its internal luminosity $L_{\text{int}}$.
 
 
 
 %% Conclusions
 \section{Conclusions}
+\label{sec:conclusions}
 
+present major conclusions
 
+-- new protostars, better estimates of protostellar positions
+
+-- weak detection of a few more protostars, no evident detection of many protostars
+
+-- highly clustered and fragmentation of gas/dust evident
+
+-- outflow elongation for two sources
+
+-- Sradio and Lbol relationship
+
+-- VeLLO
+
+-- point to future studies
 
 %% Bibliography %%
 \bibliographystyle{apj}		
@@ -299,34 +347,87 @@ The internal luminosity $L_{\text{int}}$ of a protostar is defined as the total 
 
 
 \appendix
-
-{\large To Include in Paper:} \\[.1in]
-
--- Discussion on radio spectral indices and their implications to emission \\
-
--- Does optically thick radio emission from Spitzer Class I/II source mean anything particularly interesting? B/c it is Spitzer identified, does it mean that it comes not from an ultra-compact region but from some other mechanism? \\
-
--- Discussion on VeLLOs in sample. \\
-
--- L\_int correlations? \\ \\
-
--- Make radio\_alpha vs. L\_bol or L\_int graph?\\
-
--- Fit Spitzer end of SED to get more accurate L\_MIR ? \\
  
-{\large Questions:} \\[.1in]
+{\large Questions I Still Need Answers To:} \\[.1in]
 
--- What does Rob say about SS distance?\\
 
--- What paper should I quote for infrared source extraction photometry analysis?\\
+-- Does optically thick thermal radio emission ($\alpha_{radio} > 1.0$) mean that the source is ``embedded''? In other words, can a protostellar source still be considered ``embedded'' in the sense that it is invisible at IRAC wavelengths, but have a radio spectral index indicative of optically thin thermal emission ($\alpha_{radio} \sim0$)?\\
 
--- Do we have to worry about vibrational dust emission in our 4.1 cm data?\\
+-- Is it even physically possible for VLA 10 to be a radio galaxy outflow source? In other words, is a 10 arcsecond angular extent on the size scale of typical radio galaxy jets? \\
 
--- What can we say about optically thick radio sources that match Spitzer sources? Embedded Class I source? \\
+-- Can we get a table of Herschel protostars from Bontemps et al. 2010? Reason being is because I want to say if protostars have previously been detected or not.\\
 
--- Is it even physically possible for VLA 10 to be a radio galaxy outflow source? In other words, is a 10 arcsecond angular extent on the size scale of typical radio galaxy outflows? \\
+-- Are my classifications okay? Specifically, VLA 1, 5, 8, 9, 10 and 18? \\
 
--- Can we get a table of Herschel protostars from Bontemps et al. 2010? Other papers, Teixeira12, Nakamura14 and more, quote protostellar classifications of individual protostars from Herschel data as if they had access to a Bontemps2010 catalogue. Perhaps they just asked the authors and got access to it. Ideally, we would want a catalogue of Class 0 protostars identified by Herschel with their flux values from 250 - 500 $\mu$m, the adopted FWHM apertures in the source extraction and Lbol and Menv properties they subsequently derived.\\
+-- What does MIPS 24 $\mu$m emission trace around protostars, heated dust from disk?\\
+
+-- Can we say anything about the fact that out of 50+ Spitzer identified Class I and II protostars, only $\sim$6 show strong radio emission? What is up with that? Does this say anything about relative masses of these protostars (perhaps all mid-low mass?) \\
+
+-- Are the images to a high enough sensitivity to which I can say they are ``deep'' ? \\
+
+\newpage
+\section{Additional Figures}
+
+\begin{figure}[h!]
+\label{fig:serpsouth_upper_gaussfits}
+\centering
+\includegraphics[keepaspectratio=True,scale=.5]{figures/SerpSouth_Upper_GaussFits.eps}
+\caption{\small{4.1 cm map with 2D gaussian fits from CASA's IMFIT routine. Radio contours start at 3$\sigma$ level.
+}}
+\end{figure}
+
+\begin{figure}[h!]
+\label{fig:serpsouth_lower_gaussfits}
+\centering
+\includegraphics[keepaspectratio=True,scale=.5]{figures/SerpSouth_Lower_GaussFits.eps}
+\caption{\small{6.3 cm map with 2D gaussian fits from CASA's IMFIT routine. Radio contours start at 3$\sigma$ level.
+}}
+\end{figure}
+
+\begin{figure}
+\label{fig:infra_SEDs}
+\centering
+\includegraphics[keepaspectratio=True,scale=.6]{figures/Infra_SEDs_OnePlot.eps}
+\caption{\small{All VLA sources that have any catalogued infrared associations. Infrared bands are 2MASS H and K from 1.1 - 2.2 $\mu$m, IRAC 1, 2, 3 and 4 from 3.6 - 8.0 $\mu$m, MIPS 24$\mu$m and PACS 70$\mu$m. 
+}}
+\end{figure}
+
+\begin{figure}
+\label{fig:infrared_associations}
+\epsscale{1.1}
+\plottwo{figures/SerpSouth_Spitz36_Contour.eps}{figures/SerpSouth_Spitz58_Contour.eps}
+\plottwo{figures/SerpSouth_Spitz80_Contour.eps}{figures/SerpSouth_Spitz24_Contour.eps}
+\plottwo{figures/SerpSouth_PACS70_Contour.eps}{figures/SerpSouth_SPIRE250_Contour.eps}
+\caption{\small{ 4.1 cm radio contours plotted over infrared and far-infrared images ranging from 3.6 to 250 $\mu$m. Radio contours start at the 4$\sigma$ level, with the deconvolved beam size shown at lower-left. {\bfseries (a)} Spitzer IRAC 3.6 $\mu$m image. {\bfseries (b)} Spitzer IRAC 5.8 $\mu$m image. {\bfseries (c)} Spitzer IRAC 8.0 $\mu$m image. {\bfseries (d)} Spitzer MIPS 24 $\mu$m image. {\bfseries (e)} Herschel PACS 70 $\mu$m image. {\bfseries (a)} Herschel SPIRE 250 $\mu$m image.
+}}
+\end{figure}
+
+\begin{figure}
+\label{fig:spix_class}
+\centering
+\includegraphics[keepaspectratio=True,scale=.6]{figures/Spix_Class.eps}
+\caption{\small{Radio spectral index of sources as a function of classification.
+}}
+\end{figure}
+
+\begin{figure}
+\label{fig:shirley36_corr}
+\centering
+\includegraphics[keepaspectratio=True,scale=.6]{figures/Shirley36_Correlation.eps}
+\caption{\small{Figure 2 from \citet{Shirley07} showing the 3.6 cm vs. Bolometric Luminosity correlation for protostars. Five of our protostellar sources are overlaid with a bolometric luminosities derived from a correlation that utilizes the protostars' mid-infrared luminosity \citep{Kryukova12}. Figure reproduced from \citet{Shirley07} with permission.
+}}
+\end{figure}
+
+\begin{figure}
+\label{fig:shirley60_corr}
+\centering
+\includegraphics[keepaspectratio=True,scale=.6]{figures/Shirley60_Correlation.eps}
+\caption{\small{Figure 2 from \citet{Shirley07} showing the 6.0 cm vs. Bolometric Luminosity correlation for protostars. Five of our protostellar sources are overlaid with a bolometric luminosities derived from a correlation that utilizes the protostars' mid-infrared luminosity \citep{Kryukova12}. Figure reproduced from \citet{Shirley07} with permission.
+}}
+\end{figure}
+
+
+
 
 %% End Document
 \end{document}

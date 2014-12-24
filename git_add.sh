@@ -39,6 +39,15 @@ git add IRAM_sources.reg
 git add Radio_Correlations.py
 git add AAS_2015/225th_AAS_Abstract.rtf
 git add uv_space.png
+git add Teixeira12_Sources.reg
+git add Teixeira12_Sources.tab
+git add Tanaka13_Data.tab
+git add Mallick13_Data.tab
+git add Radio_Data.pkl
+git add Dzib13_Data_Corr.tab
+git add Dzib13_Data.tab
+git add Dzib13_Classes_Corr.tab
+git add Dzib13_Classes.tab
 
 git add Data/reduction_notes.txt
 
@@ -67,6 +76,22 @@ git add Paper/figures/SerpSouth_FOV-eps-converted-to.pdf
 git add Paper/figures/SerpSouth_fov_contour-eps-converted-to.pdf
 git add Paper/figures/SerpSouth_zoom_color_contour-eps-converted-to.pdf
 git add Paper/figures/SerpSouth_zoom_contour-eps-converted-to.pdf
+git add Paper/figures/Infra_SEDs_OnePlot-eps-converted-to.pdf
+git add Paper/figures/SPIRE_350_Figure-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_Lower_GaussFits-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_PACS70_Contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_SPIRE250_Contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_Spitz24_Contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_Spitz36_Contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_Spitz58_Contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_Spitz80_Contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_Upper_GaussFits-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_VLA10_contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_VLA12_contour-eps-converted-to.pdf
+git add Paper/figures/SerpSouth_uppercont_herschelcolor-eps-converted-to.pdf
+git add Paper/figures/Shirley36_Correlation-eps-converted-to.pdf
+git add Paper/figures/Shirley60_Correlation-eps-converted-to.pdf
+git add Paper/figures/Spix_Class-eps-converted-to.pdf
 
 
 
