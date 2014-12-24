@@ -66,83 +66,92 @@ def get_zorder(layers):
 		zorder_paths[a] = path
 	return zorder_values, zorder_paths
 
+
 ### Herschel map w/ Spitzer sources and VLA primary beam
 if plot1 == True:
-	# Load and Configure Images
-	file1 = fits.open("FITS/SPIRE_250_micron.fits")
-	file2 = fits.open("FITS/SPIRE_350_micron.fits")
-	file3 = fits.open("FITS/SPIRE_500_micron.fits")
 
-	data1 = file1[1].data
-	wcs1 = WCS(file1[1].header)
+	figname = 'AAS_2015/SerpSouth_FOV.eps'
 
-	data2 = file2[1].data
-	wcs2 = WCS(file2[1].header)
+	savefig = False
 
-	data3 = file3[1].data
-	wcs3 = WCS(file3[1].header)
+	# Choose Image
+	color_im = 'FITS/SPIRE_350_micron.fits'
+	contour_im = 'FITS/SPIRE_350_micron.fits'
 
-	# Load Regions
-	spitzer = np.loadtxt('gutermuth2008_serps_ysos1.txt',unpack=True,dtype='str')
-	spitz_radec = np.array([np.array(spitzer[1],float),np.array(spitzer[2],float)])
+	# Load Header and FITS Data for Contour
+	contour_head = fits.open(contour_im)[0].header
+	contour_data = fits.open(contour_im)[1].data
+	
+	# Get RMS
+	rms = np.std(contour_data[~np.isnan(contour_data)])
 
-	# Plot Image
-	fig = mp.figure()
-	ax = WCSAxes(fig,[0.1,0.1,0.8,0.8],wcs=wcs2)
-	fig.add_axes(ax)
+	# Initialize Upper Subband Plot
+	fig = aplpy.FITSFigure(color_im, subplot=(1,1,1), figsize=(11,9))
 
-	ax.imshow(np.log(data2), origin='lower', cmap='Greys', interpolation='nearest',
-		alpha=1.0)
-
-	ax.contour(np.log(data2), levels=[5.9], colors='black', alpha=.8)
-
-	#	ax.imshow(data2, origin='lower', cmap='Greens', extent=extent2,
-	#		vmax=np.max(data2[~np.isnan(data2)])/4, alpha=.7 )
-	#	ax.imshow(data1, origin='lower', cmap='Greys', extent=extent1, alpha=1,
-	#		vmin=np.min(data1[~np.isnan(data1)])*.001, vmax=np.max(data1[~np.isnan(data1)])/3)
+	fig.show_colorscale(cmap='Greys',stretch='power',exponent=.25,pmin=0,pmax=100.001)
+	fig.show_contour(contour_im,alpha=1,cmap='Greys_r',levels=[365])
 
 	## Plot Regions
-	# Spitzer Protostars
-	classI = spitzer[3]=='I'
-	ax.scatter(spitz_radec[0][classI],spitz_radec[1][classI],marker='^',color='#3333FF',edgecolor='black',s=30,transform=ax.get_transform('fk5'),alpha=.8)
-	ax.scatter(spitz_radec[0][~classI],spitz_radec[1][~classI],marker='^',color='#FF3333',edgecolor='black',s=30,transform=ax.get_transform('fk5'),alpha=.8)
+	# Add Spitzer Infrared Sources
+	add_spitz = True
+	if add_spitz == True:
+		spitzer = np.loadtxt('gutermuth2008_serps_ysos1.txt',unpack=True,dtype='str')
+		spitz_radec = np.array([np.array(spitzer[1],float),np.array(spitzer[2],float)])
+		classI = spitzer[3]=='I'
+		fig.show_markers(spitz_radec[0][classI],spitz_radec[1][classI],s=75,marker='^',facecolor='blue',edgecolor='blue',lw=1,zorder=1,alpha=0.9)
+		fig.show_markers(spitz_radec[0][~classI],spitz_radec[1][~classI],s=75,marker='^',facecolor='red',edgecolor='red',lw=1,zorder=1,alpha=0.9)
 
-	# VLA Field of View
-	r = mp.Rectangle((277.485,-2.077),0.067,0.067,edgecolor='Lime',facecolor='None',lw=3,transform=ax.get_transform('fk5'),zorder=.5)
-	ax.add_patch(r)
+	# Box Regions for Figures
+	make_boxes = True
+	if make_boxes == True:
+		fig.show_rectangles(277.515,-2.040,0.065,0.065,color='Lime',linewidth=5)
+		#fig.add_label(277.535,-2.062,'(a)',clip_on=True)
 
-	# Figure Formatting	
-	limits = wcs2.wcs_world2pix([(277.35,-2.25),(277.68,-1.88)],0).T
-	ax.set_xlim(limits[0][1],limits[0][0])
-	ax.set_ylim(limits[1][0],limits[1][1])
+	# Miscellaneous
+	fig.ticks.set_color('#000000')
+	fig.ticks.set_linewidth(0.75)
+	fig.ticks.set_length(8)
+	fig.ticks.set_minor_frequency(0)
+	fig.ticks.show_x()
+	fig.ticks.show_y()
+	#fig.axis_labels.set_xtext('Right Ascension (J2000)')
+	#fig.axis_labels.set_ytext('Declination (J2000)')
+	fig.axis_labels.set_xtext('')
+	fig.axis_labels.set_ytext('')
+	fig._ax1.set_xticklabels([''])
+	fig._ax1.set_yticklabels([''])
+	fig.axis_labels.set_font(size=0)
+	fig.axis_labels.set_xpad(0)
+	fig.axis_labels.set_ypad(0)
+	fig._figure.axes[0].tick_params(labelsize=0)
 
-	xax = ax.coords[0]
-	yax = ax.coords[1]
+	# Add Scalebar
+	fig.add_scalebar(5./60)
+	fig.scalebar.set_corner('bottom right')
+	fig.scalebar.set_frame(True)
+	fig.scalebar.set(linewidth=2,color='black')
+	fig.scalebar.set_label('0.6 pc')
+	fig.scalebar.set_font(size=18)
+	fig.refresh()
 
-	xax.set_axislabel('Right Ascension (J2000)',fontsize=12)
-	yax.set_axislabel('Declination (J2000)',fontsize=12)
-
-	xax.set_major_formatter('hh:mm:ss')
-	yax.set_major_formatter('dd:mm')
-
-	xax.set_ticks(spacing=5*u.arcmin, exclude_overlapping=True, size=6)
-	yax.set_ticks(spacing=5*u.arcmin, exclude_overlapping=True, size=6)
+	fig.recenter(277.520,-2.060,width=0.225,height=0.325)
 
 	if savefig == True:
-		fig.savefig('Paper/figures/SerpSouth_FOV.eps',bbox_inches='tight',transparent=True)
+		fig.save(figname,adjust_bbox='tight',transparent=False)
 
 
 ### Radio Contours
 if plot2 == True:
 
 	zoom = False
+	vla4 = True
 	vla10 = False
-	vla12 = True
+	vla12 = False
 
-	figname = 'Paper/figures/SerpSouth_VLA12_contour.eps'
+	figname = 'Paper/figures/SerpSouth_VLA4_contour.eps'
 	#figname = 'Paper/figures/SerpSouth_zoom_contour.eps'
 
-	savefig = False
+	savefig = True
 
 	# Choose Image
 	color_im = 'FITS/PACS_100_micron_cropped.fits'
@@ -164,7 +173,7 @@ if plot2 == True:
 	fig.hide_colorscale()
 	fig.show_contour(contour_im,alpha=1,cmap='Greys_r',levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
 
-	if vla10 == True or vla12 == True:
+	if vla4 == True or vla10 == True or vla12 == True:
 		fig.hide_layer('contour_set_1')
 		fig.show_contour(contour_im,alpha=0.6,cmap='Blues_r',levels=[rms*3,rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
 		contour_im = 'FITS/SERPS_2.lower.briggs05.deeper.fits'
@@ -186,6 +195,8 @@ if plot2 == True:
 	fig.ticks.show_y()
 	fig.axis_labels.set_xtext('Right Ascension (J2000)')
 	fig.axis_labels.set_ytext('Declination (J2000)')
+	fig.axis_labels.set_xtext('')
+	fig.axis_labels.set_ytext('')
 	fig.axis_labels.set_font(size=18)
 	fig.axis_labels.set_xpad(15)
 	fig.axis_labels.set_ypad(10)
@@ -239,6 +250,8 @@ if plot2 == True:
 			fig.add_label(label_ra[i],label_dec[i],'VLA '+str(label_num[i]),clip_on=True,zorder=5,size=18)
 
 	# Add arrows 
+	if vla4 == True:
+		pass
 	if vla10 == True:
 		fig.show_arrows(277.5116,-2.0391,0,-0.00045,width=.15,head_width=.5,head_length=.4,facecolor='k')
 		fig.show_arrows(277.5093,-2.0421,0.0015,0,width=.15,head_width=.5,head_length=.4,facecolor='k')
@@ -259,6 +272,16 @@ if plot2 == True:
 	if zoom == True:
 		fig.recenter(277.518,-2.043,width=0.045,height=0.045)
 		fig.hide_layer('rectangle_set_1')
+	elif vla4 == True:
+		fig.recenter(277.512,-2.012,width=0.02,height=0.015)
+		fig.hide_layer('label_6')
+		# Add Scalebar
+		fig.add_scalebar(10./3600)
+		fig.scalebar.set_corner('bottom')
+		fig.scalebar.set_frame(False)
+		fig.scalebar.set(linewidth=2,color='black')
+		fig.scalebar.set_label('0.02 pc')
+		fig.scalebar.set_font(size=18)
 	elif vla10 == True:
 		fig.recenter(277.512,-2.043,width=0.01,height=0.01)
 		# Add Scalebar
@@ -268,7 +291,6 @@ if plot2 == True:
 		fig.scalebar.set(linewidth=2,color='black')
 		fig.scalebar.set_label('0.02 pc')
 		fig.scalebar.set_font(size=18)
-
 	elif vla12 == True:
 		# Re-center
 		fig.recenter(277.516,-2.054,width=0.015,height=0.0145)
@@ -289,21 +311,23 @@ if plot2 == True:
 		fig.recenter(277.525,-2.038,width=0.082,height=0.082)
 
 	if savefig == True:
-		fig.save(figname,adjust_bbox='tight')
+		fig.save(figname,adjust_bbox='tight',transparent=True)
 
 
 ### Radio Contours over Herschel Maps
 if plot3 == True:
 
 	zoom = False
-	center = True
+	zoom2 = True
+	center = False
 	
-	figname = 'Paper/figures/SerpSouth_Spitzer24_Contour.eps'
+	figname = 'AAS_2015/Spitzer80_Contour.eps'
 
-	savefig = False
+	savefig = True
 
 	# Choose Image
-	color_im = 'FITS/Spitzer_4.5_micron_crop.fits'
+	color_im = 'FITS/2MASS_Kband.fits'
+	color_im = 'FITS/Spitzer_8.0_micron_crop.fits'
 	#color_im = 'FITS/Spitzer_24_micron.fits'
 	#color_im = 'FITS/PACS_70_micron_cropped.fits'
 	#color_im = 'FITS/SPIRE_250_micron.fits'
@@ -322,13 +346,15 @@ if plot3 == True:
 	# Initialize Upper Subband Plot
 	fig = aplpy.FITSFigure(color_im, subplot=(1,1,1), figsize=(10.5,9))
 
-	fig.show_colorscale(cmap='CMRmap',stretch='power',exponent=.50,pmin=0,pmax=99.9)
-	fig.show_contour('FITS/SERPS_2.upper.briggs05.deeper.fits',cmap='Greys_r',alpha=1,levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
+	fig.show_colorscale(cmap='YlGnBu_r',stretch='power',exponent=.70,pmin=0,pmax=99.7)
+	fig.show_contour('FITS/SERPS_2.upper.briggs05.deeper.fits',cmap='bwr_r',alpha=1,levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50],zorder=10,linewidth=4)
 
 	# Draw Beam
-	beam_dict = {'bmaj':contour_head['bmaj'],'bmin':contour_head['bmin'],'bpa':contour_head['bpa']}
-	fig._header.update(beam_dict)
-	fig.show_beam(facecolor='black',frame=True)
+	draw_beam = False
+	if draw_beam == True:
+		beam_dict = {'bmaj':contour_head['bmaj'],'bmin':contour_head['bmin'],'bpa':contour_head['bpa']}
+		fig._header.update(beam_dict)
+		fig.show_beam(facecolor='black',frame=True)
 
 	# Miscellaneous
 	fig.ticks.set_color('#000000')
@@ -339,9 +365,15 @@ if plot3 == True:
 	fig.ticks.show_y()
 	fig.axis_labels.set_xtext('Right Ascension (J2000)')
 	fig.axis_labels.set_ytext('Declination (J2000)')
+	fig.axis_labels.set_xtext('')
+	fig.axis_labels.set_ytext('')
 	fig.axis_labels.set_font(size=16)
 	fig.axis_labels.set_xpad(15)
 	fig.axis_labels.set_ypad(10)
+	fig.axis_labels.set_xpad(0)
+	fig.axis_labels.set_ypad(0)
+	fig._ax1.set_xticklabels([''])
+	fig._ax1.set_yticklabels([''])
 	fig._figure.axes[0].tick_params(labelsize=16)
 	fig.refresh()
 
@@ -374,7 +406,7 @@ if plot3 == True:
 		fig.show_markers(spitz_radec[0][~classI],spitz_radec[1][~classI],s=250,marker='+',facecolor='None',edgecolor='red',lw=2,zorder=1)
 
 	# Add VLA Labels
-	add_labels = True
+	add_labels = False
 	if add_labels == True:
 		label_ra,label_dec,label_num = np.loadtxt('SS_Labels.txt',delimiter=',',unpack=True)
 		label_num = np.array(label_num,int)
@@ -382,24 +414,28 @@ if plot3 == True:
 			fig.add_label(label_ra[i],label_dec[i],'VLA '+str(label_num[i]),clip_on=True,zorder=5)
 
 	# Add Teixeira Sources
-	add_teixeira = True
+	add_teixeira = False
 	if add_teixeira == True:
 		fig.show_regions('Teixeira12_Sources.reg')	
 
 	# Add Caption
 	add_cap = True
 	if add_cap == True:
-		fig.add_label(0.1,0.9,'(f)',size=24,zorder=5,color='k',relative=True)
+		#fig.add_label(0.1,0.9,'(f)',size=24,zorder=5,color='k',relative=True)
+		props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
+		fig.add_label(.23,.92,'8.0 micron', size=30, zorder=5, color='k', relative=True, bbox=props)
 
 	if zoom == True:
 		fig.recenter(277.518,-2.043,width=0.0425,height=0.045)
+	elif zoom2 == True:
+		fig.recenter(277.516,-2.049,width=0.018,height=0.0225)
 	elif center == True:
 		fig.recenter(277.518,-2.046,width=0.04,height=0.042)
 	else: 
 		fig.recenter(277.525,-2.038,width=0.082,height=0.082)
 
 	if savefig == True:
-		fig.save(figname,adjust_bbox='tight')
+		fig.save(figname,adjust_bbox='tight',transparent=False)
 
 
 
@@ -461,4 +497,4 @@ if plot4 == True:
 	ax.set_ylabel('Radio Spectral Index',fontsize=16)
 
 	if savefig == True:
-		fig.savefig('Paper/figures/Spix_Class.eps',adjust_bbox='tight')
+		fig.savefig('Paper/figures/Spix_Class.eps',adjust_bbox='tight',transparent=True)
