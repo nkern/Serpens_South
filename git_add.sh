@@ -37,7 +37,6 @@ git add serps_yso1.reg
 git add vla_serps_merger_gutermuth_try1.csv
 git add IRAM_sources.reg
 git add Radio_Correlations.py
-git add AAS_2015/225th_AAS_Abstract.rtf
 git add uv_space.png
 git add Teixeira12_Sources.reg
 git add Teixeira12_Sources.tab
@@ -48,6 +47,11 @@ git add Dzib13_Data_Corr.tab
 git add Dzib13_Data.tab
 git add Dzib13_Classes_Corr.tab
 git add Dzib13_Classes.tab
+
+git add AAS_2015/225th_AAS_Abstract.rtf
+git add AAS_2015/SS_AAS_Poster.ai
+git add AAS_2015/SS_AAS_Poster.pdf
+
 
 git add Data/reduction_notes.txt
 

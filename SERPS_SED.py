@@ -164,7 +164,6 @@ def radio_spix_err(flux1,flux1_err,flux2,flux2_err):
 	return np.sqrt(  (flux1_err/flux1)**2 + (flux2_err/flux2)**2 )
 
 
-
 # Load cm Peak Flux Data
 lower_peak_flux = np.loadtxt('Lower_Peak_Fluxes_try2.csv',delimiter=',',unpack=True)
 upper_peak_flux = np.loadtxt('Upper_Peak_Fluxes_try2.csv',delimiter=',',unpack=True)
@@ -331,8 +330,8 @@ ir_spitz_class = cross_match(spitz_class,spitz_source_id)
 
 
 ### Dunham08 70micron vs. Linternal ###
-Lint_dunham = 3.3e8 * guter_fluxes.T[-1]*c/70e-6 * 1e-23	# Lsun
-Lint_dunham_err = 3.3e8 * guter_fluxes.T[-1]*guter_rel_errs[-1]*c/70e-6 * 1e-23	# Lsun
+Lint_dunham = 3.3e8 * guter_fluxes.T[-1]*c/70e-6 * 1e-23				# Lsun
+Lint_dunham_err = 3.3e8 * guter_fluxes.T[-1]*guter_rel_errs[-1]*c/70e-6 * 1e-23		# Lsun
 
 ### Kryukova12 Lmir vs. Lbol ###
 dist1 = 429	# pc
@@ -361,7 +360,7 @@ Lbol_dunham1 = np.concatenate( [Lmir1[flat] / (-0.298 * np.log10(0.3) + 0.270)**
 Lbol_dunham2 = np.concatenate( [Lmir2[flat] / (-0.298 * np.log10(0.3) + 0.270)**2, Lmir2[rising] / (-0.298 * np.log10(ir_spix[rising]) + 0.270)**2] )
 
 # Classification
-classes = ['Extragal.?','Extragal.','Extragal.','Extragal.','Extragal.?','Extragal.','Class I','Extragal.?','Class 0?','Unknown','Class 0','Class 0','Class 0','Class 0','Extragal.','Class II','Class I','Extragal.?']
+classes = ['Extragal.?','Extragal.','Extragal.','Extragal.','Extragal.?','Extragal.','Class I','Extragal.?','Class 0?','Unknown','Class 0,VeLLO','Class 0','Class 0','Class 0','Extragal.','Class II','Class I,VeLLO','Extragal.?']
 
 # Convert RA and DEC to J2000
 ra = upper_ra

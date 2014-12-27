@@ -9,6 +9,7 @@ from scipy.optimize import leastsq
 from AttrDict import AttrDict
 from scipy import stats
 import pickle as pkl
+from matplotlib import rc
 
 ## Flags ##
 
@@ -247,13 +248,19 @@ kern63_model = kern63_a*kern63_xrange + kern63_b
 
 
 ## Flags
-plot1 = True
+plot1 = False
 plot2 = False
-
-savefig = True
 
 ## Plot 4.1 cm over Shirley 3.6 cm data and 6.3 cm over Shirley 6.0 cm data
 if plot1 == True:
+
+	figname1 = 'Paper/figures/Shirley36_Correlation.eps'
+	figname2 = 'Paper/figures/Shirley60_Correlation.eps'
+	figname1 = 'AAS_2015/Shirley36_Correlation.eps'
+	figname2 = 'AAS_2015/Shirley60_Correlation.eps'
+
+	savefig = False
+
 	# Extrapolate 4.1 cm to 3.6 cm and 6.3 cm to 6.0 cm w/ spectral indices	
 	trust_int_spix = np.where(kern.cm_spix_trust == 'int')[0]
 	trust_peak_spix = np.where(kern.cm_spix_trust == 'peak')[0]
@@ -295,33 +302,37 @@ if plot1 == True:
 	fig1,ax1 = mp.subplots()
 
 	p1, = ax1.plot(shirley36_x,shirley36_y,'ko',alpha=.8)
-	p2 = ax1.errorbar(kern_x_kryukova1,kern36_flux1,xerr=0.5,yerr=kern36_flux_err1,fmt='o',color='b',alpha=.9)
-	p3 = ax1.errorbar(kern_x_kryukova2,kern36_flux2,xerr=0.5,yerr=kern36_flux_err2,fmt='o',color='r',alpha=.9)
-#	p4 = ax1.errorbar(kern_x_dunham1,kern36_flux1,yerr=kern36_flux_err1,fmt='o',color='c',alpha=.7)
-#	p5 = ax1.errorbar(kern_x_dunham2,kern36_flux2,yerr=kern36_flux_err2,fmt='o',color='m',alpha=.7)
-	mp.legend([p1,p2,p3],["Shirley+07","This work, d=429pc","This work, d=260pc"],loc=2)
+	p2 = ax1.errorbar(kern_x_kryukova1,kern36_flux1,xerr=0.5,yerr=kern36_flux_err1,fmt='o',color='b',alpha=.6)
+#	p3 = ax1.errorbar(kern_x_kryukova2,kern36_flux2,xerr=0.5,yerr=kern36_flux_err2,fmt='o',color='r',alpha=.9)
+	p4 = ax1.errorbar(kern_x_dunham1,kern36_flux1,xerr=0.5,yerr=kern36_flux_err1,fmt='o',color='r',alpha=.6)
+#	p5 = ax1.errorbar(kern_x_dunham2,kern36_flux2,xerr=0.5,yerr=kern36_flux_err2,fmt='o',color='m',alpha=.7)
+	mp.legend([p1,p2,p4],["Shirley+07","This work and Kryukova+ 2012","This work and Dunham+ 2013"],loc=2)
 
-	ax1.set_xlabel('log10(Lbol)',fontsize=16)
-	ax1.set_ylabel('log10(Flux*Distance^2)',fontsize=16)
+	mp.rc('text', usetex=True)
+	mp.rc('font', family='serif')
+	ax1.set_xlabel(r'log10( L$_{bol}$ / 1 L$_{\odot}$ )',fontsize=18)
+	ax1.set_ylabel(r'log10( $S\cdot$D$^{2}$ / 1mJy kpc$^{2}$ )',fontsize=18)
 
 	if savefig == True:
-		fig1.savefig('Paper/figures/Shirley36_Correlation.eps',adjust_bbox='tight')
+		fig1.savefig(figname1,adjust_bbox='tight',transparent=True)
 
 	# Plot 6.0 corelation
 	fig2,ax2 = mp.subplots()
 
 	p1, = ax2.plot(shirley60_x,shirley60_y,'ko',alpha=.8)
-	p2 = ax2.errorbar(kern_x_kryukova1,kern60_flux1,xerr=0.5,yerr=kern60_flux_err1,fmt='o',color='b',alpha=.9)
-	p3 = ax2.errorbar(kern_x_kryukova2,kern60_flux2,xerr=0.5,yerr=kern60_flux_err2,fmt='o',color='r',alpha=.9)
-#	p4 = ax2.errorbar(kern_x_dunham1,kern60_flux1,yerr=kern60_flux_err1,fmt='o',color='c',alpha=.7)
-#	p5 = ax2.errorbar(kern_x_dunham2,kern60_flux2,yerr=kern60_flux_err2,fmt='o',color='m',alpha=.7)
-	mp.legend([p1,p2,p3],["Shirley+07","This work, d=429pc","This work, d=260pc"],loc=2)
+	p2 = ax2.errorbar(kern_x_kryukova1,kern60_flux1,xerr=0.5,yerr=kern60_flux_err1,fmt='o',color='b',alpha=.6)
+#	p3 = ax2.errorbar(kern_x_kryukova2,kern60_flux2,xerr=0.5,yerr=kern60_flux_err2,fmt='o',color='r',alpha=.9)
+	p4 = ax2.errorbar(kern_x_dunham1,kern60_flux1,xerr=0.5,yerr=kern60_flux_err1,fmt='o',color='r',alpha=.6)
+#	p5 = ax2.errorbar(kern_x_dunham2,kern60_flux2,xerr=0.5,yerr=kern60_flux_err2,fmt='o',color='m',alpha=.7)
+	mp.legend([p1,p2,p4],["Shirley+07","This work and Kryukova+ 2012","This work and Dunham+ 2013"],loc=2)
 
-	ax2.set_xlabel('log10(Lbol)',fontsize=16)
-	ax2.set_ylabel('log10(Flux*Distance^2)',fontsize=16)
+	mp.rc('text', usetex=True)
+	mp.rc('font', family='serif')
+	ax2.set_xlabel(r'log10( L$_{bol}$ / 1 L$_{\odot}$ )',fontsize=18)
+	ax2.set_ylabel(r'log10( $S\cdot$D$^{2}$ / 1 mJy kpc$^{2}$ )',fontsize=18)
 
 	if savefig == True:
-		fig2.savefig('Paper/figures/Shirley60_Correlation.eps',adjust_bbox='tight')
+		fig2.savefig(figname2,adjust_bbox='tight',transparent=True)
 	
 
 

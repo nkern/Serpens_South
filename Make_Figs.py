@@ -26,8 +26,8 @@ savefig = False
 
 plot1 = False
 plot2 = False
-plot3 = True
-plot4 = False
+plot3 = False
+plot4 = True
 
 def sexig_to_deg(ra,dec):
 	length = len(ra)
@@ -148,8 +148,8 @@ if plot2 == True:
 	vla10 = False
 	vla12 = False
 
+	#figname = 'AAS_2015/SerpSouth_VLA12_contour.eps'
 	figname = 'Paper/figures/SerpSouth_VLA4_contour.eps'
-	#figname = 'Paper/figures/SerpSouth_zoom_contour.eps'
 
 	savefig = True
 
@@ -195,8 +195,8 @@ if plot2 == True:
 	fig.ticks.show_y()
 	fig.axis_labels.set_xtext('Right Ascension (J2000)')
 	fig.axis_labels.set_ytext('Declination (J2000)')
-	fig.axis_labels.set_xtext('')
-	fig.axis_labels.set_ytext('')
+#	fig.axis_labels.set_xtext('')
+#	fig.axis_labels.set_ytext('')
 	fig.axis_labels.set_font(size=18)
 	fig.axis_labels.set_xpad(15)
 	fig.axis_labels.set_ypad(10)
@@ -443,6 +443,11 @@ if plot3 == True:
 if plot4 == True:
 	import pickle as pkl
 
+	figname = 'Paper/figures/Spix_Class.eps'
+	figname = 'AAS_2015/Spix_Class.eps'
+
+	savefig = True
+
 	# Load Radio Data
 	data = pkl.Unpickler(open('Radio_Data.pkl','rb')).load()
 	for i in data:
@@ -472,29 +477,29 @@ if plot4 == True:
 	for i in range(18):
 		if i in class0:
 			if i in trust_int_spix:
-				ax.errorbar([0],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',color='green',alpha=.7)
+				ax.errorbar([0],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',markersize=10,color='green',alpha=.7)
 			elif i in trust_peak_spix:
-				ax.errorbar([0],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',color='green',alpha=.7)
+				ax.errorbar([0],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',markersize=10,color='green',alpha=.7)
 		elif i in class1:
 			if i in trust_int_spix:
-				ax.errorbar([1],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',color='blue',alpha=.7)
+				ax.errorbar([1],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',markersize=10,color='blue',alpha=.7)
 			elif i in trust_peak_spix:
-				ax.errorbar([1],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',color='blue',alpha=.7)
+				ax.errorbar([1],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',markersize=10,color='blue',alpha=.7)
 		elif i in class2:
 			if i in trust_int_spix:
-				ax.errorbar([2],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',color='red',alpha=.7)
+				ax.errorbar([2],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',markersize=10,color='red',alpha=.7)
 			elif i in trust_peak_spix:
-				ax.errorbar([2],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',color='red',alpha=.7)
+				ax.errorbar([2],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',markersize=10,color='red',alpha=.7)
 		elif i in extragal:
 			if i in trust_int_spix:
-				ax.errorbar([3],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',color='black',alpha=.7)
+				ax.errorbar([3],kern.cm_int_spix[i],yerr=kern.cm_int_spix_err[i],fmt='s',markersize=10,color='black',alpha=.7)
 			elif i in trust_peak_spix:
-				ax.errorbar([3],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',color='black',alpha=.7)
+				ax.errorbar([3],kern.cm_peak_spix[i],yerr=kern.cm_peak_spix_err[i],fmt='s',markersize=10,color='black',alpha=.7)
 
 	ax.set_xlim(-1,4)
 	ax.set_ylim(-4,4)
-	mp.xticks([0,1,2,3],['Class 0','Class I','Class II','Extragal.'],fontsize=16)
-	ax.set_ylabel('Radio Spectral Index',fontsize=16)
+	mp.xticks([0,1,2,3],['Class 0','Class I','Class II','Extragal.'],fontsize=18)
+	ax.set_ylabel('Radio Spectral Index',fontsize=18)
 
 	if savefig == True:
-		fig.savefig('Paper/figures/Spix_Class.eps',adjust_bbox='tight',transparent=True)
+		fig.savefig(figname,adjust_bbox='tight',transparent=True)
