@@ -192,6 +192,19 @@ cm_peak_spix_err = np.array(cm_peak_spix_err)
 # Which spectral index to trust based on observational properties
 cm_spix_trust = ['int','int','int','int','int','peak','int','peak','peak','peak','peak','peak','peak','peak','int','peak','int','peak']
 
+cm_spix = []
+cm_spix_err = []
+for i in range(source_num):
+	if cm_spix_trust[i] == 'int':
+		cm_spix.append(cm_int_spix[i])
+		cm_spix_err.append(cm_int_spix_err[i])
+	elif cm_spix_trust[i] == 'peak':
+		cm_spix.append(cm_peak_spix[i])
+		cm_spix_err.append(cm_peak_spix_err[i])
+
+cm_spix = np.array(cm_spix)
+cm_spix_err = np.array(cm_spix_err)	
+
 cm_lower_snr = lower_peak_flux[1] / lower_rms
 cm_upper_snr = upper_peak_flux[1] / upper_rms
 
@@ -295,8 +308,6 @@ def replace_nan(array,sub,round_num=2,flt=True):
 				new_array.append(array[i])
 	return np.array(new_array)
 
-
-
 ## Create data dictionary for arrays with ordering identical to SS_Final_Sources
 data = {}
 
@@ -330,7 +341,7 @@ ir_spitz_class = cross_match(spitz_class,spitz_source_id)
 
 
 ### Dunham08 70micron vs. Linternal ###
-Lint_dunham = 3.3e8 * guter_fluxes.T[-1]*c/70e-6 * 1e-23				# Lsun
+Lint_dunham = (guter_fluxes.T[-1] * c / 70e-6 * 1e-23) ** (0.94) * 3.3e8
 Lint_dunham_err = 3.3e8 * guter_fluxes.T[-1]*guter_rel_errs[-1]*c/70e-6 * 1e-23		# Lsun
 
 ### Kryukova12 Lmir vs. Lbol ###
@@ -345,22 +356,28 @@ Lmir2 = (19.79*guter_fluxes.T[0] + 16.96*guter_fluxes.T[1] + 10.49*guter_fluxes.
 
 Lmir2_err = (19.79*guter_fluxes.T[0]*guter_rel_errs[0] + 16.96*guter_fluxes.T[1]*guter_rel_errs[1] + 10.49*guter_fluxes.T[2]*guter_rel_errs[2] + 5.50*guter_fluxes.T[3]**guter_rel_errs[3] + 4.68*guter_fluxes.T[4]*guter_rel_errs[4] + 4.01*guter_fluxes.T[5]*guter_rel_errs[5] + 4.31*guter_fluxes.T[6]*guter_rel_errs[6] + 0.81*guter_fluxes.T[7]*guter_rel_errs[7]) * 1e-6 * dist2**2
 
-# Flat and Rising IR Sources
+## Flat and Rising IR Sources
 flat = np.array([6,16])
-rising = np.array([10,12,15])
+rising = np.array([12])#10,12,15])
+Lbol_sources = np.concatenate([flat,rising])
 
 Lbol_kryukova1 = np.concatenate([ Lmir1[flat] * (-0.466 * np.log10(0.3) + 0.337)**2, Lmir1[rising] / (-0.466 * np.log10(ir_spix[rising]) + 0.337)**2 ])
 Lbol_kryukova2 = np.concatenate([ Lmir2[flat] * (-0.466 * np.log10(0.3) + 0.337)**2, Lmir2[rising] / (-0.466 * np.log10(ir_spix[rising]) + 0.337)**2 ])
 
-#Lbol_kryukova1_err = Lmir1 / ( np.sqrt( (0.014 * np.log10(ir_spix))**2 + 0.053**2)/(-0.466 * np.log10(ir_spix) + 0.337)**2 * np.sqrt(2))
-#Lbol_kryukova2_err = Lmir1 / ( np.sqrt( (0.014 * np.log10(ir_spix))**2 + 0.053**2)/(-0.466 * np.log10(ir_spix) + 0.337)**2 * np.sqrt(2))
+Delta = (-0.466 * np.log10(cm_spix[Lbol_sources]) + 0.337)
+Delta_err = np.sqrt( (0.014 * cm_spix_err[Lbol_sources]/cm_spix[Lbol_sources])**2 + 0.033**2)
+Beta = Delta**2
+Beta_err = Beta * np.sqrt((Delta_err/Delta)**2 * 2)
+
+Lbol_kryukova1_err = Lbol_kryukova1 * np.sqrt( (Lmir1_err[Lbol_sources]/Lmir1[Lbol_sources])**2 + (Beta_err/Beta)**2 )
+Lbol_kryukova2_err = Lbol_kryukova2 * np.sqrt( (Lmir2_err[Lbol_sources]/Lmir2[Lbol_sources])**2 + (Beta_err/Beta)**2 )
 
 ### Dunham13 Lmir vs. Lbol ###
 Lbol_dunham1 = np.concatenate( [Lmir1[flat] / (-0.298 * np.log10(0.3) + 0.270)**2, Lmir1[rising] / (-0.298 * np.log10(ir_spix[rising]) + 0.270)**2] )
 Lbol_dunham2 = np.concatenate( [Lmir2[flat] / (-0.298 * np.log10(0.3) + 0.270)**2, Lmir2[rising] / (-0.298 * np.log10(ir_spix[rising]) + 0.270)**2] )
 
 # Classification
-classes = ['Extragal.?','Extragal.','Extragal.','Extragal.','Extragal.?','Extragal.','Class I','Extragal.?','Class 0?','Unknown','Class 0,VeLLO','Class 0','Class 0','Class 0','Extragal.','Class II','Class I,VeLLO','Extragal.?']
+classes = ['Extragal.?','Extragal.','Extragal.','Extragal.','Extragal.?','Extragal.','Class I','Extragal.?','Class 0?','Unknown','Class 0','Class 0','Class 0','Class 0','Extragal.','Class II','Class I','Extragal.?']
 
 # Convert RA and DEC to J2000
 ra = upper_ra
@@ -404,12 +421,16 @@ data['ir_spix_err'] = replace_nan(ir_spix_err,'--',1)
 data['ir_spitz_class'] = replace_nan(ir_spitz_class,'--',flt=False)
 data['classes'] = classes
 data['cm_spix_trust'] = np.array(cm_spix_trust)
+data['cm_spix'] = np.array(cm_spix)
+data['cm_spix_err'] = np.array(cm_spix_err)
 
 data['Lbol_kryukova1'] = Lbol_kryukova1
 data['Lbol_kryukova2'] = Lbol_kryukova2
+data['Lbol_kryukova1_err'] = Lbol_kryukova1_err
+data['Lbol_kryukova2_err'] = Lbol_kryukova2_err
 data['Lbol_dunham1'] = Lbol_dunham1
 data['Lbol_dunham2'] = Lbol_dunham2
-data['Lbol_sources'] = np.concatenate([flat,rising])
+data['Lbol_sources'] = np.array(Lbol_sources)
 
 ##################################################
 ########## PRINT STRINGS FOR FLUX TABLE ##########
@@ -435,7 +456,7 @@ if print_strings == True:
 ######### W R I T E   D A T A ###############
 #############################################
 
-write_pkl = False
+write_pkl = True
 if write_pkl == True:
 	import pickle as pkl
 	file = open('Radio_Data.pkl','wb')

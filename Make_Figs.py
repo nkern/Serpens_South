@@ -26,8 +26,8 @@ savefig = False
 
 plot1 = False
 plot2 = False
-plot3 = False
-plot4 = True
+plot3 = True
+plot4 = False
 
 def sexig_to_deg(ra,dec):
 	length = len(ra)
@@ -144,12 +144,13 @@ if plot1 == True:
 if plot2 == True:
 
 	zoom = False
-	vla4 = True
+	vla4 = False
 	vla10 = False
 	vla12 = False
+	vla10and12 = True
 
-	#figname = 'AAS_2015/SerpSouth_VLA12_contour.eps'
-	figname = 'Paper/figures/SerpSouth_VLA4_contour.eps'
+	figname = 'AAS_2015/SerpSouth_VLA10and12_contour.eps'
+	#figname = 'Paper/figures/SerpSouth_VLA4_contour.eps'
 
 	savefig = True
 
@@ -173,7 +174,7 @@ if plot2 == True:
 	fig.hide_colorscale()
 	fig.show_contour(contour_im,alpha=1,cmap='Greys_r',levels=[rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
 
-	if vla4 == True or vla10 == True or vla12 == True:
+	if vla4 == True or vla10 == True or vla12 == True or vla10and12 == True:
 		fig.hide_layer('contour_set_1')
 		fig.show_contour(contour_im,alpha=0.6,cmap='Blues_r',levels=[rms*3,rms*4,rms*5,rms*6,rms*8,rms*10,rms*15,rms*20,rms*30,rms*50])
 		contour_im = 'FITS/SERPS_2.lower.briggs05.deeper.fits'
@@ -265,6 +266,16 @@ if plot2 == True:
 		fig.show_arrows(277.5205,-2.0550,-0.00075,0.00075,width=.15,head_width=.5,head_length=.4,facecolor='k')
 		fig.show_arrows(277.5115,-2.0585,0.00125,0.0005,width=.15,head_width=.5,head_length=.4,facecolor='k')
 
+	elif vla10and12 == True:
+		fig.show_arrows(277.5098,-2.0421,0.0010,0,width=.15,head_width=.5,head_length=.4,facecolor='k')
+		fig.show_arrows(277.5125,-2.0467,0.00075,0.0004,width=.15,head_width=.5,head_length=.4,facecolor='k')
+		fig.show_arrows(277.5193,-2.0502,-0.0012,-0.0004,width=.15,head_width=.5,head_length=.4,facecolor='k')
+		fig.show_arrows(277.5124,-2.0525,0.0011,0,width=.15,head_width=.5,head_length=.4,facecolor='k')
+		fig.show_arrows(277.5149,-2.0544,0.0005,0.0005,width=.15,head_width=.5,head_length=.4,facecolor='k')
+		fig.show_arrows(277.5205,-2.0548,-0.0007,0.0007,width=.15,head_width=.5,head_length=.4,facecolor='k')
+		fig.show_arrows(277.5119,-2.0585,0.0010,0.0005,width=.15,head_width=.5,head_length=.4,facecolor='k')
+
+
 	# Add SPIRE 350 micron contour from figure 1
 	add_spire = False
 	if add_spire == True:
@@ -307,6 +318,15 @@ if plot2 == True:
 		fig.scalebar.set_label('0.02 pc')
 		fig.scalebar.set_font(size=18)
 		fig.refresh()
+	elif vla10and12 == True:
+		fig.recenter(277.514,-2.049,width=0.018,height=0.0225)
+		# Add Scalebar
+		fig.add_scalebar(10./3600)
+		fig.scalebar.set_corner('bottom right')
+		fig.scalebar.set_frame(False)
+		fig.scalebar.set(linewidth=2,color='black')
+		fig.scalebar.set_label('0.02 pc')
+		fig.scalebar.set_font(size=18)
 	else: 
 		fig.recenter(277.525,-2.038,width=0.082,height=0.082)
 
@@ -321,15 +341,15 @@ if plot3 == True:
 	zoom2 = True
 	center = False
 	
-	figname = 'AAS_2015/Spitzer80_Contour.eps'
+	figname = 'AAS_2015/Herschel70_Contour.eps'
 
-	savefig = True
+	savefig = False
 
 	# Choose Image
 	color_im = 'FITS/2MASS_Kband.fits'
 	color_im = 'FITS/Spitzer_8.0_micron_crop.fits'
-	#color_im = 'FITS/Spitzer_24_micron.fits'
-	#color_im = 'FITS/PACS_70_micron_cropped.fits'
+	color_im = 'FITS/Spitzer_24_micron_corrected.fits'
+	color_im = 'FITS/PACS_70_micron_cropped_corrected.fits'
 	#color_im = 'FITS/SPIRE_250_micron.fits'
 	#contour_im = 'FITS/SERPS_2.lower.briggs05.deeper.fits'
 	contour_im = 'FITS/SERPS_2.upper.briggs05.deeper.fits'
@@ -337,8 +357,9 @@ if plot3 == True:
 	# Load Header and FITS Data for Contour
 	contour_head = fits.open(contour_im)[0].header
 	contour_data = fits.open(contour_im)[0].data
-	
 	contour_data = contour_data[0][0]
+
+	color_head = fits.open(color_im)[0].header
 
 	# Get RMS
 	rms = np.std(contour_data[~np.isnan(contour_data)])
@@ -423,7 +444,7 @@ if plot3 == True:
 	if add_cap == True:
 		#fig.add_label(0.1,0.9,'(f)',size=24,zorder=5,color='k',relative=True)
 		props = dict(boxstyle='round', facecolor='wheat', alpha=0.8)
-		fig.add_label(.23,.92,'8.0 micron', size=30, zorder=5, color='k', relative=True, bbox=props)
+		fig.add_label(.23,.92,'70 micron', size=30, zorder=5, color='k', relative=True, bbox=props)
 
 	if zoom == True:
 		fig.recenter(277.518,-2.043,width=0.0425,height=0.045)
